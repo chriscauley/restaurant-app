@@ -1,13 +1,5 @@
-from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.db import models
-
-
-
-class User(AbstractUser):
-    avatar = models.ImageField(upload_to="avatars")
-    # TODO use avatar from twitter/github
-
 
 class BaseModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -20,6 +12,7 @@ class Restaurant(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField()
     owners = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    photo = models.ImageField(upload_to="restaurant_photos")
     __str__ = lambda self: self.name
 
 

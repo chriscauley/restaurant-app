@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Restaurant, Meal, Order, OrderItem
+from .models import Restaurant, Meal, Order, OrderItem
 from django.contrib.auth.admin import UserAdmin
 
 
@@ -21,10 +21,3 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
     pass
-
-
-@admin.register(User)
-class UserAdmin(UserAdmin):
-    fieldsets = UserAdmin.fieldsets + ( (None, {'fields': ('avatar',)}), )
-    add_fieldsets = UserAdmin.add_fieldsets + ( (None, {'fields': ('avatar',)}), )
-

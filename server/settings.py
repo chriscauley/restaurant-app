@@ -14,7 +14,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'server',
+    'server.restaurant',
+    'server.user',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,7 @@ DATABASES = {
 }
 
 
-AUTH_USER_MODEL = 'server.User'
+AUTH_USER_MODEL = 'user.User'
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
