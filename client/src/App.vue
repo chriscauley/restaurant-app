@@ -1,7 +1,11 @@
 <template>
+  <navbar />
   <router-view class="router-view" />
 </template>
 
 <script>
-export default {}
+import Navbar from '@/components/Navbar'
+export default {
+  components: { Navbar },
+}
 </script>

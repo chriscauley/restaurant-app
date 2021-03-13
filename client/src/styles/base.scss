@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './nav';
+
 body {
   @apply bg-blue-200;
 }
