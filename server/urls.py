@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 
 from server.restaurant.views import restaurant_list
-from server.user.views import whoami
+from server.user.views import whoami, logout_ajax
 
 # need to import these files somewhere to @schema.register the forms
 # import server.restaurant.forms
@@ -13,6 +13,7 @@ urlpatterns = [
     path('api/restaurant/', restaurant_list),
     path('admin/', admin.site.urls),
     path('api/whoami', whoami),
+    path('api/logout', logout_ajax),
     path('', include('server.schema.urls')),
 ]
 
