@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-blue-200;
+}
+
+body, html, #app {
+  height: 100%;
+}
+
+#app {
+  @apply bg-white mx-auto;
+}

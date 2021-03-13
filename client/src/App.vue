@@ -1,12 +1,7 @@
 <template>
-  <div>
-    <router-view class="app-view" />
-  </div>
+  <router-view class="router-view" />
 </template>
 
 <script>
-import RestaurantList from '@/components/RestaurantList'
-export default {
-  components: { RestaurantList },
-}
+export default {}
 </script>
