@@ -37,6 +37,12 @@
       "parser": "babel-eslint"
     },
     "rules": {
+      "prettier/prettier": ["error", {
+        "singleQuote": true,
+        "trailingComma": "all",
+        "semi": false,
+        "printWidth": 100
+      }],
       "no-unused-vars": [
         "error",
         {

@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import RestaurantList from "@/components/RestaurantList";
+import RestaurantList from '@/components/RestaurantList'
 export default {
-  components: { RestaurantList }
-};
+  components: { RestaurantList },
+}
 </script>
