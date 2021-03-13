@@ -1,4 +1,5 @@
 import restaurant from './restaurant'
+import schema from './schema'
 
 const store = {
   list: [],
@@ -8,7 +9,7 @@ const store = {
   },
 }
 
-Object.entries({ restaurant }).forEach(([name, module]) => {
+Object.entries({ restaurant, schema }).forEach(([name, module]) => {
   store.list.push(module)
   store[name] = module
 })

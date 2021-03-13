@@ -1,5 +1,7 @@
 <template>
-  <div>Login</div>
+  <div>
+    <schema-form form_name="LoginForm" />
+  </div>
 </template>
 
 <script>
