@@ -1,0 +1,102 @@
+[
+{
+  "model": "restaurant.restaurant",
+  "pk": 1,
+  "fields": {
+    "name": "Moe's Tavern",
+    "description": "",
+    "photo": "restaurant_photos/Moes_Tavern_Night-560x315.jpg",
+    "owners": [3]
+  }
+},
+{
+  "model": "restaurant.restaurant",
+  "pk": 2,
+  "fields": {
+    "name": "Bronto Burger",
+    "description": "",
+    "photo": "restaurant_photos/bedrock_bronto.jpg",
+    "owners": [3]
+  }
+},
+{
+  "model": "restaurant.restaurant",
+  "pk": 3,
+  "fields": {
+    "name": "The Broken Stool",
+    "description": "",
+    "photo": "restaurant_photos/The_Broken_Stool.jpg",
+    "owners": [3]
+  }
+},
+{
+  "model": "restaurant.restaurant",
+  "pk": 4,
+  "fields": {
+    "name": "Elzar's Fine Cuisine",
+    "description": "",
+    "photo": "restaurant_photos/Elzars.jpg",
+    "owners": [3]
+  }
+},
+{
+  "model": "restaurant.restaurant",
+  "pk": 5,
+  "fields": {
+    "name": "Krusty Burger",
+    "description": "",
+    "photo": "restaurant_photos/Krusty_burger.jpg",
+    "owners": [3]
+  }
+},
+{
+  "model": "restaurant.restaurant",
+  "pk": 6,
+  "fields": {
+    "name": "The Frying Dutchman",
+    "description": "",
+    "photo": "restaurant_photos/The_Frying_Dutchman.jpg",
+    "owners": [3]
+  }
+},
+{
+  "model": "restaurant.restaurant",
+  "pk": 7,
+  "fields": {
+    "name": "The Gilded Truffle",
+    "description": "",
+    "photo": "restaurant_photos/gilded.jpg",
+    "owners": [3]
+  }
+},
+{
+  "model": "restaurant.restaurant",
+  "pk": 8,
+  "fields": {
+    "name": "The Krusty Krab",
+    "description": "",
+    "photo": "restaurant_photos/KrustyKrab.jpg",
+    "owners": [3]
+  }
+},
+{
+  "model": "restaurant.restaurant",
+  "pk": 9,
+  "fields": {
+    "name": "Bob's Burgers",
+    "description": "",
+    "photo": "restaurant_photos/BOB.jpg",
+    "owners": [3]
+  }
+},
+{
+  "model": "restaurant.restaurant",
+  "pk": 10,
+  "fields": {
+    "name": "The Drunken Clam",
+    "description": "",
+    "photo": "restaurant_photos/Family_Guy_Drunken_Clam-560x373.gif",
+    "owners": [3]
+  }
+}
+]
