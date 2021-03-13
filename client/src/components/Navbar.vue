@@ -4,9 +4,13 @@
       <img src="/pizza.png" />
       Top Table
     </router-link>
+    <user-dropdown />
   </header>
 </template>
 
 <script>
-export default {}
+import UserDropdown from './UserDropdown'
+export default {
+  components: { UserDropdown },
+}
 </script>

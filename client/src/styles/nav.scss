@@ -1,11 +1,25 @@
 .navbar {
-  @apply p-2;
+  @apply flex justify-between p-2;
   .navbar__brand {
     @apply flex items-center;
-    font-size: 3rem;
+    font-size: 1.5rem;
     img {
       @apply mr-2;
-      height: 4rem;
+      height: 2rem;
+    }
+  }
+}
+
+.navbar .user-dropdown {
+  @apply cursor-pointer flex items-center;
+  .menu {
+    @apply bg-white border shadow;
+    min-width: 200px;
+  }
+  .menu-item {
+    @apply cursor-pointer flex p-2;
+    &:hover {
+      @apply bg-gray-200; /* TODO bg-bg-alt */
     }
   }
 }
