@@ -1,6 +1,6 @@
 <template>
   <div>
-    <restaurant-list />
+    <router-view class="app-view" />
   </div>
 </template>
 
