@@ -14,6 +14,9 @@ class Restaurant(models.Model):
     owners = models.ManyToManyField(settings.AUTH_USER_MODEL)
     photo = models.ImageField(upload_to="restaurant_photos")
     __str__ = lambda self: self.name
+    @property
+    def owner_ids(self):
+        return [o.id for o in self.owners.all()]
 
 
 class Meal(BaseModel):
