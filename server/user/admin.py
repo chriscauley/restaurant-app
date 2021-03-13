@@ -3,8 +3,12 @@ from .models import User
 from django.contrib.auth.admin import UserAdmin
 
 
+custom_fields = (
+    (None, {'fields': ('avatar', 'role')}),
+)
+
 @admin.register(User)
 class UserAdmin(UserAdmin):
-    fieldsets = UserAdmin.fieldsets + ( (None, {'fields': ('avatar',)}), )
-    add_fieldsets = UserAdmin.add_fieldsets + ( (None, {'fields': ('avatar',)}), )
+    fieldsets = UserAdmin.fieldsets + custom_fields
+    add_fieldsets = UserAdmin.add_fieldsets + custom_fields
 
