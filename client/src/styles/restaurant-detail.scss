@@ -1,8 +1,20 @@
 .restaurant-detail {
   .menu-item {
-    @apply border cursor-pointer flex flex-wrap justify-between p-2 rounded;
+    @apply border cursor-pointer p-2 rounded;
+    .menu-item__top {
+      @apply flex justify-between;
+    }
+    .menu-item__name {
+      @apply pr-4;
+    }
+    .menu-item__price {
+      font-weight: bold;
+    }
     .menu-item__description {
-      @apply w-full;
+      @apply mt-2;
+      &:empty {
+        display: none;
+      }
     }
   }
 }

@@ -7,8 +7,10 @@
         <div class="menu-items row">
           <div v-for="item in section.items" :key="item.id" class="col-6">
             <div class="menu-item">
-              <div class="menu-item__name">{{ item.name }}</div>
-              <div class="menu-item__price">${{ item.price }}</div>
+              <div class="menu-item__top">
+                <div class="menu-item__name">{{ item.name }}</div>
+                <div class="menu-item__price">${{ item.price }}</div>
+              </div>
               <div class="menu-item__description">{{ item.description }}</div>
             </div>
           </div>
