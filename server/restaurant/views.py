@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from server.restaurant.models import Restaurant, Order, Meal
 from server.paginate import paginate
 
-restaurant_attrs = ['id', 'name', 'description', 'owner_ids']
+restaurant_attrs = ['id', 'name', 'description', 'owner_ids', 'photo_url']
 
 def restaurant_list(request):
     query = Restaurant.objects.all()

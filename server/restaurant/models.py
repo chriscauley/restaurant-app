@@ -15,6 +15,9 @@ class Restaurant(models.Model):
     photo = models.ImageField(upload_to="restaurant_photos")
     __str__ = lambda self: self.name
     @property
+    def photo_url(self):
+        return self.photo.url
+    @property
     def owner_ids(self):
         return [o.id for o in self.owners.all()]
 
