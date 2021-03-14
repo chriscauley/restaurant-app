@@ -32,9 +32,10 @@
               <div class="action" @click="addItem(item.menuitem_id)">+</div>
             </div>
           </div>
-          <div class="cart-total">
-            ${{ total }}
-          </div>
+          <div class="cart-total">${{ total }}</div>
+          <button class="btn btn-primary" @click="checkout">
+            Checkout
+          </button>
         </div>
       </div>
     </div>
@@ -55,9 +56,9 @@ export default {
     },
     total() {
       let total = 0
-      this.cart.items.forEach(item => total += item.price * item.quantity)
+      this.cart.items.forEach(item => (total += item.price * item.quantity))
       return total
-    }
+    },
   },
   methods: {
     addItem(item_id) {
@@ -65,6 +66,9 @@ export default {
     },
     removeItem(item_id) {
       this.$store.cart.removeItem(item_id)
+    },
+    checkout() {
+      this.$store.cart.checkout()
     },
   },
 }

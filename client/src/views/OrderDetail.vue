@@ -5,7 +5,7 @@
 <script>
 export default {
   __route: {
-    path: '/order-detail',
+    path: '/order/:order_id/',
   },
 }
 </script>

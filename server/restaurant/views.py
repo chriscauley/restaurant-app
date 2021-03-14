@@ -77,3 +77,19 @@ def cart_remove(request):
     if cartitem.quantity < 1:
         cartitem.delete()
     return cart_detail(request)
+
+
+def cart_checkout(request):
+    data = json.loads(request.body.decode('utf-8') or "{}")
+    cart = get_object_or_404(Cart, user=request.user)
+    order = Order.objects.create(
+        restaurant=cart.restaurant,
+        user=cart.user
+    )
+    for cartitem in cart.cartitem_set.all():
+        orderitem = order.orderitem_set.create(
+            menuitem=cartitem.menuitem,
+            quantity=cartitem.quantity
+        )
+    cart.delete()
+    return JsonResponse({ "order_id": order.id })
