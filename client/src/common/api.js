@@ -6,6 +6,10 @@ export const getCSRF = cookie => {
 }
 
 function handleError(error) {
+  error.server_errors = {}
+  Object.entries(error.response.data.errors).forEach(([key, errors]) => {
+    error.server_errors[key] = errors.map(e => e.message).join(' ')
+  })
   throw error
 }
 
