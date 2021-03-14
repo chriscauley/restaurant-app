@@ -38,6 +38,17 @@ class MenuItem(BaseModel):
     __str__ = lambda self: self.name
 
 
+class Cart(BaseModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
+    restaurant = models.ForeignKey(Restaurant, models.CASCADE)
+
+
+class CartItem(BaseModel):
+    cart = models.ForeignKey(Cart, models.CASCADE)
+    menuitem = models.ForeignKey(MenuItem, models.CASCADE)
+    quantity = models.IntegerField(default=0)
+
+
 class Order(BaseModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
     restaurant = models.ForeignKey(Restaurant, models.CASCADE)

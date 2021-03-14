@@ -1,4 +1,5 @@
 import auth from './auth'
+import cart from './cart'
 import restaurant from './restaurant'
 import schema from './schema'
 
@@ -10,7 +11,7 @@ const store = {
   },
 }
 
-Object.entries({ auth, restaurant, schema }).forEach(([name, module]) => {
+Object.entries({ auth, cart, restaurant, schema }).forEach(([name, module]) => {
   store.list.push(module)
   store[name] = module
 })
