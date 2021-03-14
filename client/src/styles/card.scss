@@ -1,0 +1,9 @@
+.card {
+  @apply block border rounded;
+  .card__img {
+    background: center no-repeat;
+    background-size: cover;
+    padding-top: 66.66666%;
+    width: 100%;
+  }
+}

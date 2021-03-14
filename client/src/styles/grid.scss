@@ -1,0 +1,6 @@
+.row {
+  @apply flex flex-wrap -mx-2;
+  .col-4 {
+    @apply px-2 py-4 w-1/3;
+  }
+}
