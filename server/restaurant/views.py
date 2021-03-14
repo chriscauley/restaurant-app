@@ -39,7 +39,8 @@ def process_cartitem(item):
         'id': item.id,
         'name': item.menuitem.name,
         'price': item.menuitem.price,
-        'quantity': item.quantity
+        'menuitem_id': item.menuitem.id,
+        'quantity': item.quantity,
     }
 
 def cart_detail(request):
@@ -58,8 +59,9 @@ def cart_add(request):
     restaurant = menuitem.menusection.restaurant
     cart, _new = Cart.objects.get_or_create(user=request.user, defaults={'restaurant': restaurant})
     if not cart.restaurant == restaurant:
-        cart.cartitem_set.clear()
+        cart.cartitem_set.all().delete()
         cart.restaurant = restaurant
+        cart.save()
 
     cartitem, _new = CartItem.objects.get_or_create(cart=cart, menuitem=menuitem)
     cartitem.quantity += 1
@@ -71,6 +73,7 @@ def cart_remove(request):
     data = json.loads(request.body.decode('utf-8') or "{}")
     cartitem = get_object_or_404(CartItem, cart__user=request.user, menuitem_id=data.get('item_id'))
     cartitem.quantity -= 1
+    cartitem.save()
     if cartitem.quantity < 1:
         cartitem.delete()
     return cart_detail(request)

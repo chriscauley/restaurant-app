@@ -1,3 +1,18 @@
 .cart {
   @apply border rounded;
+  .cart-item {
+    @apply mb-2;
+    &__top {
+      @apply flex justify-between;
+    }
+    &__bottom {
+      @apply flex;
+      .action {
+        @apply border cursor-pointer flex h-6 items-center justify-center ml-2 rounded w-6;
+      }
+    }
+  }
+  .cart-total {
+    @apply border-t text-right;
+  }
 }
