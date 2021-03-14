@@ -2,6 +2,8 @@ import { reactive } from 'vue'
 import api from '@/common/api'
 import slugify from '@/common/slugify'
 
+const DEFAULT_IMG = '/pizza.png'
+
 const state = reactive({
   by_id: {},
 })
@@ -10,7 +12,7 @@ const fetch = (page = 1) => {
   api.get('restaurant/?page=' + page).then(response => {
     response.items.forEach(restaurant => {
       state.by_id[restaurant.id] = {
-        img_style: `background-image: url(${restaurant.photo_url})`,
+        img_style: `background-image: url(${restaurant.photo_url || DEFAULT_IMG})`,
         to: `/restaurant/${restaurant.id}/${slugify(restaurant.name)}/`,
         ...restaurant,
       }
