@@ -1,7 +1,12 @@
+const alt_colors = ['bg', 'bg-alt', 'text', 'text-alt', 'border']
+
+const colors = {}
+alt_colors.forEach(c => (colors[c] = `var(--${c})`))
+
 module.exports = {
   purge: false,
   theme: {
-    extend: {},
+    extend: { colors },
     screens: {
       sm: '640px',
       md: '768px',
