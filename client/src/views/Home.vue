@@ -19,7 +19,6 @@ export default {
   },
   computed: {
     restaurants() {
-      console.log(this.$store.restaurant.all())
       return this.$store.restaurant.all()
     },
   },

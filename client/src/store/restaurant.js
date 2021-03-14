@@ -6,20 +6,30 @@ const DEFAULT_IMG = '/pizza.png'
 
 const state = reactive({
   by_id: {},
+  with_menu: {},
 })
 
+const setRestaurant = data => {
+  state.by_id[data.id] = {
+    ...state[data.id],
+    ...data,
+    img_style: `background-image: url(${data.photo_url || DEFAULT_IMG})`,
+    to: `/restaurant/${data.id}/${slugify(data.name)}/`,
+  }
+}
+
 const fetch = (page = 1) => {
-  api.get('restaurant/?page=' + page).then(response => {
-    response.items.forEach(restaurant => {
-      state.by_id[restaurant.id] = {
-        img_style: `background-image: url(${restaurant.photo_url || DEFAULT_IMG})`,
-        to: `/restaurant/${restaurant.id}/${slugify(restaurant.name)}/`,
-        ...restaurant,
-      }
-    })
-  })
+  api.get('restaurant/?page=' + page).then(({ items }) => items.forEach(setRestaurant))
+}
+
+const fetchmenu = id => {
+  if (!state.by_id[id]?.menusections) {
+    api.get(`restaurant/${id}/`).then(setRestaurant)
+  }
+  return state.by_id[id]
 }
 
 const init = fetch
 
-export default { state, fetch, init, all: () => Object.values(state.by_id) }
+const all = () => Object.values(state.by_id)
+export default { state, fetch, fetchmenu, init, all }

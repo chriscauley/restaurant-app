@@ -21,7 +21,10 @@
 @import './card';
 @import './form';
 @import './grid';
+@import './hx';
 @import './nav';
+
+@import './restaurant-detail';
 
 body {
   @apply bg-blue-200;

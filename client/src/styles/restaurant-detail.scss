@@ -1,0 +1,8 @@
+.restaurant-detail {
+  .menu-item {
+    @apply border cursor-pointer flex flex-wrap justify-between p-2 rounded;
+    .menu-item__description {
+      @apply w-full;
+    }
+  }
+}
