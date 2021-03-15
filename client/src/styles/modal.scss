@@ -1,0 +1,37 @@
+.modal {
+  @apply fixed h-full left-0 top-0 w-full;
+}
+
+.modal .modal__mask {
+  @apply absolute bg-black cursor-pointer h-full w-full;
+  --tw-bg-opacity: 0.2;
+}
+
+.modal .modal__title {
+  @apply flex font-bold mb-4;
+}
+
+.modal .modal__content {
+  @apply absolute bg-white;
+  border-radius: 8px;
+  left: 50%;
+  max-height: 95%;
+  max-width: 90%;
+  overflow: auto;
+  padding: 36px 32px 32px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal__body {
+  font-size: 14px;
+  line-height: 22px;
+  margin-bottom: 20px;
+}
+
+.modal__footer {
+  @apply flex justify-end;
+  .btn {
+    @apply ml-4;
+  }
+}
