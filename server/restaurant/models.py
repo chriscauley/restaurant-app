@@ -1,6 +1,11 @@
 from django.conf import settings
 from django.db import models
 
+
+def serialize(obj, attrs):
+    return { attr: getattr(obj, attr) for attr in attrs }
+
+
 class BaseModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -50,8 +55,6 @@ class CartItem(BaseModel):
 
 
 class Order(BaseModel):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
-    restaurant = models.ForeignKey(Restaurant, models.CASCADE)
     _status_choices = [
         'placed',
         'canceled',
@@ -61,10 +64,58 @@ class Order(BaseModel):
         'received'
     ]
     STATUS_CHOICES = zip(_status_choices, _status_choices)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
+    restaurant = models.ForeignKey(Restaurant, models.CASCADE)
     status = models.CharField(max_length=16, choices=STATUS_CHOICES)
+    @property
+    def user_name(self):
+        return self.user.username
+    @property
+    def restaurant_name(self):
+        return self.restaurant.name
+    @property
+    def items(self):
+        attrs = ['quantity', 'name', 'price', 'id']
+        return [serialize(item, attrs) for item in self.orderitem_set.all()]
+    @property
+    def status_history(self):
+        return [serialize(osu, ['status', 'created']) for osu in self.orderstatusupdate_set.all()]
+    def set_status(self, status):
+        self.status = status
+        self.save()
+        OrderStatusUpdate.objects.create(order=self, status=status)
+    def user_can_see_order(self, user):
+        return user.is_superuser or user.id == self.user_id or self.is_restaurant_owner(user)
+    def is_restaurant_owner(self, user):
+        return user in self.restaurant.owners.all()
+    def get_allowed_statuses(self, user):
+        return [status for status in self._status_choices if self.user_can_set_status(user, status)]
+    def user_can_set_status(self, user, status):
+        if status == 'canceled':
+            return user == self.user and self.status == 'placed'
+        if status == 'received':
+            return user == self.user and self.status == 'delivered'
+        if status == 'processing':
+            return self.is_restaurant_owner(user) and self.status == 'placed'
+        if status == 'in_route':
+            return self.is_restaurant_owner(user) and self.status == 'processing'
+        if status == 'delivered':
+            return self.is_restaurant_owner(user) and self.status == 'in_route'
+        # anything else is not allowed
 
 
 class OrderItem(BaseModel):
     order = models.ForeignKey(Order, models.CASCADE)
     menuitem = models.ForeignKey(MenuItem, models.CASCADE)
     quantity = models.IntegerField()
+    @property
+    def name(self):
+        return self.menuitem.name
+    @property
+    def price(self):
+        return self.menuitem.price
+
+
+class OrderStatusUpdate(BaseModel):
+    order = models.ForeignKey(Order, models.CASCADE)
+    status = models.CharField(max_length=16, choices=Order.STATUS_CHOICES)

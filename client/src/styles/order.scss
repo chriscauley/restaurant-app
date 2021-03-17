@@ -1,0 +1,7 @@
+.order-detail .order__items {
+  @apply border;
+  max-width: 400px;
+  .order-item {
+    @apply flex
+  }
+}

@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 import json
 
-from server.restaurant.models import Restaurant, Order, MenuSection, MenuItem, Cart, CartItem
+from server.restaurant.models import Restaurant, Order, MenuSection, MenuItem, Cart, CartItem, serialize
 from server.paginate import paginate
 
 restaurant_attrs = ['id', 'name', 'description', 'owner_ids', 'photo_url']
@@ -86,6 +86,7 @@ def cart_checkout(request):
         restaurant=cart.restaurant,
         user=cart.user
     )
+    order.set_status('placed')
     for cartitem in cart.cartitem_set.all():
         orderitem = order.orderitem_set.create(
             menuitem=cartitem.menuitem,
@@ -93,3 +94,22 @@ def cart_checkout(request):
         )
     cart.delete()
     return JsonResponse({ "order_id": order.id })
+
+
+def order_detail(request, order_id):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8') or "{}")
+        order = get_object_or_404(Order, id=order_id)
+        if data.get('status'):
+            if not order.user_can_set_status(request.user, data['status']):
+                raise NotImplementedError(f'TODO {request.user} cannot set status {data["status"]}')
+            order.set_status(data.get('status'))
+
+    order = get_object_or_404(Order, id=order_id)
+    if not order.user_can_see_order(request.user):
+        raise NotImplementedError('TODO')
+    # TODO this uses so many queries
+    attrs = ['user_name', 'id', 'status', 'status_history', 'restaurant_name', 'items', 'created']
+    data = serialize(order, attrs)
+    data['allowed_statuses'] = order.get_allowed_statuses(request.user)
+    return JsonResponse(data)
