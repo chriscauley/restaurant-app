@@ -17,6 +17,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'server.restaurant',
     'server.user',
+    'mailer',
+    'django_registration',
 ]
 
 MIDDLEWARE = [
@@ -34,7 +36,7 @@ ROOT_URLCONF = 'server.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'server/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -58,6 +60,8 @@ DATABASES = {
 }
 
 
+EMAIL_BACKEND = "mailer.backend.DbBackend"
+ACCOUNT_ACTIVATION_DAYS = 7
 AUTH_USER_MODEL = 'user.User'
 AUTH_PASSWORD_VALIDATORS = [
     {

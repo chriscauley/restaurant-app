@@ -1,5 +1,6 @@
-from django.http import JsonResponse
-from django.contrib.auth import logout
+from django.http import JsonResponse, HttpResponseRedirect
+from django.contrib.auth import logout as _logout, login
+from django_registration.backends.activation.views import ActivationView, ActivationError
 
 user_attrs = ['id', 'email', 'username', 'role']
 
@@ -8,6 +9,15 @@ def whoami(request):
         return JsonResponse({})
     return JsonResponse({'user': { a: getattr(request.user,a) for a in user_attrs}})
 
-def logout_ajax(request):
-    logout(request)
+def logout(request):
+    _logout(request)
     return JsonResponse({})
+
+def complete_registration(request, activation_key):
+    view = ActivationView()
+    try:
+        user = view.activate(activation_key=activation_key)
+    except ActivationError:
+        return HttpResponseRedirect('/registration/invalid/')
+    login(request, user)
+    return HttpResponseRedirect('/registration/complete/')

@@ -44,6 +44,8 @@ def process_cartitem(item):
     }
 
 def cart_detail(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({})
     cart = Cart.objects.filter(user=request.user).prefetch_related('cartitem_set__menuitem').first()
     if not cart:
         return JsonResponse({})

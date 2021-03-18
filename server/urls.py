@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 
 from server.restaurant.views import restaurant_list, restaurant_detail, cart_detail, cart_add, cart_remove, cart_checkout, order_detail
-from server.user.views import whoami, logout_ajax
+from server.user.views import whoami, logout, complete_registration
 from server.views import spa
 
 # need to import these files somewhere to @schema.register the forms
@@ -11,6 +11,8 @@ from server.views import spa
 import server.user.forms
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
+
     path('api/restaurant/', restaurant_list),
     path('api/restaurant/<int:restaurant_id>/', restaurant_detail),
     path('api/cart/', cart_detail),
@@ -18,11 +20,13 @@ urlpatterns = [
     path('api/cart/remove/', cart_remove),
     path('api/cart/checkout/', cart_checkout),
     path('api/order/<int:order_id>/', order_detail),
-    path('admin/', admin.site.urls),
+
     path('api/whoami', whoami),
-    path('api/logout', logout_ajax),
+    path('api/logout', logout),
+    path('registration/complete/<str:activation_key>/', complete_registration),
+
     path('', include('server.schema.urls')),
-    path('', spa),
+    re_path('', spa),
 ]
 
 if settings.DEBUG:  # pragma: no cover
