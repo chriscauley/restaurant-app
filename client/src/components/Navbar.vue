@@ -1,7 +1,7 @@
 <template>
   <header class="navbar">
     <router-link to="/" class="navbar__brand">
-      <img src="/pizza.png" />
+      <img src="/static/pizza.png" />
       Top Table
     </router-link>
     <user-dropdown />

@@ -4,6 +4,7 @@ from django.urls import include, path, re_path
 
 from server.restaurant.views import restaurant_list, restaurant_detail, cart_detail, cart_add, cart_remove, cart_checkout, order_detail
 from server.user.views import whoami, logout_ajax
+from server.views import spa
 
 # need to import these files somewhere to @schema.register the forms
 # import server.restaurant.forms
@@ -21,6 +22,7 @@ urlpatterns = [
     path('api/whoami', whoami),
     path('api/logout', logout_ajax),
     path('', include('server.schema.urls')),
+    path('', spa),
 ]
 
 if settings.DEBUG:  # pragma: no cover

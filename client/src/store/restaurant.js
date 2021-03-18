@@ -2,7 +2,7 @@ import { reactive } from 'vue'
 import api from '@/common/api'
 import slugify from '@/common/slugify'
 
-const DEFAULT_IMG = '/pizza.png'
+const DEFAULT_IMG = '/static/pizza.png'
 
 const state = reactive({
   by_id: {},
