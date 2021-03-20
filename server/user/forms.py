@@ -1,7 +1,10 @@
+from django.core.files.base import ContentFile
 from django import forms
 from django.contrib.auth import login
 from django_registration.forms import RegistrationFormUniqueEmail
 from django_registration.backends.activation.views import RegistrationView
+import json
+import urllib
 
 from server import schema
 from server.user.models import User
@@ -60,6 +63,35 @@ class SignupForm(RegistrationFormUniqueEmail):
         view.send_activation_email(user)
         return user
 
+
 @schema.register
 class OwnerSignupForm(SignupForm):
     _role = 'owner'
+
+
+@schema.register
+class UserSettingsForm(forms.ModelForm):
+    _avatar_url = None
+    avatar_url = forms.CharField(required=False)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not self.data.get('avatar_url') == self.instance.avatar_url:
+            self._avatar_url = self.data.get('avatar_url')
+
+    def clean_avatar_url(self, *args, **kwargs):
+        if self._avatar_url:
+            response = urllib.request.urlopen(self._avatar_url['dataURL'])
+            self._avatar_url['file'] = ContentFile(response.read())
+    def clean(self):
+        if not self.request.user == self.instance:
+            raise Forms.ValidationError("You can only edit your own data.")
+    def save(self, commit=True):
+        instance = super().save(commit)
+        if self._avatar_url:
+            instance.avatar.save(self._avatar_url['name'], self._avatar_url['file'])
+            instance.save()
+        return instance
+
+    class Meta:
+        model = User
+        fields = ['username', 'avatar_url']

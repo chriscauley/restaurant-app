@@ -29,7 +29,9 @@ def schema_form(request, form_name, object_id=None, method=None, content_type=No
     form_class = FORMS[form_name]
     _meta  = getattr(form_class, 'Meta', object())
     kwargs = {}
-    if object_id and hasattr(_meta, 'model'):
+    if object_id == "self":
+        kwargs['instance'] = request.user
+    elif object_id and hasattr(_meta, 'model'):
         kwargs['instance'] = _meta.model.objects.get(id=object_id)
     if getattr(_meta, 'login_required', None) and not request.user.is_authenticated:
         return JsonResponse({'error': 'You must be logged in to do this'}, status=403)

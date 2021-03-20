@@ -9,13 +9,18 @@ export default {
   props: {
     form_name: String,
     success: Function,
+    prepSchema: {
+      type: Function,
+      default: a => a,
+    },
   },
   data() {
     return { errors: null, loading: false }
   },
   computed: {
     schema() {
-      return this.$store.schema.fetch(this.form_name)
+      const schema = this.$store.schema.fetch(this.form_name)
+      return schema ? this.prepSchema(schema) : schema
     },
   },
   methods: {

@@ -9,6 +9,7 @@ import Signup from './Signup'
 import SignupOwner from './SignupOwner'
 import SignupComplete from './SignupComplete'
 import RegistrationComplete from './RegistrationComplete'
+import UserSettings from './UserSettings'
 
 export default {
   Checkout,
@@ -22,4 +23,5 @@ export default {
   SignupOwner,
   SignupComplete,
   RegistrationComplete,
+  UserSettings,
 }
