@@ -25,9 +25,6 @@
 
 <script>
 export default {
-  mounted() {
-    this.$store.ui.toast({ text: 'foo', level: 'success' })
-  },
   computed: {
     toasts() {
       return this.$store.ui.state.toasts.filter(t => !t.hidden)

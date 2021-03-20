@@ -1,12 +1,17 @@
 import { reactive } from 'vue'
 
 let ID_COUNTER = 0
-const DELAY = 5000
+const DELAY = 10000
 
 const state = reactive({
   alert: null,
   toasts: [],
 })
+
+const hide = id => {
+  const item = state.toasts.find(item => item.id === id)
+  item.hidden = true
+}
 
 export default {
   alert: item => (state.alert = item),
@@ -16,8 +21,7 @@ export default {
     item.id = id
     item.hidden = false
     state.toasts.push(item)
-    console.log(state.toasts)
-    setTimeout(() => (item.hidden = console.log('hide') || true), DELAY)
+    setTimeout(() => hide(item.id), DELAY)
   },
   state,
 }
