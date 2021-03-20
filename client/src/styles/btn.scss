@@ -1,0 +1,11 @@
+.btn {
+  @apply font-bold inline-block py-2 px-4 rounded cursor-pointer select-none leading-normal;
+  &.-twitter {
+    background-color: #1da1f2;
+    color: white;
+  }
+  &.-github {
+    background-color: #333;
+    color: white;
+  }
+}

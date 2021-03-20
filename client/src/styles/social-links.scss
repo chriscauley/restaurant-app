@@ -1,0 +1,12 @@
+.social-links {
+  @apply w-full;
+  .social-links__or {
+    @apply text-center mb-4;
+  }
+  .social-links__links {
+    @apply flex justify-center mb-4;
+    .btn {
+      @apply mx-2;
+    }
+  }
+}

@@ -18,6 +18,7 @@
 }
 
 @import './alert';
+@import './btn';
 @import './card';
 @import './form';
 @import './grid';
@@ -28,6 +29,8 @@
 
 @import './cart';
 @import './restaurant-detail';
+@import './social-links';
+@import './user-dropdown';
 
 body {
   @apply bg-blue-200;

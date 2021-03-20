@@ -1,0 +1,9 @@
+.user-dropdown .user-dropdown__name {
+  @apply flex;
+  .avatar {
+    @apply w-6 rounded-full overflow-hidden mr-2;
+  }
+  .fa {
+    @apply mr-2;
+  }
+}
