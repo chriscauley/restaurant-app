@@ -6,6 +6,7 @@
 export default {
   __route: {
     path: '/checkout',
+    meta: { authRequired: true },
   },
 }
 </script>

@@ -6,6 +6,7 @@
 export default {
   __route: {
     path: '/restaurant/edit/:id/:slug/',
+    meta: { authRequired: true, requiredRole: 'owner' },
   },
 }
 </script>

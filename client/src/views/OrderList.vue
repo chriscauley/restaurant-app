@@ -6,6 +6,7 @@
 export default {
   __route: {
     path: '/order-list',
+    meta: { authRequired: true },
   },
 }
 </script>

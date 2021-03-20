@@ -8,6 +8,7 @@
 export default {
   __route: {
     path: '/login',
+    meta: { authRedirect: true },
   },
 }
 </script>

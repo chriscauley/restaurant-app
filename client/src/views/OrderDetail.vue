@@ -37,6 +37,7 @@ import { formatDistanceToNow } from 'date-fns'
 export default {
   __route: {
     path: '/order/:order_id/',
+    meta: { authRequired: true },
   },
   data() {
     return { cancelling: false }

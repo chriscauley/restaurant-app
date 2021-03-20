@@ -46,6 +46,7 @@
 export default {
   __route: {
     path: '/restaurant/:id/:slug/',
+    meta: { authRequired: true },
   },
   computed: {
     restaurant() {
