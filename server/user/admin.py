@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 
 
 custom_fields = (
-    (None, {'fields': ('avatar', 'role')}),
+    (None, {'fields': ('avatar', 'social_avatar', 'role')}),
 )
 
 @admin.register(User)
