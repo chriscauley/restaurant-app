@@ -41,4 +41,16 @@ export default {
   refetch,
   init: check,
   logout,
+  social: [
+    {
+      name: 'Twitter',
+      slug: 'twitter',
+      href: '/login/twitter/',
+    },
+    {
+      name: 'Github',
+      slug: 'github',
+      href: '/login/github/',
+    },
+  ],
 }

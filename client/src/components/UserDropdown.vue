@@ -1,7 +1,10 @@
 <template>
   <div class="user-dropdown" v-if="user">
-    <div @click="toggleFocus">
-      <i class="fa fa-user" />
+    <div @click="toggleFocus" class="user-dropdown__name">
+      <div v-if="user.avatar_url" class="avatar">
+        <img :src="user.avatar_url" />
+      </div>
+      <i class="fa fa-user" v-else />
       {{ user.username }}
     </div>
     <popper v-if="focused" class="menu">
