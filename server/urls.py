@@ -26,7 +26,6 @@ urlpatterns = [
     path('registration/complete/<str:activation_key>/', complete_registration),
 
     path('', include('server.schema.urls')),
-    re_path('', spa),
 ]
 
 if settings.DEBUG:  # pragma: no cover
@@ -37,3 +36,5 @@ if settings.DEBUG:  # pragma: no cover
             'show_indexes': True
         }),
     ]
+
+urlpatterns.append(re_path('', spa))

@@ -36,12 +36,12 @@ def register(form):
 
 @schema.register
 class SignupForm(RegistrationFormUniqueEmail):
+    _role = 'user'
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['password1'].help_text = None
         self.fields.pop('password2')
     def clean(self, *args, **kwargs):
-        print(self.cleaned_data)
         self.cleaned_data['password2'] = self.cleaned_data.get('password1')
         super().clean()
     class Meta(RegistrationFormUniqueEmail.Meta):
@@ -51,6 +51,7 @@ class SignupForm(RegistrationFormUniqueEmail):
     def save(self, commit=False):
         user = super().save(commit=False)
         user.is_active = False
+        user.role = self._role
         user.save()
 
         # Using django_registration's default view
@@ -58,3 +59,7 @@ class SignupForm(RegistrationFormUniqueEmail):
         view.request = self.request
         view.send_activation_email(user)
         return user
+
+@schema.register
+class OwnerSignupForm(RegistrationFormUniqueEmail):
+    _role = 'owner'
