@@ -9,13 +9,7 @@ const state = reactive({
   loaded: null,
 })
 
-const logout = () =>
-  api.post('logout').then(() => {
-    state.user = null
-    check()
-  })
-
-const check = async () => {
+const check = () => {
   if (state.loading) {
     return new Promise(resolve => pending.push(resolve))
   }
@@ -31,11 +25,20 @@ const check = async () => {
       }
     })
   }
+  return Promise.resolve()
+}
+
+const logout = () => api.post('logout').then(refetch)
+
+const refetch = () => {
+  state.loaded = state.loading = false
+  return check()
 }
 
 export default {
   state,
   check,
+  refetch,
   init: check,
   logout,
 }

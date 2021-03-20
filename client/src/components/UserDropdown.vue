@@ -29,7 +29,13 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.auth.logout()
+      this.$store.auth.logout().then(() => {
+        this.$store.ui.toast({
+          text: 'You have been logged out.',
+          level: 'success',
+        })
+        this.$router.replace('/login')
+      })
     },
   },
 }
