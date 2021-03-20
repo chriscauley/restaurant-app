@@ -61,5 +61,5 @@ class SignupForm(RegistrationFormUniqueEmail):
         return user
 
 @schema.register
-class OwnerSignupForm(RegistrationFormUniqueEmail):
+class OwnerSignupForm(SignupForm):
     _role = 'owner'

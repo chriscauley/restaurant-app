@@ -6,6 +6,9 @@ import OrderList from './OrderList'
 import RestaurantDetail from './RestaurantDetail'
 import RestaurantEdit from './RestaurantEdit'
 import Signup from './Signup'
+import SignupOwner from './SignupOwner'
+import SignupComplete from './SignupComplete'
+import RegistrationComplete from './RegistrationComplete'
 
 export default {
   Checkout,
@@ -16,4 +19,7 @@ export default {
   RestaurantDetail,
   RestaurantEdit,
   Signup,
+  SignupOwner,
+  SignupComplete,
+  RegistrationComplete,
 }

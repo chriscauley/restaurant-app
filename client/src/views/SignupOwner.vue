@@ -1,15 +1,15 @@
 <template>
   <div>
-    <h1>Sign Up</h1>
-    <schema-form form_name="SignupForm" :state="state" :success="success" />
-    <router-link to="/signup/owner/">Register as a business</router-link>
+    <h1>Buisness Account Sign Up</h1>
+    <schema-form form_name="OwnerSignupForm" :state="state" :success="success" />
+    <router-link to="/signup/">Not a business? Register as a customer</router-link>
   </div>
 </template>
 
 <script>
 export default {
   __route: {
-    path: '/signup/',
+    path: '/signup/owner/',
     meta: { authRedirect: true },
   },
   data() {
