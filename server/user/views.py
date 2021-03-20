@@ -2,7 +2,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth import logout as _logout, login
 from django_registration.backends.activation.views import ActivationView, ActivationError
 
-user_attrs = ['id', 'email', 'username', 'role']
+user_attrs = ['id', 'email', 'username', 'role', 'avatar_url']
 
 def whoami(request):
     if not request.user.is_authenticated:

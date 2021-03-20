@@ -7,6 +7,7 @@ client/dist
 # python server
 .media
 *.pyc
+server/local_settings.py
 
 # development files
 db.sqlite3

@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/logout', logout),
     path('registration/complete/<str:activation_key>/', complete_registration),
 
+    path('', include('social_django.urls', namespace='social')),
     path('', include('server.schema.urls')),
 ]
 
