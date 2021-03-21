@@ -86,14 +86,17 @@ def cart_checkout(request):
     cart = get_object_or_404(Cart, user=request.user)
     order = Order.objects.create(
         restaurant=cart.restaurant,
-        user=cart.user
+        user=cart.user,
     )
     order.set_status('placed')
     for cartitem in cart.cartitem_set.all():
+        order.total_price += cartitem.quantity * cartitem.menuitem.price
+        order.total_items += cartitem.quantity
         orderitem = order.orderitem_set.create(
             menuitem=cartitem.menuitem,
             quantity=cartitem.quantity
         )
+    order.save()
     cart.delete()
     return JsonResponse({ "order_id": order.id })
 
@@ -118,8 +121,30 @@ def order_detail(request, order_id):
         'status_history',
         'restaurant_name',
         'items',
-        'created'
+        'created',
     ]
     data = serialize(order, attrs)
     data['allowed_status'] = order.get_allowed_status(request.user)
     return JsonResponse(data)
+
+def order_list(request):
+    if request.user.role == 'user':
+        orders = request.user.order_set.all()
+    elif request.user.role == 'owner':
+        orders = Order.objects.filter(restaurant__owners=request.user)
+    orders = orders.select_related('restaurant', 'user')
+    attrs = [
+        'id',
+        'restaurant_name',
+        'user_name',
+        'total_items',
+        'total_price',
+        'created',
+        'status',
+    ]
+    items = []
+    for order in orders:
+        item = serialize(order, attrs)
+        item['allowed_status'] = order.get_allowed_status(request.user)
+        items.append(item)
+    return JsonResponse({ 'items': items })

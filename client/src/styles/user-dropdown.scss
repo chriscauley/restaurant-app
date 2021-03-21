@@ -7,3 +7,16 @@
     @apply mr-2;
   }
 }
+
+.badge {
+  @apply flex h-5 items-center justify-center mx-2 rounded-full w-5;
+}
+.badge, .notify-dot {
+  &.-red {
+    @apply bg-red-600 text-white;
+  }
+}
+
+.notify-dot {
+  @apply h-2 mb-2 rounded-full w-2;
+}

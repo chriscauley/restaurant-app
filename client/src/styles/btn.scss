@@ -8,4 +8,24 @@
     background-color: #333;
     color: white;
   }
+  &.-primary {
+    @apply text-white bg-blue-500;
+    &:hover { @apply bg-blue-700; }
+  }
+  &.-secondary {
+    @apply text-white bg-gray-500;
+    &:hover { @apply bg-gray-700; }
+  }
+  &.-success {
+    @apply text-white bg-green-500;
+    &:hover { @apply bg-green-700; }
+  }
+  &.-danger {
+    @apply text-white bg-red-600;
+    &:hover { @apply bg-red-800; }
+  }
+  &.-warning {
+    @apply text-black bg-yellow-500;
+    &:hover { @apply bg-yellow-700; }
+  }
 }

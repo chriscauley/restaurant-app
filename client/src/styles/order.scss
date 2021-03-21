@@ -4,3 +4,7 @@
     @apply flex
   }
 }
+
+.order-list .order-item {
+  @apply border flex items-center justify-between p-2 mb-4 rounded;
+}

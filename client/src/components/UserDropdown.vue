@@ -6,9 +6,14 @@
       </div>
       <i class="fa fa-user" v-else />
       {{ user.username }}
+      <span v-if="pending_orders" class="notify-dot -red" />
     </div>
     <popper v-if="focused" class="menu">
       <div>
+        <router-link to="/order-list/" class="menu-item">
+          Orders
+          <span v-if="pending_orders" class="badge -red">{{ pending_orders }}</span>
+        </router-link>
         <router-link to="/settings" class="menu-item">Settings</router-link>
         <div class="menu-item" @click="logout">Logout</div>
       </div>
@@ -28,6 +33,11 @@ export default {
   computed: {
     user() {
       return this.$store.auth.state.user
+    },
+    pending_orders() {
+      const orders = this.$store.order.fetchList()?.items || []
+      orders.forEach(o => console.log(o))
+      return orders.filter(o => o.allowed_status).length
     },
   },
   methods: {

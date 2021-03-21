@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path, re_path
 
-from server.restaurant.views import restaurant_list, restaurant_detail, cart_detail, cart_add, cart_remove, cart_checkout, order_detail
+from server.restaurant.views import restaurant_list, restaurant_detail, cart_detail, cart_add, cart_remove, cart_checkout, order_detail, order_list
 from server.user.views import whoami, logout, complete_registration
 from server.views import spa
 
@@ -20,6 +20,7 @@ urlpatterns = [
     path('api/cart/remove/', cart_remove),
     path('api/cart/checkout/', cart_checkout),
     path('api/order/<int:order_id>/', order_detail),
+    path('api/order/', order_list),
 
     path('api/whoami', whoami),
     path('api/logout', logout),
