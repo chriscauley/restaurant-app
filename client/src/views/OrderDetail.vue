@@ -6,21 +6,26 @@
         <button v-if="can_cancel" class="btn btn-cancel" @click="cancelling = true">
           Cancel Order
         </button>
-        <button v-else class="btn btn-cancel" @click="uncancel">
-          UnCancel Order
+        <button v-else-if="order.allowed_status" class="btn btn-success" @click="markAllowedStatus">
+          Mark order as {{ order.allowed_status }}
         </button>
       </div>
-      <div class="order__items">
-        <div v-for="item in order.items" :key="item.id" class="order-item">
-          <div class="order-item__name">{{ item.name }}</div>
-          <div class="order-item__price">${{ item.price }}</div>
-          <div class="order-item__quantity">x{{ item.quantity }}</div>
+      <div class="row">
+        <div class="order__items col-6">
+          <div v-for="item in order.items" :key="item.id" class="order-item">
+            <div class="order-item__name">{{ item.name }}</div>
+            <div class="order-item__price">${{ item.price }}</div>
+            <div class="order-item__quantity">x{{ item.quantity }}</div>
+          </div>
         </div>
-      </div>
-      <div class="order-history">
-        <div v-for="history in order.status_history" :key="history.id">
-          <div class="order-history__status">{{ history.status }}</div>
-          <div class="order-history__since">{{ formatDistanceToNow(history.created) }}</div>
+        <div class="order-history col-6">
+          <div v-for="update in history" :key="update.status">
+            {{ update.status }}
+            {{ update.ago }}
+          </div>
+          <div v-if="order.status === 'canceled'">
+            The order was canceled by the customer.
+          </div>
         </div>
       </div>
     </div>
@@ -37,6 +42,8 @@
 <script>
 import { formatDistanceToNow } from 'date-fns'
 
+const POLL_FREQUENCY = 1 // seconds to update order
+
 export default {
   __route: {
     path: '/order/:order_id/',
@@ -45,15 +52,42 @@ export default {
   data() {
     return { cancelling: false }
   },
+  mounted() {
+    this.timeout = setTimeout(this.poll, POLL_FREQUENCY * 1000)
+  },
+  unmounted() {
+    clearTimeout(this.timeout)
+  },
   computed: {
     order() {
       return this.$store.order.fetchOne(this.$route.params.order_id)
     },
     can_cancel() {
-      return this.order.allowed_statuses.includes('canceled')
+      return this.order.allowed_status === 'canceled'
+    },
+    history() {
+      const getDate = created => {
+        return created && `${formatDistanceToNow(new Date(created))} ago`
+      }
+      return this.order.status_history.map(({ status, created }) => ({
+        status,
+        ago: getDate(created),
+      }))
     },
   },
   methods: {
+    poll() {
+      clearTimeout(this.timeout)
+      this.$store.order.markStale()
+      this.$store.order.fetchOne(this.$route.params.order_id)
+      if (!['canceled', 'received'].includes(this.order?.status)) {
+        this.timeout = setTimeout(this.poll, POLL_FREQUENCY * 1000)
+      }
+    },
+    getVerboseStatus(status) {
+      const title = s => s[0].toUpperCase() + s.slice(1)
+      return status.replace('_', ' ').replace(/(\w*\W*|\w*)\s*/g, title)
+    },
     formatDistanceToNow(s) {
       return formatDistanceToNow(new Date(s).valueOf()) + ' ago'
     },
@@ -61,9 +95,9 @@ export default {
       this.$store.order.updateStatus(this.order.id, 'canceled')
       this.cancelling = false
     },
-    uncancel() {
-      // TODO remove me
-      this.$store.order.updateStatus(this.order.id, 'placed')
+    markAllowedStatus() {
+      const { id, allowed_status } = this.order
+      this.$store.order.updateStatus(id, allowed_status)
     },
   },
 }

@@ -26,6 +26,7 @@ class LoginForm(forms.Form):
                 return self.cleaned_data
         raise forms.ValidationError("Username and password do not match")
     def save(self, commit=True):
+        self.user.backend = "django.contrib.auth.backends.ModelBackend"
         login(self.request, self.user)
 
 

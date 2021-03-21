@@ -79,7 +79,10 @@ class Order(BaseModel):
         return [serialize(item, attrs) for item in self.orderitem_set.all()]
     @property
     def status_history(self):
-        return [serialize(osu, ['status', 'created']) for osu in self.orderstatusupdate_set.all()]
+        status_times = {}
+        for update in self.orderstatusupdate_set.all().order_by('created'):
+            status_times[update.status] = update.created
+        return [{ 'status': s, 'created': status_times.get(s) } for s in self._status_choices]
     def set_status(self, status):
         self.status = status
         self.save()
@@ -88,8 +91,10 @@ class Order(BaseModel):
         return user.is_superuser or user.id == self.user_id or self.is_restaurant_owner(user)
     def is_restaurant_owner(self, user):
         return user in self.restaurant.owners.all()
-    def get_allowed_statuses(self, user):
-        return [status for status in self._status_choices if self.user_can_set_status(user, status)]
+    def get_allowed_status(self, user):
+        for status in self._status_choices:
+            if self.user_can_set_status(user, status):
+                return status
     def user_can_set_status(self, user, status):
         if status == 'canceled':
             return user == self.user and self.status == 'placed'

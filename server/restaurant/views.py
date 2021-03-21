@@ -111,7 +111,15 @@ def order_detail(request, order_id):
     if not order.user_can_see_order(request.user):
         raise NotImplementedError('TODO')
     # TODO this uses so many queries
-    attrs = ['user_name', 'id', 'status', 'status_history', 'restaurant_name', 'items', 'created']
+    attrs = [
+        'user_name',
+        'id',
+        'status',
+        'status_history',
+        'restaurant_name',
+        'items',
+        'created'
+    ]
     data = serialize(order, attrs)
-    data['allowed_statuses'] = order.get_allowed_statuses(request.user)
+    data['allowed_status'] = order.get_allowed_status(request.user)
     return JsonResponse(data)
