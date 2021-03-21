@@ -11,11 +11,13 @@
         </button>
       </div>
       <div class="row">
-        <div class="order__items col-6">
-          <div v-for="item in order.items" :key="item.id" class="order-item">
-            <div class="order-item__name">{{ item.name }}</div>
-            <div class="order-item__price">${{ item.price }}</div>
-            <div class="order-item__quantity">x{{ item.quantity }}</div>
+        <div class="col-6">
+          <div class="order__items">
+            <div v-for="item in order.items" :key="item.id" class="order-item">
+              <div class="order-item__name">{{ item.name }}</div>
+              <div class="order-item__price">${{ item.price }}</div>
+              <div class="order-item__quantity">x{{ item.quantity }}</div>
+            </div>
           </div>
         </div>
         <div class="order-history col-6">
@@ -26,6 +28,12 @@
           <div v-if="order.status === 'canceled'">
             The order was canceled by the customer.
           </div>
+        </div>
+      </div>
+      <div v-if="order.is_owner" class="block-zone">
+        <div>
+          <button v-if="order.is_blocked" @click="unblockUser" class="btn -danger">Unblock User</button>
+          <button v-else @click="blockUser" class="btn -danger">Block User</button>
         </div>
       </div>
     </div>
@@ -42,7 +50,7 @@
 <script>
 import { formatDistanceToNow } from 'date-fns'
 
-const POLL_FREQUENCY = 1 // seconds to update order
+const POLL_FREQUENCY = 15 // seconds to update order
 
 export default {
   __route: {
@@ -98,6 +106,12 @@ export default {
     markAllowedStatus() {
       const { id, allowed_status } = this.order
       this.$store.order.updateStatus(id, allowed_status)
+    },
+    blockUser() {
+      this.$store.order.blockUser(this.order.id)
+    },
+    unblockUser() {
+      this.$store.order.unblockUser(this.order.id)
     },
   },
 }

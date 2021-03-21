@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 import json
 
-from server.restaurant.models import Restaurant, Order, MenuSection, MenuItem, Cart, CartItem, serialize
+from server.restaurant.models import Restaurant, Order, MenuSection, MenuItem, Cart, CartItem, serialize, OwnerBlock
 from server.paginate import paginate
 
 restaurant_attrs = ['id', 'name', 'description', 'photo_url']
@@ -17,6 +17,9 @@ def restaurant_list(request):
     if request.user.is_authenticated and request.user.role == 'owner':
         # owners only see restaurants they control
         query = query.filter(owner=request.user)
+    else:
+        blocks = OwnerBlock.objects.filter(user=request.user).values_list('owner_id', flat=True)
+        query = query.exclude(owner__in=blocks)
     process = process_restaurant
     # TODO pagination not implemented on front end yet
     return JsonResponse(paginate(query, process=process, query_dict=request.GET, per_page=60))
@@ -37,6 +40,7 @@ def restaurant_detail(request, restaurant_id):
     menusections = restaurant.menusection_set.all().prefetch_related('menuitem_set')
     data['menusections'] = [process_menusection(s) for s in menusections]
     data['is_owner'] = restaurant.user_can_edit(request.user)
+    data['is_blocked'] = OwnerBlock.objects.filter(owner=restaurant.owner, user=request.user).exists()
     return JsonResponse(data)
 
 def process_cartitem(item):
@@ -114,6 +118,14 @@ def order_detail(request, order_id):
             if not order.user_can_set_status(request.user, data['status']):
                 raise NotImplementedError(f'TODO {request.user} cannot set status {data["status"]}')
             order.set_status(data.get('status'))
+        if data.get('action'):
+            owner = order.restaurant.owner
+            if request.user != owner:
+                raise NotImplementedError('TODO')
+            if data['action'] == 'block':
+                OwnerBlock.objects.get_or_create(user=order.user, owner=owner)
+            if data['action'] == 'unblock':
+                OwnerBlock.objects.filter(user=order.user, owner=owner).delete()
 
     order = get_object_or_404(Order, id=order_id)
     if not order.user_can_see_order(request.user):
@@ -130,6 +142,8 @@ def order_detail(request, order_id):
     ]
     data = serialize(order, attrs)
     data['allowed_status'] = order.get_allowed_status(request.user)
+    data['is_blocked'] = OwnerBlock.objects.filter(owner=order.restaurant.owner, user=order.user).exists()
+    data['is_owner'] = order.restaurant.owner == request.user
     return JsonResponse(data)
 
 def order_list(request):

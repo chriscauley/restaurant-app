@@ -136,3 +136,8 @@ class OrderItem(BaseModel):
 class OrderStatusUpdate(BaseModel):
     order = models.ForeignKey(Order, models.CASCADE)
     status = models.CharField(max_length=16, choices=Order.STATUS_CHOICES)
+
+
+class OwnerBlock(BaseModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, related_name='+')

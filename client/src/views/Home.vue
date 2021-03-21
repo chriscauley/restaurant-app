@@ -8,14 +8,15 @@
           <div>{{ restaurant.name }}</div>
         </router-link>
       </div>
-      <div v-if="is_owner">
-        <button class="btn -primary" @click="adding = true">
-          Add another restaurant
-        </button>
-      </div>
+    </div>
+    <div v-if="is_owner">
+      <button class="btn -primary" @click="adding = true">
+        Add another restaurant
+      </button>
     </div>
     <modal v-if="adding">
       <schema-form form_name="OwnerRestaurantForm" :success="success" />
+      <template #actions>{{" "}}</template>
     </modal>
   </div>
 </template>

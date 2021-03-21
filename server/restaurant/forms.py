@@ -24,9 +24,9 @@ class OwnerRestaurantForm(forms.ModelForm):
             self._photo_url['file'] = ContentFile(response.read())
 
     def save(self, commit=True):
+        if not self.instance.id:
+            self.instance.owner = self.request.user
         instance = super().save(commit)
-        if not instance.id:
-            instance.owner = self.request.user
         if self._photo_url:
             instance.photo.save(self._photo_url['name'], self._photo_url['file'])
             instance.save()
@@ -51,7 +51,7 @@ class OwnerMenuItemForm(forms.ModelForm):
             menusection = MenuSection.objects.filter(
                 id=self.cleaned_data.get('menusection')
             ).first()
-        if not (menusection and menusection.restaurant.user_can_edit(user)):
+        if not (menusection and menusection.restaurant.user_can_edit(self.request.user)):
             raise ValidationError(f"You do not have permission to do this.")
         return menusection
     class Meta:
@@ -73,7 +73,7 @@ class OwnerMenuSectionForm(forms.ModelForm):
             restaurant = Restaurant.objects.filter(
                 id=self.cleaned_data.get('restaurant')
             ).first()
-        if not (restaurant and restaurant.user_can_edit(user)):
+        if not (restaurant and restaurant.user_can_edit(self.request.user)):
             raise ValidationError(f"You do not have permission to do this.")
         return restaurant
     class Meta:
