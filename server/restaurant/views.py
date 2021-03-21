@@ -24,6 +24,7 @@ def restaurant_list(request):
 def process_menusection(menusection):
     return {
         'name': menusection.name,
+        'id': menusection.id,
         'items': [process_menuitem(i) for i in menusection.menuitem_set.all()]
     }
 
@@ -35,6 +36,7 @@ def restaurant_detail(request, restaurant_id):
     data = process_restaurant(restaurant)
     menusections = restaurant.menusection_set.all().prefetch_related('menuitem_set')
     data['menusections'] = [process_menusection(s) for s in menusections]
+    data['is_owner'] = request.user in restaurant.owners.all()
     return JsonResponse(data)
 
 def process_cartitem(item):

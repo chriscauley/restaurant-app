@@ -42,22 +42,42 @@ class OwnerRestaurantForm(forms.ModelForm):
 
 @schema.register
 class OwnerMenuItemForm(forms.ModelForm):
+    menusection = forms.IntegerField(widget=forms.HiddenInput)
+    def clean_menusection(self):
+        if self.instance.id:
+            menusection = self.instance.menusection
+        else:
+            menusection = MenuSection.objects.filter(
+                id=self.cleaned_data.get('menusection')
+            ).first()
+        if not (menusection and self.request.user in menusection.restaurant.owners.all()):
+            raise ValidationError(f"You do not have permission to do this.")
+        return menusection
     class Meta:
         model = MenuItem
-        fields = ['name', 'description', 'menusection']
-        widgets = {'menusection': forms.HiddenInput()}
+        fields = ['name', 'description', 'menusection', 'price']
         def user_can_access(instance, user):
             if instance:
-                return user in instance.restaurant.owners.all()
+                return user in instance.menusection.restaurant.owners.all()
             return user.role == 'owner'
 
 
 @schema.register
 class OwnerMenuSectionForm(forms.ModelForm):
+    restaurant = forms.IntegerField(widget=forms.HiddenInput)
+    def clean_restaurant(self):
+        if self.instance.id:
+            restaurant = self.instance.restaurant
+        else:
+            restaurant = Restaurant.objects.filter(
+                id=self.cleaned_data.get('restaurant')
+            ).first()
+        if not (restaurant and self.request.user in restaurant.owners.all()):
+            raise ValidationError(f"You do not have permission to do this.")
+        return restaurant
     class Meta:
         model = MenuSection
         fields = ['name', 'restaurant']
-        widgets = {'restaurant': forms.HiddenInput()}
         def user_can_access(instance, user):
             if instance:
                 return user in instance.restaurant.owners.all()

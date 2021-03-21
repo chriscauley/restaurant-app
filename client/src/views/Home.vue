@@ -15,7 +15,7 @@
       </div>
     </div>
     <modal v-if="adding">
-      <schema-form form_name="OwnerRestaurantForm" :prepSchema="prepSchema" :success="success" />
+      <schema-form form_name="OwnerRestaurantForm" :success="success" />
     </modal>
   </div>
 </template>
@@ -38,11 +38,6 @@ export default {
     },
   },
   methods: {
-    prepSchema(schema) {
-      schema.properties.photo_url.type = 'image'
-      schema.properties.photo_url.title = 'Photo'
-      return schema
-    },
     success(data) {
       this.$router.push(`/restaurant/${data.id}/${data.name}/`)
     },

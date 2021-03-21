@@ -78,7 +78,7 @@ class UserSettingsForm(forms.ModelForm):
         if not self.data.get('avatar_url') == self.instance.avatar_url:
             self._avatar_url = self.data.get('avatar_url')
 
-    def clean_avatar_url(self, *args, **kwargs):
+    def clean_avatar_url(self):
         if self._avatar_url:
             response = urllib.request.urlopen(self._avatar_url['dataURL'])
             self._avatar_url['file'] = ContentFile(response.read())

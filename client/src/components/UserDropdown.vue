@@ -36,7 +36,6 @@ export default {
     },
     pending_orders() {
       const orders = this.$store.order.fetchList()?.items || []
-      orders.forEach(o => console.log(o))
       return orders.filter(o => o.allowed_status).length
     },
   },

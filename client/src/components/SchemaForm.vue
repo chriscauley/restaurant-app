@@ -20,7 +20,23 @@ export default {
   computed: {
     schema() {
       const schema = this.$store.schema.fetch(this.form_name)
-      return schema ? this.prepSchema(schema) : schema
+      if (!schema) {
+        return
+      }
+      if (schema.properties.avatar_url) {
+        schema.properties.avatar_url.type = 'image'
+        schema.properties.avatar_url.title = 'Avatar'
+      }
+      if (schema.properties.photo_url) {
+        schema.properties.photo_url.type = 'image'
+        schema.properties.photo_url.title = 'Photo'
+      }
+      Object.values(schema.properties).forEach(property => {
+        if (property.__widget === 'HiddenInput') {
+          property.ui = { tagName: 'ur-hidden' }
+        }
+      })
+      return schema
     },
   },
   methods: {
