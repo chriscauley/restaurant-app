@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     restaurants() {
-      return this.$store.restaurant.all()
+      return this.$store.restaurant.fetchList()?.items
     },
   },
 }

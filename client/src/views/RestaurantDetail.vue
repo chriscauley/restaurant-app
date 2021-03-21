@@ -50,7 +50,7 @@ export default {
   },
   computed: {
     restaurant() {
-      return this.$store.restaurant.fetchmenu(this.$route.params.id)
+      return this.$store.restaurant.fetchOne(this.$route.params.id)
     },
     cart() {
       return this.$store.cart.state

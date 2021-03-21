@@ -6,6 +6,9 @@
         <button v-if="can_cancel" class="btn btn-cancel" @click="cancelling = true">
           Cancel Order
         </button>
+        <button v-else class="btn btn-cancel" @click="uncancel">
+          UnCancel Order
+        </button>
       </div>
       <div class="order__items">
         <div v-for="item in order.items" :key="item.id" class="order-item">
@@ -44,7 +47,7 @@ export default {
   },
   computed: {
     order() {
-      return this.$store.order.fetch(this.$route.params.order_id)
+      return this.$store.order.fetchOne(this.$route.params.order_id)
     },
     can_cancel() {
       return this.order.allowed_statuses.includes('canceled')
@@ -55,8 +58,12 @@ export default {
       return formatDistanceToNow(new Date(s).valueOf()) + ' ago'
     },
     confirmCancel() {
-      this.$store.order.cancel(this.order.id)
+      this.$store.order.updateStatus(this.order.id, 'canceled')
       this.cancelling = false
+    },
+    uncancel() {
+      // TODO remove me
+      this.$store.order.updateStatus(this.order.id, 'placed')
     },
   },
 }

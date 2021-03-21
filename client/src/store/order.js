@@ -1,20 +1,10 @@
-import api from '@/common/api'
-import { reactive } from 'vue'
+import Api from './Api'
 
-const state = reactive({
-  list: [],
-  by_id: {},
-})
+const api = Api()
 
-const fetch = (id, force) => {
-  if (!state.by_id[id] || force) {
-    api.get(`order/${id}/`).then(d => (state.by_id[id] = d))
-  }
-  return state.by_id[id]
-}
+const fetchList = () => api.get('order/')
+const fetchOne = id => api.get(`order/${id}/`)
 
-const cancel = order_id => {
-  api.post(`order/${order_id}/`, { status: 'canceled' }).then(d => (state.by_id[order_id] = d))
-}
+const updateStatus = (id, status) => api.post(`order/${id}/`, { status })
 
-export default { state, fetch, cancel }
+export default { fetchList, fetchOne, updateStatus, markStale: api.markStale }

@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import applyMeta from './applyMeta'
 import checkAuth from './checkAuth'
 import checkRole from './checkRole'
+import store from '@/store'
 import views from '@/views'
 
 const routes = []
@@ -30,5 +31,9 @@ const router = createRouter({
 router.beforeEach(applyMeta)
 router.beforeEach(checkAuth)
 router.beforeEach(checkRole)
-
+router.beforeEach(() => {
+  // refresh any api calls after navigation
+  store.restaurant.markStale()
+  store.order.markStale()
+})
 export default router
