@@ -6,6 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = '@4zg8pi7l&f0+_iz2h&d4g_i(0q(h0_cw*%#dj$#dj5)b%(esf'
 DEBUG = True
+KILL_CSRF = False
 ALLOWED_HOSTS = ['toptable.localhost']
 
 INSTALLED_APPS = [
@@ -124,3 +125,11 @@ try:
     from .local_settings import *
 except ImportError:
     pass
+
+if KILL_CSRF:
+    print("""
+    KILL_CSRF is on.
+    This is meant to be a temporary hack to make working in postman faster.
+    Please enable asap.
+    """)
+    MIDDLEWARE = [s for s in MIDDLEWARE if s != 'django.middleware.csrf.CsrfViewMiddleware']
