@@ -6,7 +6,7 @@ const state = reactive({})
 
 const fetch = form_name => {
   if (!state[form_name]) {
-    api.get(`schema/${form_name}/`).then(r => (state[form_name] = r.schema))
+    api.get(`${form_name}/?schema=1`).then(r => (state[form_name] = r.schema))
   }
   return state[form_name]
 }

@@ -26,11 +26,25 @@ class Restaurant(models.Model):
         return self.photo.url
     def user_can_edit(self, user):
         return user == self.owner
+    def get_json(self, user):
+        data = serialize(self, ['id', 'name', 'description', 'photo_url'])
+        menusections = self.menusection_set.all().prefetch_related('menuitem_set')
+        data['menusections'] = [s.get_json(user) for s in menusections]
+        data['is_owner'] = self.user_can_edit(user)
+        data['is_blocked'] = OwnerBlock.objects.filter(owner=self.owner, user=user).exists()
+        return data
 
 class MenuSection(BaseModel):
     restaurant = models.ForeignKey(Restaurant, models.CASCADE)
     name = models.CharField(max_length=256)
     __str__ = lambda self: self.name
+
+    def get_json(self, user):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'items': [item.get_json(user) for item in self.menuitem_set.all()]
+        }
 
 
 class MenuItem(BaseModel):
@@ -39,6 +53,8 @@ class MenuItem(BaseModel):
     description = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
     __str__ = lambda self: self.name
+    def get_json(self, user):
+        return serialize(self, ['id', 'name', 'price', 'description'])
 
 
 class Cart(BaseModel):

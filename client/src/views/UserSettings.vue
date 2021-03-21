@@ -1,6 +1,6 @@
 <template>
   <div>
-    <schema-form form_name="UserSettingsForm/self" :success="success" />
+    <schema-form form_name="settings/self" :success="success" />
   </div>
 </template>
 

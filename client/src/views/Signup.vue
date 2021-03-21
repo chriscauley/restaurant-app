@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Sign Up</h1>
-    <schema-form form_name="SignupForm" :state="state" :success="success" />
+    <schema-form form_name="signup" :state="state" :success="success" />
     <router-link to="/signup/owner/">Register as a business</router-link>
     <social-links verb="Sign Up" />
   </div>

@@ -6,42 +6,18 @@ import json
 from server.restaurant.models import Restaurant, Order, MenuSection, MenuItem, Cart, CartItem, serialize, OwnerBlock
 from server.paginate import paginate
 
-restaurant_attrs = ['id', 'name', 'description', 'photo_url']
-menuitem_attrs = ['id', 'name', 'price', 'description']
-
-def process_restaurant(restaurant):
-    return {attr: getattr(restaurant, attr) for attr in restaurant_attrs}
-
 def restaurant_list(request):
     query = Restaurant.objects.all()
     if request.user.is_authenticated and request.user.role == 'owner':
         # owners only see restaurants they control
         query = query.filter(owner=request.user)
     else:
+        # non-owners cannot see blocked restaurants
         blocks = OwnerBlock.objects.filter(user=request.user).values_list('owner_id', flat=True)
         query = query.exclude(owner__in=blocks)
-    process = process_restaurant
+    process = lambda r: serialize(r, ['id', 'name', 'description', 'photo_url'])
     # TODO pagination not implemented on front end yet
     return JsonResponse(paginate(query, process=process, query_dict=request.GET, per_page=60))
-
-def process_menusection(menusection):
-    return {
-        'name': menusection.name,
-        'id': menusection.id,
-        'items': [process_menuitem(i) for i in menusection.menuitem_set.all()]
-    }
-
-def process_menuitem(menuitem):
-    return { attr: getattr(menuitem, attr) for attr in menuitem_attrs }
-
-def restaurant_detail(request, restaurant_id):
-    restaurant = get_object_or_404(Restaurant, id=restaurant_id)
-    data = process_restaurant(restaurant)
-    menusections = restaurant.menusection_set.all().prefetch_related('menuitem_set')
-    data['menusections'] = [process_menusection(s) for s in menusections]
-    data['is_owner'] = restaurant.user_can_edit(request.user)
-    data['is_blocked'] = OwnerBlock.objects.filter(owner=restaurant.owner, user=request.user).exists()
-    return JsonResponse(data)
 
 def process_cartitem(item):
     return {

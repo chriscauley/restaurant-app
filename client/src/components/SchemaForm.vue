@@ -47,7 +47,7 @@ export default {
       this.errors = null
       this.loading = true
       api
-        .post(`schema/${this.form_name}/`, state)
+        .post(`${this.form_name}/`, state)
         .catch(e => {
           this.errors = e.server_errors || { __all__: 'An unknown error has occurred' }
         })

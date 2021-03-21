@@ -15,8 +15,8 @@
       </button>
     </div>
     <modal v-if="adding">
-      <schema-form form_name="OwnerRestaurantForm" :success="success" />
-      <template #actions>{{" "}}</template>
+      <schema-form form_name="restaurant" :success="success" />
+      <template #actions>{{ ' ' }}</template>
     </modal>
   </div>
 </template>

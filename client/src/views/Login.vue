@@ -1,6 +1,6 @@
 <template>
   <div>
-    <schema-form form_name="LoginForm" :success="success" />
+    <schema-form form_name="login" :success="success" />
     <social-links verb="Login" />
   </div>
 </template>

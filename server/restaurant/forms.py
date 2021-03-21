@@ -7,7 +7,7 @@ from server import schema
 
 NOT_OWNER = 'NOT_OWNER'
 
-@schema.register
+@schema.register('restaurant')
 class OwnerRestaurantForm(forms.ModelForm):
     _photo_url = None
     photo_url = forms.CharField(required=False)
@@ -32,16 +32,18 @@ class OwnerRestaurantForm(forms.ModelForm):
             instance.save()
         return instance
 
+    user_can_GET = 'ANY'
+    @staticmethod
+    def user_can_POST(instance, user):
+        if instance:
+            return instance.user_can_edit(user)
+        return user.role == 'owner'
     class Meta:
         model = Restaurant
         fields = ('name', 'description', 'photo_url')
-        def user_can_access(instance, user):
-            if instance:
-                return instance.user_can_edit(user)
-            return user.role == 'owner'
 
 
-@schema.register
+@schema.register('menuitem')
 class OwnerMenuItemForm(forms.ModelForm):
     menusection = forms.IntegerField(widget=forms.HiddenInput)
     def clean_menusection(self):
@@ -54,16 +56,21 @@ class OwnerMenuItemForm(forms.ModelForm):
         if not (menusection and menusection.restaurant.user_can_edit(self.request.user)):
             raise ValidationError(f"You do not have permission to do this.")
         return menusection
+
+    @staticmethod
+    def user_can_POST(instance, user):
+        if instance:
+            return instance.menusection.restaurant.user_can_edit(user)
+        return user.role == 'owner'
+    user_can_GET = user_can_POST
+    user_can_DELETE = user_can_POST
+
     class Meta:
         model = MenuItem
         fields = ['name', 'description', 'menusection', 'price']
-        def user_can_access(instance, user):
-            if instance:
-                return instance.menusection.restaurant.user_can_edit(user)
-            return user.role == 'owner'
 
 
-@schema.register
+@schema.register('menusection')
 class OwnerMenuSectionForm(forms.ModelForm):
     restaurant = forms.IntegerField(widget=forms.HiddenInput)
     def clean_restaurant(self):
@@ -76,10 +83,15 @@ class OwnerMenuSectionForm(forms.ModelForm):
         if not (restaurant and restaurant.user_can_edit(self.request.user)):
             raise ValidationError(f"You do not have permission to do this.")
         return restaurant
+
+    @staticmethod
+    def user_can_POST(instance, user):
+        if instance:
+            return instance.restaurant.user_can_edit(user)
+        return user.role == 'owner'
+    user_can_GET = user_can_POST
+    user_can_DELETE = user_can_POST
+
     class Meta:
         model = MenuSection
         fields = ['name', 'restaurant']
-        def user_can_access(instance, user):
-            if instance:
-                return instance.restaurant.user_can_edit(user)
-            return user.role == 'owner'

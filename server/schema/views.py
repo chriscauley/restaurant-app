@@ -1,7 +1,11 @@
 from django.http import JsonResponse, Http404
+from django.urls import path
 
 from .utils import form_to_schema
+from .urls import urlpatterns
 import json
+
+from django import forms
 
 FORMS = {}
 
@@ -17,6 +21,10 @@ def register(form, form_name=None):
         raise ValueError(e)
 
     FORMS[form_name] = form
+    kwargs = dict(form_name=form_name)
+    root = f'api/{form_name}/'
+    urlpatterns.append(path(root, schema_form, kwargs=kwargs))
+    urlpatterns.append(path(root + '<object_id>/', schema_form, kwargs=kwargs))
     return form
 
 
@@ -28,33 +36,54 @@ def schema_form(request, form_name, object_id=None, method=None, content_type=No
     content_type = content_type or request.headers.get('Content-Type', None)
     form_class = FORMS[form_name]
     _meta  = getattr(form_class, 'Meta', object())
-    kwargs = {}
-    if object_id == "self":
-        kwargs['instance'] = request.user
-    elif object_id and hasattr(_meta, 'model'):
-        kwargs['instance'] = _meta.model.objects.get(id=object_id)
-    if getattr(_meta, 'login_required', None) and not request.user.is_authenticated:
-        return JsonResponse({'error': 'You must be logged in to do this'}, status=403)
-    if getattr(_meta, 'user_can_access'):
-        if not _meta.user_can_access(kwargs.get('instance'), request.user):
-            return JsonResponse({'error': 'You do not have access to this resource'}, status=403)
+    instance = None
 
-    if request.method == "POST":
-        if content_type == 'application/json':
-            data = json.loads(request.body.decode('utf-8') or "{}")
-            form = form_class(data, **kwargs)
+    def check_permission(permission):
+        f = getattr(form_class, 'user_can_'+permission, None)
+        if f == 'ANY':
+            return True
+        return f and f(instance, request.user)
+
+    if object_id:
+        if object_id == "self":
+            instance = request.user
         else:
-            form = form_class(request.POST, request.FILES, **kwargs)
+            instance = _meta.model.objects.get(id=object_id)
+
+    if not check_permission('GET'):
+        return JsonResponse({'error': 'You do not have access to this resource'}, status=403)
+
+    kwargs = {}
+    if instance:
+        kwargs['instance'] = instance
+
+    if request.method == "GET":
+        if 'schema' in request.GET:
+            schema = form_to_schema(form_class(**kwargs))
+            return JsonResponse({'schema': schema})
+        if hasattr(instance, 'get_json'):
+            return JsonResponse(instance.get_json(request.user))
+        raise NotImplementedError('Need to serialize form.')
+
+    if request.method == "POST" or request.method == "PUT":
+        if not check_permission('POST'):
+            return JsonResponse({'error': 'You cannot edit this resource.'}, status=403)
+
+        data = json.loads(request.body.decode('utf-8') or "{}")
+        form = form_class(data, **kwargs)
 
         form.request = request
         if form.is_valid():
             instance = form.save()
-            data = {'schema': form_to_schema(form_class(**kwargs)) }
-            if instance:
-                data['id'] = instance.id
-                data['name'] = str(instance)
+            data = {}
+            if instance and hasattr(instance, 'get_json'):
+                data = instance.get_json(request.user)
             return JsonResponse(data)
         return JsonResponse({'errors': form.errors.get_json_data()}, status=400)
-    schema = form_to_schema(form_class(**kwargs))
-    return JsonResponse({'schema': schema})
 
+    if request.method == "DELETE" and instance and hasattr(_meta, 'user_can_delete'):
+        if not check_permission('DELETE'):
+            return JsonResponse({'error': 'You cannot edit this resource.'}, status=403)
+        instance.delete()
+
+    return JsonResponse({}, status=405)

@@ -32,7 +32,9 @@
       </div>
       <div v-if="order.is_owner" class="block-zone">
         <div>
-          <button v-if="order.is_blocked" @click="unblockUser" class="btn -danger">Unblock User</button>
+          <button v-if="order.is_blocked" @click="unblockUser" class="btn -danger">
+            Unblock User
+          </button>
           <button v-else @click="blockUser" class="btn -danger">Block User</button>
         </div>
       </div>

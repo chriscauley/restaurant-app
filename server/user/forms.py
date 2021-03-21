@@ -9,7 +9,7 @@ from server import schema
 from server.user.models import User
 
 
-@schema.register
+@schema.register('login')
 class LoginForm(forms.Form):
     username = forms.CharField(label='Username', max_length=150)
     password = forms.CharField(label='Password', max_length=128, widget=forms.PasswordInput)
@@ -28,16 +28,11 @@ class LoginForm(forms.Form):
         self.user.backend = "django.contrib.auth.backends.ModelBackend"
         login(self.request, self.user)
 
-
-def register(form):
-    new_user = form.save(commit=False)
-    new_user.is_active = False
-    new_user.save()
-    send_activation_email(new_user)
-    return new_user
+    user_can_GET = 'ANY'
+    user_can_POST = 'ANY'
 
 
-@schema.register
+@schema.register('signup')
 class SignupForm(RegistrationFormUniqueEmail):
     _role = 'user'
     def __init__(self, *args, **kwargs):
@@ -63,16 +58,22 @@ class SignupForm(RegistrationFormUniqueEmail):
         view.send_activation_email(user)
         return user
 
+    user_can_GET = 'ANY'
+    user_can_POST = 'ANY'
 
-@schema.register
+@schema.register('owner/signup')
 class OwnerSignupForm(SignupForm):
     _role = 'owner'
 
 
-@schema.register
+@schema.register('settings')
 class UserSettingsForm(forms.ModelForm):
     _avatar_url = None
     avatar_url = forms.CharField(required=False)
+
+    user_can_POST = 'SELF'
+    user_can_POST = 'SELF'
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if not self.data.get('avatar_url') == self.instance.avatar_url:
@@ -82,9 +83,6 @@ class UserSettingsForm(forms.ModelForm):
         if self._avatar_url:
             response = urllib.request.urlopen(self._avatar_url['dataURL'])
             self._avatar_url['file'] = ContentFile(response.read())
-    def clean(self):
-        if not self.request.user == self.instance:
-            raise Forms.ValidationError("You can only edit your own data.")
     def save(self, commit=True):
         instance = super().save(commit)
         if self._avatar_url:

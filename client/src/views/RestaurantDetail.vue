@@ -2,7 +2,7 @@
   <div v-if="restaurant" class="restaurant-detail">
     <h1>
       {{ restaurant.name }}
-      <i class="fa fa-edit" v-if="is_owner" @click="edit('Restaurant', restaurant.id)" />
+      <i class="fa fa-edit" v-if="is_owner" @click="edit('restaurant', restaurant.id)" />
     </h1>
     <h3>{{ restaurant.description }}</h3>
     <div class="row">
@@ -10,14 +10,14 @@
         <div v-for="section in restaurant.menusections" :key="section.id" class="menu-section">
           <h2>
             {{ section.name }}
-            <i class="fa fa-edit" v-if="is_owner" @click="edit('MenuSection', section.id)" />
+            <i class="fa fa-edit" v-if="is_owner" @click="edit('menusection', section.id)" />
           </h2>
           <div class="menu-items row">
             <div v-for="item in section.items" :key="item.id" class="col-6">
               <div class="menu-item" @click="addItem(item.id)">
                 <div class="menu-item__top">
                   <div class="menu-item__name">
-                    <i class="fa fa-edit" v-if="is_owner" @click="edit('MenuItem', item.id)" />
+                    <i class="fa fa-edit" v-if="is_owner" @click="edit('menuitem', item.id)" />
                     {{ item.name }}
                   </div>
                   <div class="menu-item__price">${{ item.price }}</div>
@@ -25,12 +25,19 @@
                 <div class="menu-item__description">{{ item.description }}</div>
               </div>
             </div>
-            <div class="col-6" v-if="is_owner">
+            <div class="col-6 flex-grow" v-if="is_owner">
               <button class="btn -primary" @click="addMenuItem(section)">
                 Add another item
               </button>
             </div>
           </div>
+        </div>
+        <div v-if="is_owner">
+          <div class="hr" />
+          <div class="hr" />
+          <button class="btn -primary" @click="addMenuSection">
+            Add another menu section
+          </button>
         </div>
       </div>
       <div v-if="!is_owner" class="col-4">
@@ -54,9 +61,6 @@
         </div>
       </div>
     </div>
-    <button class="btn -primary" @click="addMenuSection" v-if="is_owner">
-      Add another menu section
-    </button>
     <modal v-if="form_name" :close="() => (form_name = null)">
       <schema-form v-bind="form_attrs" />
       <template #actions>{{ ' ' }}</template>
@@ -95,10 +99,14 @@ export default {
       return {
         form_name: this.form_name,
         state: this.form_state || {},
-        success: () => {
+        success: data => {
           this.form_name = this.form_state = null
           this.$store.restaurant.markStale()
           this.$store.restaurant.fetchOne(this.$route.params.id)
+          this.$store.ui.toast({
+            text: `Updated "${data.name}"`,
+            level: 'success',
+          })
         },
       }
     },
@@ -114,19 +122,19 @@ export default {
       this.$store.cart.checkout()
     },
     addMenuSection() {
-      this.form_name = 'OwnerMenuSectionForm'
+      this.form_name = 'menusection'
       this.form_state = {
         restaurant: this.$route.params.id,
       }
     },
     addMenuItem(section) {
-      this.form_name = 'OwnerMenuItemForm'
+      this.form_name = 'menuitem'
       this.form_state = {
         menusection: section.id,
       }
     },
     edit(model, id) {
-      this.form_name = `Owner${model}Form/${id}`
+      this.form_name = `${model}/${id}`
     },
   },
 }

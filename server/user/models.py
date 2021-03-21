@@ -20,3 +20,5 @@ class User(AbstractUser):
         if self.avatar:
             return self.avatar.url
         return self.social_avatar
+    def get_json(self, user):
+        return {'id': self.id}

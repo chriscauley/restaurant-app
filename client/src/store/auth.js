@@ -15,7 +15,7 @@ const check = () => {
   }
   if (!state.loaded) {
     state.loading = true
-    return api.get('whoami').then(({ user }) => {
+    return api.get('self/').then(({ user }) => {
       state.user = user
       state.loading = false
       state.loaded = true
@@ -28,7 +28,7 @@ const check = () => {
   return Promise.resolve()
 }
 
-const logout = () => api.post('logout').then(refetch)
+const logout = () => api.post('logout/').then(refetch)
 
 const refetch = () => {
   state.loaded = state.loading = false
