@@ -14,6 +14,9 @@ def process_restaurant(restaurant):
 
 def restaurant_list(request):
     query = Restaurant.objects.all()
+    if request.user.is_authenticated and request.user.role == 'owner':
+        # owners only see restaurants they control
+        query = query.filter(owners=request.user)
     process = process_restaurant
     # TODO pagination not implemented on front end yet
     return JsonResponse(paginate(query, process=process, query_dict=request.GET, per_page=60))

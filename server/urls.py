@@ -7,7 +7,7 @@ from server.user.views import whoami, logout, complete_registration
 from server.views import spa
 
 # need to import these files somewhere to @schema.register the forms
-# import server.restaurant.forms
+import server.restaurant.forms
 import server.user.forms
 
 urlpatterns = [

@@ -3,7 +3,6 @@ from django import forms
 from django.contrib.auth import login
 from django_registration.forms import RegistrationFormUniqueEmail
 from django_registration.backends.activation.views import RegistrationView
-import json
 import urllib
 
 from server import schema

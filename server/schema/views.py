@@ -35,6 +35,9 @@ def schema_form(request, form_name, object_id=None, method=None, content_type=No
         kwargs['instance'] = _meta.model.objects.get(id=object_id)
     if getattr(_meta, 'login_required', None) and not request.user.is_authenticated:
         return JsonResponse({'error': 'You must be logged in to do this'}, status=403)
+    if getattr(_meta, 'user_can_access'):
+        if not _meta.user_can_access(kwargs.get('instance'), request.user):
+            return JsonResponse({'error': 'You do not have access to this resource'}, status=403)
 
     if request.method == "POST":
         if content_type == 'application/json':
@@ -46,10 +49,11 @@ def schema_form(request, form_name, object_id=None, method=None, content_type=No
         form.request = request
         if form.is_valid():
             instance = form.save()
-            data = {}
+            data = {'schema': form_to_schema(form_class(**kwargs)) }
             if instance:
-                data = {'id': instance.id, 'name': str(instance)}
-            return JsonResponse({ 'schema': form_to_schema(form_class(**kwargs)) })
+                data['id'] = instance.id
+                data['name'] = str(instance)
+            return JsonResponse(data)
         return JsonResponse({'errors': form.errors.get_json_data()}, status=400)
     schema = form_to_schema(form_class(**kwargs))
     return JsonResponse({'schema': schema})

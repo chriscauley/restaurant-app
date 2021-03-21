@@ -8,7 +8,15 @@
           <div>{{ restaurant.name }}</div>
         </router-link>
       </div>
+      <div v-if="is_owner">
+        <button class="btn -primary" @click="adding = true">
+          Add another restaurant
+        </button>
+      </div>
     </div>
+    <modal v-if="adding">
+      <schema-form form_name="OwnerRestaurantForm" :prepSchema="prepSchema" :success="success" />
+    </modal>
   </div>
 </template>
 
@@ -18,9 +26,25 @@ export default {
     path: '/',
     meta: { authRequired: true },
   },
+  data() {
+    return { adding: false }
+  },
   computed: {
     restaurants() {
       return this.$store.restaurant.fetchList()?.items
+    },
+    is_owner() {
+      return this.$store.auth.state.user?.role === 'owner'
+    },
+  },
+  methods: {
+    prepSchema(schema) {
+      schema.properties.photo_url.type = 'image'
+      schema.properties.photo_url.title = 'Photo'
+      return schema
+    },
+    success(data) {
+      this.$router.push(`/restaurant/${data.id}/${data.name}/`)
     },
   },
 }
