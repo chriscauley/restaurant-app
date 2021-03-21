@@ -11,4 +11,6 @@ const fetch = form_name => {
   return state[form_name]
 }
 
-export default { fetch }
+const markStale = form_name => delete state[form_name]
+
+export default { fetch, markStale }

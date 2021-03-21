@@ -55,6 +55,7 @@ export default {
           this.loading = false
           if (!this.errors) {
             this.success?.(result)
+            this.$store.schema.markStale(this.form_name)
           }
         })
     },

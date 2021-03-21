@@ -25,10 +25,11 @@ class OwnerRestaurantForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super().save(commit)
+        if not instance.id:
+            instance.owner = self.request.user
         if self._photo_url:
             instance.photo.save(self._photo_url['name'], self._photo_url['file'])
             instance.save()
-        instance.owners.add(self.request.user)
         return instance
 
     class Meta:
@@ -36,7 +37,7 @@ class OwnerRestaurantForm(forms.ModelForm):
         fields = ('name', 'description', 'photo_url')
         def user_can_access(instance, user):
             if instance:
-                return user in instance.owners.all()
+                return instance.user_can_edit(user)
             return user.role == 'owner'
 
 
@@ -50,7 +51,7 @@ class OwnerMenuItemForm(forms.ModelForm):
             menusection = MenuSection.objects.filter(
                 id=self.cleaned_data.get('menusection')
             ).first()
-        if not (menusection and self.request.user in menusection.restaurant.owners.all()):
+        if not (menusection and menusection.restaurant.user_can_edit(user)):
             raise ValidationError(f"You do not have permission to do this.")
         return menusection
     class Meta:
@@ -58,7 +59,7 @@ class OwnerMenuItemForm(forms.ModelForm):
         fields = ['name', 'description', 'menusection', 'price']
         def user_can_access(instance, user):
             if instance:
-                return user in instance.menusection.restaurant.owners.all()
+                return instance.menusection.restaurant.user_can_edit(user)
             return user.role == 'owner'
 
 
@@ -72,7 +73,7 @@ class OwnerMenuSectionForm(forms.ModelForm):
             restaurant = Restaurant.objects.filter(
                 id=self.cleaned_data.get('restaurant')
             ).first()
-        if not (restaurant and self.request.user in restaurant.owners.all()):
+        if not (restaurant and restaurant.user_can_edit(user)):
             raise ValidationError(f"You do not have permission to do this.")
         return restaurant
     class Meta:
@@ -80,5 +81,5 @@ class OwnerMenuSectionForm(forms.ModelForm):
         fields = ['name', 'restaurant']
         def user_can_access(instance, user):
             if instance:
-                return user in instance.restaurant.owners.all()
+                return instance.restaurant.user_can_edit(user)
             return user.role == 'owner'

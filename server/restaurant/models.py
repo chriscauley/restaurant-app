@@ -16,7 +16,7 @@ class BaseModel(models.Model):
 class Restaurant(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField()
-    owners = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
     photo = models.ImageField(upload_to="restaurant_photos", null=True, blank=True)
     __str__ = lambda self: self.name
     @property
@@ -24,10 +24,8 @@ class Restaurant(models.Model):
         if not self.photo:
             return None
         return self.photo.url
-    @property
-    def owner_ids(self):
-        return [o.id for o in self.owners.all()]
-
+    def user_can_edit(self, user):
+        return user == self.owner
 
 class MenuSection(BaseModel):
     restaurant = models.ForeignKey(Restaurant, models.CASCADE)
@@ -98,7 +96,7 @@ class Order(BaseModel):
         return user.is_superuser or user.id == self.user_id or self.is_restaurant_owner(user)
 
     def is_restaurant_owner(self, user):
-        return user in self.restaurant.owners.all()
+        return self.restaurant.user_can_edit(user)
 
     def get_allowed_status(self, user):
         if self.status in ['canceled', 'received']:

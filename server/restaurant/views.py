@@ -6,7 +6,7 @@ import json
 from server.restaurant.models import Restaurant, Order, MenuSection, MenuItem, Cart, CartItem, serialize
 from server.paginate import paginate
 
-restaurant_attrs = ['id', 'name', 'description', 'owner_ids', 'photo_url']
+restaurant_attrs = ['id', 'name', 'description', 'photo_url']
 menuitem_attrs = ['id', 'name', 'price', 'description']
 
 def process_restaurant(restaurant):
@@ -16,7 +16,7 @@ def restaurant_list(request):
     query = Restaurant.objects.all()
     if request.user.is_authenticated and request.user.role == 'owner':
         # owners only see restaurants they control
-        query = query.filter(owners=request.user)
+        query = query.filter(owner=request.user)
     process = process_restaurant
     # TODO pagination not implemented on front end yet
     return JsonResponse(paginate(query, process=process, query_dict=request.GET, per_page=60))
@@ -36,7 +36,7 @@ def restaurant_detail(request, restaurant_id):
     data = process_restaurant(restaurant)
     menusections = restaurant.menusection_set.all().prefetch_related('menuitem_set')
     data['menusections'] = [process_menusection(s) for s in menusections]
-    data['is_owner'] = request.user in restaurant.owners.all()
+    data['is_owner'] = restaurant.user_can_edit(request.user)
     return JsonResponse(data)
 
 def process_cartitem(item):
@@ -136,7 +136,7 @@ def order_list(request):
     if request.user.role == 'user':
         orders = request.user.order_set.all()
     elif request.user.role == 'owner':
-        orders = Order.objects.filter(restaurant__owners=request.user)
+        orders = Order.objects.filter(restaurant__owner=request.user)
     orders = orders.select_related('restaurant', 'user')
     attrs = [
         'id',
