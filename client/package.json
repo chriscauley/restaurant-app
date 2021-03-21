@@ -18,8 +18,10 @@
     "vue-router": "^4.0.0-beta.13"
   },
   "devDependencies": {
+    "@vue/cli": "^4.5.12",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-unit-jest": "^4.5.12",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
@@ -37,5 +39,10 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "jest": {
+    "moduleNameMapper": {
+      "@/(.*)$": "<rootDir>/src/$1"
+    }
+  }
 }
