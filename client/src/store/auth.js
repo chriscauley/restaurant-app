@@ -1,46 +1,22 @@
-import { reactive } from 'vue'
-import api from '@/common/api'
+import Api from './Api'
 
-const pending = []
+const api = Api()
 
-const state = reactive({
-  user: null,
-  loading: null,
-  loaded: null,
-})
-
-const check = () => {
-  if (state.loading) {
-    return new Promise(resolve => pending.push(resolve))
-  }
-  if (!state.loaded) {
-    state.loading = true
-    return api.get('self/').then(({ user }) => {
-      state.user = user
-      state.loading = false
-      state.loaded = true
-      while (pending.length) {
-        // resolve any other pending promises
-        pending.pop()()
-      }
-    })
-  }
-  return Promise.resolve()
-}
+const check = () => new Promise(resolve => api.get('self/', resolve))
+const get = () => api.get('self/')?.user
 
 const logout = () => api.post('logout/').then(refetch)
 
 const refetch = () => {
-  state.loaded = state.loading = false
-  return check()
+  api.markStale()
+  api.get('self/')
 }
 
 export default {
-  state,
   check,
   refetch,
-  init: check,
   logout,
+  get,
   social: [
     {
       name: 'Twitter',

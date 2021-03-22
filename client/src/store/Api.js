@@ -7,7 +7,7 @@ export default () => {
   const url_fetched_at = {}
   const loading = reactive({})
   const state = reactive({})
-  const get = url => {
+  const get = (url, next = () => {}) => {
     const needs_fetch = stale_at > url_fetched_at[url] || !state[url]
     if (needs_fetch && !loading[url]) {
       loading[url] = true
@@ -15,8 +15,10 @@ export default () => {
         url_fetched_at[url] = new Date().valueOf()
         state[url] = data
         loading[url] = false
+        next()
       })
     }
+    next()
     return state[url]
   }
 
@@ -24,12 +26,11 @@ export default () => {
     stale_at = new Date().valueOf()
   }
 
-  const post = (url, data) => {
+  const post = (url, data) =>
     api.post(url, data).then(() => {
       markStale()
       get(url)
     })
-  }
 
   return { get, markStale, post }
 }

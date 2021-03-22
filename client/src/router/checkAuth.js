@@ -1,7 +1,7 @@
 import store from '@/store'
 
 const requireAuth = (to, next) => {
-  if (!store.auth.state.user) {
+  if (!store.auth.get()) {
     next({
       path: '/login',
       params: { next: to.fullPath },
@@ -12,7 +12,7 @@ const requireAuth = (to, next) => {
 }
 
 const redirectIfAuthed = (to, next) => {
-  if (store.auth.state.user) {
+  if (store.auth.get()) {
     next(to.params.next || '/')
   } else {
     next()

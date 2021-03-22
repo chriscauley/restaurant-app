@@ -35,7 +35,7 @@ export default {
       return this.$store.restaurant.fetchList()?.items
     },
     is_owner() {
-      return this.$store.auth.state.user?.role === 'owner'
+      return this.$store.auth.get()?.role === 'owner'
     },
   },
   methods: {

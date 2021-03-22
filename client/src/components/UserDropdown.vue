@@ -32,7 +32,7 @@ export default {
   mixins: [FocusMixin],
   computed: {
     user() {
-      return this.$store.auth.state.user
+      return this.$store.auth.get()
     },
     pending_orders() {
       const orders = this.$store.order.fetchList()?.items || []

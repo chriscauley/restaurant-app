@@ -1,7 +1,7 @@
 import store from '@/store'
 
 const requireRole = (role, to, next) => {
-  if (store.auth.state.user?.role !== role) {
+  if (store.auth.get()?.role !== role) {
     store.ui.toast({ text: `Only ${role} users can view that page`, level: 'danger' })
     next({ path: '/' })
   } else {

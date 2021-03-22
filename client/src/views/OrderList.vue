@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     is_owner() {
-      return this.$store.auth.state.user?.role === 'owner'
+      return this.$store.auth.get()?.role === 'owner'
     },
     orders() {
       return this.$store.order.fetchList()?.items
