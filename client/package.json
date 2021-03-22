@@ -46,9 +46,13 @@
   ],
   "jest": {
     "moduleNameMapper": {
-      "@/(.*)$": "<rootDir>/src/$1"
+      "@/(.*)$": "<rootDir>/src/$1",
+      "@tests/(.*)$": "<rootDir>/tests/$1"
     },
     "preset": "@vue/cli-plugin-unit-jest",
+    "setupFiles": [
+      "./__mocks__/client.js"
+    ],
     "transform": {
       "^.+\\.vue$": "vue-jest"
     }
