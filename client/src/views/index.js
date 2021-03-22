@@ -4,7 +4,6 @@ import Login from './Login'
 import OrderDetail from './OrderDetail'
 import OrderList from './OrderList'
 import RestaurantDetail from './RestaurantDetail'
-import RestaurantEdit from './RestaurantEdit'
 import Signup from './Signup'
 import SignupOwner from './SignupOwner'
 import SignupComplete from './SignupComplete'
@@ -18,7 +17,6 @@ export default {
   OrderDetail,
   OrderList,
   RestaurantDetail,
-  RestaurantEdit,
   Signup,
   SignupOwner,
   SignupComplete,

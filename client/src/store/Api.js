@@ -4,6 +4,7 @@ import api from '@/common/api'
 
 export default () => {
   let stale_at = new Date().valueOf()
+  const pending = {}
   const url_fetched_at = {}
   const loading = reactive({})
   const state = reactive({})
@@ -16,9 +17,17 @@ export default () => {
         state[url] = data
         loading[url] = false
         next()
+        while (pending[url]?.length) {
+          pending[url].pop()()
+        }
       })
     }
-    next()
+    if (!loading[url]) {
+      next()
+    } else {
+      pending[url] = pending[url] || []
+      pending[url].push(next)
+    }
     return state[url]
   }
 

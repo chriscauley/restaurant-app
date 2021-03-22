@@ -1,14 +1,7 @@
 <template>
   <div class="home">
     <h1>Restaurants</h1>
-    <div class="restaurant-list row">
-      <div v-for="restaurant in restaurants" :key="restaurant.id" class="col-4">
-        <router-link class="card" :to="restaurant.to">
-          <div class="card__img" :style="restaurant.img_style" />
-          <div>{{ restaurant.name }}</div>
-        </router-link>
-      </div>
-    </div>
+    <restaurant-list v-if="restaurants" :restaurants="restaurants" />
     <div v-if="is_owner">
       <button class="btn -primary" @click="adding = true">
         Add another restaurant
@@ -22,7 +15,10 @@
 </template>
 
 <script>
+import RestaurantList from '@/components/RestaurantList'
+
 export default {
+  components: { RestaurantList },
   __route: {
     path: '/',
     meta: { authRequired: true },
