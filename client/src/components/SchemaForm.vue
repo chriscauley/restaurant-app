@@ -4,15 +4,30 @@
 
 <script>
 import api from '@/common/api'
+import { cloneDeep } from 'lodash'
+
+export const prepSchema = schema => {
+  schema = cloneDeep(schema)
+  if (schema.properties.avatar_url) {
+    schema.properties.avatar_url.type = 'image'
+    schema.properties.avatar_url.title = 'Avatar'
+  }
+  if (schema.properties.photo_url) {
+    schema.properties.photo_url.type = 'image'
+    schema.properties.photo_url.title = 'Photo'
+  }
+  Object.values(schema.properties).forEach(property => {
+    if (property.__widget === 'HiddenInput') {
+      property.ui = { tagName: 'ur-hidden' }
+    }
+  })
+  return schema
+}
 
 export default {
   props: {
     form_name: String,
     success: Function,
-    prepSchema: {
-      type: Function,
-      default: a => a,
-    },
   },
   data() {
     return { errors: null, loading: false }
@@ -23,20 +38,7 @@ export default {
       if (!schema) {
         return
       }
-      if (schema.properties.avatar_url) {
-        schema.properties.avatar_url.type = 'image'
-        schema.properties.avatar_url.title = 'Avatar'
-      }
-      if (schema.properties.photo_url) {
-        schema.properties.photo_url.type = 'image'
-        schema.properties.photo_url.title = 'Photo'
-      }
-      Object.values(schema.properties).forEach(property => {
-        if (property.__widget === 'HiddenInput') {
-          property.ui = { tagName: 'ur-hidden' }
-        }
-      })
-      return schema
+      return prepSchema(schema)
     },
   },
   methods: {

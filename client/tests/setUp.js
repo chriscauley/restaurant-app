@@ -11,5 +11,7 @@ global.document = dom.window.document
 global.window = dom.window
 
 config.global.mocks['$store'] = store
-const RouterLink = () => 'ROUTER_LINK'
-config.global.components = { SchemaForm, Modal, RouterLink }
+const Dummy = () => ''
+const RouterLink = Dummy
+const UrForm = Dummy
+config.global.components = { SchemaForm, Modal, RouterLink, UrForm }
