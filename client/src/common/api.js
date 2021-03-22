@@ -1,13 +1,10 @@
 import axios from 'axios'
 
 export const getCSRF = (cookie = '') => {
-  if (typeof document !== 'undefined') {
-    cookie = cookie || document.cookie
-  }
   return cookie.match(/csrftoken=([^;]+)/)?.[1] || ''
 }
 
-function handleError(error) {
+export function handleError(error) {
   error.server_errors = {}
   Object.entries(error.response?.data.errors || {}).forEach(([key, errors]) => {
     error.server_errors[key] = errors.map(e => e.message).join(' ')
@@ -15,10 +12,12 @@ function handleError(error) {
   throw error
 }
 
+const root = process.env.VUE_APP_ROOT_URL || ''
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: root + '/api',
   transformRequest(data, headers) {
-    headers.post['X-CSRFToken'] = getCSRF()
+    headers.post['X-CSRFToken'] = getCSRF(document.cookie)
     headers.post['Content-Type'] = 'application/json'
     return JSON.stringify(data)
   },
