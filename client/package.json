@@ -51,7 +51,7 @@
     },
     "preset": "@vue/cli-plugin-unit-jest",
     "setupFiles": [
-      "./__mocks__/client.js"
+      "./tests/setUp.js"
     ],
     "transform": {
       "^.+\\.vue$": "vue-jest"
