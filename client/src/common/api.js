@@ -1,16 +1,5 @@
 import axios from 'axios'
-
-export const getCSRF = (cookie = '') => {
-  return cookie.match(/csrftoken=([^;]+)/)?.[1] || ''
-}
-
-export function handleError(error) {
-  error.server_errors = {}
-  Object.entries(error.response?.data.errors || {}).forEach(([key, errors]) => {
-    error.server_errors[key] = errors.map(e => e.message).join(' ')
-  })
-  throw error
-}
+import { getCSRF, handleError } from './utils'
 
 const root = process.env.VUE_APP_ROOT_URL || ''
 

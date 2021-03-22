@@ -1,5 +1,5 @@
 import Api from './Api'
-import slugify from '@/common/slugify'
+import { slugify } from '@/common/utils'
 
 const DEFAULT_IMG = '/static/pizza.png'
 

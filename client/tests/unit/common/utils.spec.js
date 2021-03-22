@@ -1,4 +1,4 @@
-import { getCSRF, handleError } from '@/common/api'
+import { getCSRF, handleError, slugify } from '@/common/utils'
 
 test('getCSRF', () => {
   expect(getCSRF()).toBe('')
@@ -16,4 +16,8 @@ test('handleError', () => {
     },
   }
   expect(() => handleError(server_error)).toThrow('')
+})
+
+test('slugify', () => {
+  expect(slugify('This$$isA   slug-=++')).toBe('this-isa-slug-')
 })
