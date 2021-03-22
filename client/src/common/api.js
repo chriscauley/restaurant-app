@@ -1,13 +1,15 @@
 import axios from 'axios'
 
-export const getCSRF = cookie => {
-  cookie = cookie || document.cookie
-  return cookie.match(/csrftoken=([^;]+)/)?.[1]
+export const getCSRF = (cookie = '') => {
+  if (typeof document !== 'undefined') {
+    cookie = cookie || document.cookie
+  }
+  return cookie.match(/csrftoken=([^;]+)/)?.[1] || ''
 }
 
 function handleError(error) {
   error.server_errors = {}
-  Object.entries(error.response.data.errors).forEach(([key, errors]) => {
+  Object.entries(error.response?.data.errors || {}).forEach(([key, errors]) => {
     error.server_errors[key] = errors.map(e => e.message).join(' ')
   })
   throw error

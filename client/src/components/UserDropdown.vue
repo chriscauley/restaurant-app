@@ -8,7 +8,7 @@
       {{ user.username }}
       <span v-if="pending_orders" class="notify-dot -red" />
     </div>
-    <popper v-if="focused" class="menu">
+    <popper v-if="focused" class="menu" placement="bottom-end">
       <div>
         <router-link to="/order-list/" class="menu-item">
           Orders

@@ -1,9 +1,9 @@
 import store from '@/store'
 
-test("store", (done) => {
+test('store', done => {
   store.schema.fetch('login')
   setTimeout(() => {
-    console.log(store.schema.fetch('login'))
+    expect(store.schema.fetch('login')).toMatchSnapshot()
     done()
   }, 1000)
 })

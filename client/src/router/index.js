@@ -1,5 +1,5 @@
 import { defaultsDeep } from 'lodash'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, createMemoryHistory } from 'vue-router'
 
 import applyMeta from './applyMeta'
 import checkAuth from './checkAuth'
@@ -22,9 +22,10 @@ const loadViews = o =>
   })
 
 loadViews(views)
+const createHistory = process.env.NODE_ENV === 'test' ? createMemoryHistory : createWebHistory
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createHistory(),
   routes,
 })
 
