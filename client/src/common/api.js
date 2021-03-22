@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getCSRF, handleError } from './utils'
+import { getCSRF, handleAPIError } from './utils'
 
 const root = process.env.VUE_APP_ROOT_URL || ''
 
@@ -11,6 +11,6 @@ const api = axios.create({
     return JSON.stringify(data)
   },
 })
-api.interceptors.response.use(r => r.data, handleError)
+api.interceptors.response.use(r => r.data, handleAPIError)
 
 export default api
