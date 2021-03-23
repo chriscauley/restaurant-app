@@ -37,3 +37,31 @@ test('SchemaForm loads schema via api', async next => {
   api._mock.cleanUp()
   next()
 })
+
+test('SchemaForm.submit', async next => {
+  const schema = { properties: {} }
+  const form_name = 'submit_schema'
+  const propsData = { form_name }
+  api._mock.get(form_name + '/?schema=1', { schema })
+
+  const wrapper = shallowMount(SchemaForm, { propsData })
+  await Promise.resolve()
+
+  // submit causes schema to refetch
+  api._mock.get(form_name + '/?schema=1', { schema })
+  api._mock.post(form_name + '/', { throw: 'arst' })
+  wrapper.vm.submit({})
+  expect(wrapper.vm.loading).toBe(true)
+
+  // submitting twice does not trigger submit again (unsure how to test this)
+  wrapper.vm.submit({})
+
+  await Promise.resolve()
+  await Promise.resolve()
+  expect(wrapper.vm.loading).toBe(false)
+  api._mock.post(form_name + '/', {})
+  wrapper.vm.submit({})
+  await Promise.resolve()
+  await Promise.resolve()
+  next()
+})

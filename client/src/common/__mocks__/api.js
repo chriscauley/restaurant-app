@@ -12,7 +12,13 @@ const _get = (url, prefix = '') => {
   // console.log('mocked', key)
   const data = store[key]
   delete store[key]
-  return Promise.resolve(data)
+  return new Promise((resolve, reject) => {
+    if (data.throw) {
+      reject(data.throw)
+    } else {
+      resolve(data)
+    }
+  })
 }
 
 export default {
