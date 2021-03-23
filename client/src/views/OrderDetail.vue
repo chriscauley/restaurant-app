@@ -52,9 +52,13 @@
 <script>
 import { formatDistanceToNow } from 'date-fns'
 
-const POLL_FREQUENCY = 15 // seconds to update order
-
 export default {
+  props: {
+    POLL_FREQUENCY: {
+      type: Number,
+      default: () => 15, // seconds to update order
+    },
+  },
   __route: {
     path: '/order/:order_id/',
     meta: { authRequired: true },
@@ -63,7 +67,7 @@ export default {
     return { cancelling: false }
   },
   mounted() {
-    this.timeout = setTimeout(this.poll, POLL_FREQUENCY * 1000)
+    this.timeout = setTimeout(this.poll, this.POLL_FREQUENCY * 1000)
   },
   unmounted() {
     clearTimeout(this.timeout)
@@ -91,7 +95,7 @@ export default {
       this.$store.order.markStale()
       this.$store.order.fetchOne(this.$route.params.order_id)
       if (!['canceled', 'received'].includes(this.order?.status)) {
-        this.timeout = setTimeout(this.poll, POLL_FREQUENCY * 1000)
+        this.timeout = setTimeout(this.poll, this.POLL_FREQUENCY * 1000)
       }
     },
     formatDistanceToNow(s) {

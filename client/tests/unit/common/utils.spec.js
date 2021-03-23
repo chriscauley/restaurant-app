@@ -1,12 +1,12 @@
-import { getCSRF, handleError, slugify } from '@/common/utils'
+import { getCSRF, handleAPIError, slugify } from '@/common/utils'
 
 test('getCSRF', () => {
   expect(getCSRF()).toBe('')
   expect(getCSRF('')).toBe('')
 })
 
-test('handleError', () => {
-  expect(() => handleError({})).toThrow('')
+test('handleAPIError', () => {
+  expect(() => handleAPIError({})).toThrow('')
 
   const server_error = {
     response: {
@@ -15,7 +15,7 @@ test('handleError', () => {
       },
     },
   }
-  expect(() => handleError(server_error)).toThrow('')
+  expect(() => handleAPIError(server_error)).toThrow('')
 })
 
 test('slugify', () => {

@@ -16,7 +16,7 @@ const _get = (url, prefix = '') => {
     if (data.throw) {
       reject(data.throw)
     } else {
-      resolve(data)
+      resolve(data === 'NULL' ? null : data)
     }
   })
 }
