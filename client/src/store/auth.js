@@ -2,8 +2,18 @@ import Api from './Api'
 
 const api = Api()
 
-const check = () => new Promise(resolve => api.get('self/', resolve))
-const get = () => api.get('self/')?.user
+let faked
+
+const check = () => {
+  if (faked !== undefined) {
+    return Promise.resolve()
+  }
+  return new Promise(resolve => api.get('self/', resolve))
+}
+
+const get = () => {
+  return faked !== undefined ? faked : api.get('self/')?.user
+}
 
 const logout = () => api.post('logout/').then(refetch)
 
@@ -13,6 +23,7 @@ const refetch = () => {
 }
 
 export default {
+  setFaked: user => (faked = user),
   check,
   refetch,
   logout,

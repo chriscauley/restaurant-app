@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit --silent=false --env=node",
+    "test:unit": "jest",
     "lint": "vue-cli-service lint",
     "watch": "vue-cli-service build --watch"
   },
