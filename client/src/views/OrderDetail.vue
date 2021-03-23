@@ -94,10 +94,6 @@ export default {
         this.timeout = setTimeout(this.poll, POLL_FREQUENCY * 1000)
       }
     },
-    getVerboseStatus(status) {
-      const title = s => s[0].toUpperCase() + s.slice(1)
-      return status.replace('_', ' ').replace(/(\w*\W*|\w*)\s*/g, title)
-    },
     formatDistanceToNow(s) {
       return formatDistanceToNow(new Date(s).valueOf()) + ' ago'
     },
