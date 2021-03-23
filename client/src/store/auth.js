@@ -9,7 +9,7 @@ const logout = () => api.post('logout/').then(refetch)
 
 const refetch = () => {
   api.markStale()
-  api.get('self/')
+  return new Promise(resolve => api.get('self/', resolve))
 }
 
 export default {

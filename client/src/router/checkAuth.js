@@ -3,7 +3,7 @@ import store from '@/store'
 const requireAuth = (to, next) => {
   if (!store.auth.get()) {
     next({
-      path: '/login',
+      name: 'login',
       params: { next: to.fullPath },
     })
   } else {
