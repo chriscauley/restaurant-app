@@ -37,6 +37,7 @@ class SignupForm(RegistrationFormUniqueEmail):
     _role = 'user'
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['username'].help_text = None
         self.fields['password1'].help_text = None
         self.fields.pop('password2')
     def clean(self, *args, **kwargs):

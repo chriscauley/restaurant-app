@@ -1,0 +1,33 @@
+/* styles for raw html elements and top level ids/classes */
+
+:root {
+  --bg: white;
+  --bg-alt: theme('colors.gray.200');
+  --text: theme('colors.gray.900');
+  --text-alt: theme('colors.gray.700');
+  --border: theme('colors.gray.300');
+}
+
+.theme-dark_mode {
+  --bg: theme('colors.gray.900');
+  --bg-alt: theme('colors.gray.700');
+  --text: theme('colors.gray.100');
+  --text-alt: theme('colors.gray.300');
+  --border: theme('colors.gray.800');
+}
+
+body {
+  @apply bg-blue-200;
+}
+
+body, html, #app {
+  min-height: 100vh;
+}
+
+#app {
+  @apply bg-bg mx-auto pb-16;
+}
+
+p {
+  margin-bottom: 1rem;
+}

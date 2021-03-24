@@ -1,21 +1,7 @@
 @tailwind base;
 @tailwind components;
 
-:root {
-  --bg: white;
-  --bg-alt: theme('colors.gray.200');
-  --text: theme('colors.gray.900');
-  --text-alt: theme('colors.gray.700');
-  --border: theme('colors.gray.300');
-}
-
-.theme-dark_mode {
-  --bg: theme('colors.gray.900');
-  --bg-alt: theme('colors.gray.700');
-  --text: theme('colors.gray.100');
-  --text-alt: theme('colors.gray.300');
-  --border: theme('colors.gray.800');
-}
+@import './global';
 
 @import './alert';
 @import './btn';
@@ -27,21 +13,9 @@
 @import './nav';
 @import './order';
 
+@import './views';
 @import './cart';
 @import './restaurant-detail';
 @import './social-links';
 @import './user-dropdown';
 
-@import './views';
-
-body {
-  @apply bg-blue-200;
-}
-
-body, html, #app {
-  min-height: 100vh;
-}
-
-#app {
-  @apply bg-bg mx-auto pb-16;
-}
