@@ -109,12 +109,14 @@ def order_detail(request, order_id):
     # TODO this uses so many queries
     attrs = [
         'user_name',
+        'user_avatar_url',
         'id',
         'status',
         'status_history',
         'restaurant_name',
         'items',
         'created',
+        'total_items',
     ]
     data = serialize(order, attrs)
     data['allowed_status'] = order.get_allowed_status(request.user)
@@ -132,6 +134,7 @@ def order_list(request):
         'id',
         'restaurant_name',
         'user_name',
+        'user_avatar_url',
         'total_items',
         'total_price',
         'created',

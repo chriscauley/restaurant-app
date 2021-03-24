@@ -1,8 +1,54 @@
-.order-detail .order__items {
-  @apply border;
-  .order-item {
-    @apply flex
+.order-detail-view .left-details {
+  .description {
+    @apply pb-4;
   }
+  .avatar {
+    @apply rounded-full;
+    background-size: cover;
+    height: 120px;
+    width: 120px;
+  }
+  .user {
+    @apply flex items-center mb-2;
+  }
+  .user, .date, .restaurant {
+    @apply mb-4;
+  }
+}
+
+.order-detail-view .progress-bar {
+  @apply flex items-center justify-between relative;
+  margin-bottom: 100px;
+  .rail {
+    @apply  bg-gray-400 w-full;
+    content: "";
+    z-index: 1;
+  }
+  .so-far {
+    @apply bg-green-400;
+    transition: 2s;
+  }
+  .rail, .so-far {
+    @apply absolute h-4 left-0 rounded-lg;
+    top: 50%;
+    transform: translate(0, -50%);
+    z-index: 2;
+  }
+  .status-icon {
+    @apply bg-white border-2 h-6 rounded-full w-6 relative;
+    z-index: 3;
+  }
+  .status-content {
+    @apply absolute border p-2 rounded text-center;
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%, 12px);
+    white-space: nowrap;
+  }
+}
+
+.order-detail-view .actions {
+  @apply mb-4 mx-auto flex justify-between;
 }
 
 .order-list-view .order-item {
@@ -12,5 +58,9 @@
   }
   .total-price {
     @apply font-bold text-lg;
+  }
+  .avatar {
+    @apply h-6 mr-4 rounded-full w-6;
+    background-size: cover;
   }
 }

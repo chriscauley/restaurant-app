@@ -89,8 +89,13 @@ class Order(BaseModel):
         return self.user.username
 
     @property
+    def user_avatar_url(self):
+        return self.user.avatar_url
+
+    @property
     def restaurant_name(self):
         return self.restaurant.name
+
     @property
     def items(self):
         attrs = ['quantity', 'name', 'price', 'id']
@@ -101,7 +106,12 @@ class Order(BaseModel):
         status_times = {}
         for update in self.orderstatusupdate_set.all().order_by('created'):
             status_times[update.status] = update.created
-        return [{ 'status': s, 'created': status_times.get(s) } for s in self._status_choices]
+        choices = self._status_choices[:]
+        if self.status == 'canceled':
+            choices.remove('received')
+        else:
+            choices.remove('canceled')
+        return [{ 'status': s, 'created': status_times.get(s) } for s in choices]
 
     def set_status(self, status):
         self.status = status
@@ -136,6 +146,8 @@ class Order(BaseModel):
                 return new_status == 'delivered'
         # anything else is not allowed
 
+    class Meta:
+        ordering = ('-created',)
 
 class OrderItem(BaseModel):
     order = models.ForeignKey(Order, models.CASCADE)

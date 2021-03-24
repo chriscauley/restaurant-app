@@ -44,28 +44,12 @@
       <div class="col-4">
         <div v-if="!is_owner">
           <h2>Cart</h2>
-          <div class="cart">
-            <div v-for="item in cart.items" :key="item.id" class="cart-item">
-              <div class="cart-item__top">
-                <div class="cart-item__name">{{ item.name }}</div>
-                <div class="price">${{ item.price * item.quantity }}</div>
-              </div>
-              <div class="cart-item__bottom">
-                ${{ item.price }} x {{ item.quantity }}
-                <div class="action" @click="removeItem(item.menuitem_id)">-</div>
-                <div class="action" @click="addItem(item.menuitem_id)">+</div>
-              </div>
-            </div>
-            <div class="cart__bottom">
-              <button class="btn -primary" @click="checkout">
-                Checkout
-              </button>
-              <div>
-                total:
-                <span class="price">${{ total.toFixed(2) }}</span>
-              </div>
-            </div>
-          </div>
+          <cart
+            :addItem="addItem"
+            :removeItem="removeItem"
+            :checkout="checkout"
+            :items="cart.items"
+          />
         </div>
       </div>
     </div>
@@ -77,7 +61,10 @@
 </template>
 
 <script>
+import Cart from '@/components/Cart'
+
 export default {
+  components: { Cart },
   __route: {
     path: '/restaurant/:id/:slug/',
     meta: { authRequired: true },

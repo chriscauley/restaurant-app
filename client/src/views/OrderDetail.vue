@@ -1,37 +1,41 @@
 <template>
-  <div class="order-detail">
+  <div class="order-detail-view">
     <div v-if="order">
-      <h2>You ordered from {{ order.restaurant_name }} {{ formatDistanceToNow(order.created) }}</h2>
-      <div>
+      <h2>Order #{{ order.id }}</h2>
+      <div class="row">
+        <div class="col-6 left-details">
+          <div class="avatar" :style="`background-image: url(${order.user_avatar_url})`" />
+          <div class="user">Username: {{ order.user_name }}</div>
+          <div class="date">Date: {{ date }}</div>
+          <div class="restaurant">Restaurant: {{ order.restaurant_name }}</div>
+        </div>
+        <div class="col-6">
+          <cart :items="order.items" />
+        </div>
+      </div>
+      <div v-if="order.status === 'canceled'">
+        The order was canceled by the customer.
+      </div>
+      <div class="progress-bar">
+        <div class="rail" />
+        <div class="so-far" :style="progress_style" />
+        <div class="status-icon" v-for="update in history" :key="update.status">
+          <div class="status-content">
+            {{ update.status }}
+            <div>
+              {{ update.date }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
         <button v-if="can_cancel" class="btn -danger" @click="cancelling = true">
           Cancel Order
         </button>
         <button v-else-if="order.allowed_status" class="btn -primary" @click="markAllowedStatus">
           Mark order as {{ order.allowed_status }}
         </button>
-      </div>
-      <div class="row">
-        <div class="col-6">
-          <div class="order__items">
-            <div v-for="item in order.items" :key="item.id" class="order-item">
-              <div class="order-item__name">{{ item.name }}</div>
-              <div class="order-item__price">${{ item.price }}</div>
-              <div class="order-item__quantity">x{{ item.quantity }}</div>
-            </div>
-          </div>
-        </div>
-        <div class="order-history col-6">
-          <div v-for="update in history" :key="update.status">
-            {{ update.status }}
-            {{ update.ago }}
-          </div>
-          <div v-if="order.status === 'canceled'">
-            The order was canceled by the customer.
-          </div>
-        </div>
-      </div>
-      <div v-if="order.is_owner" class="block-zone">
-        <div>
+        <div v-if="order.is_owner" class="block-zone">
           <button v-if="order.is_blocked" @click="unblockUser" class="btn -danger">
             Unblock User
           </button>
@@ -50,9 +54,12 @@
 </template>
 
 <script>
-import { formatDistanceToNow } from 'date-fns'
+import { formatDistanceToNow, format } from 'date-fns'
+
+import Cart from '@/components/Cart'
 
 export default {
+  components: { Cart },
   props: {
     POLL_FREQUENCY: {
       type: Number,
@@ -80,13 +87,18 @@ export default {
       return this.order.allowed_status === 'canceled'
     },
     history() {
-      const getDate = created => {
-        return created && `${formatDistanceToNow(new Date(created))} ago`
-      }
       return this.order.status_history.map(({ status, created }) => ({
         status,
-        ago: getDate(created),
+        date: created && format(new Date(created), 'h:mm aaaa'),
       }))
+    },
+    date() {
+      return format(new Date(this.order.created), 'MMM d, yyyy')
+    },
+    progress_style() {
+      const steps = this.history.length - 1
+      const steps_done = this.history.filter(h => h.date).length - 1
+      return `width: ${(100 * steps_done) / steps}%`
     },
   },
   methods: {
