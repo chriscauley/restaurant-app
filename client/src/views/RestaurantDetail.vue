@@ -8,10 +8,17 @@
     <div class="row">
       <div class="menu col-8">
         <div v-for="section in restaurant.menusections" :key="section.id" class="menu-section">
-          <h2>
-            {{ section.name }}
-            <i class="fa fa-edit" v-if="is_owner" @click="edit('menusection', section.id)" />
-          </h2>
+          <div class="menu-title">
+            <h2>
+              <i class="fa fa-edit" v-if="is_owner" @click="edit('menusection', section.id)" />
+              {{ section.name }}
+            </h2>
+            <div v-if="is_owner">
+              <button class="btn -primary" @click="addMenuItem(section)">
+                Add menu item
+              </button>
+            </div>
+          </div>
           <div class="menu-items row">
             <div v-for="item in section.items" :key="item.id" class="col-6">
               <div class="menu-item" @click="addItem(item.id)">
@@ -25,42 +32,38 @@
                 <div class="menu-item__description">{{ item.description }}</div>
               </div>
             </div>
-            <div class="col-6 flex-grow" v-if="is_owner">
-              <button class="btn -primary" @click="addMenuItem(section)">
-                Add another item
-              </button>
-            </div>
           </div>
         </div>
         <div v-if="is_owner">
-          <div class="hr" />
           <div class="hr" />
           <button class="btn -primary" @click="addMenuSection">
             Add another menu section
           </button>
         </div>
       </div>
-      <div v-if="!is_owner" class="col-4">
-        <h2>Cart</h2>
-        <div class="cart">
-          <div v-for="item in cart.items" :key="item.id" class="cart-item">
-            <div class="cart-item__top">
-              <div class="cart-item__name">{{ item.name }}</div>
-              <div class="price">${{ item.price * item.quantity }}</div>
+      <div class="col-4">
+        <div v-if="!is_owner">
+          <h2>Cart</h2>
+          <div class="cart">
+            <div v-for="item in cart.items" :key="item.id" class="cart-item">
+              <div class="cart-item__top">
+                <div class="cart-item__name">{{ item.name }}</div>
+                <div class="price">${{ item.price * item.quantity }}</div>
+              </div>
+              <div class="cart-item__bottom">
+                ${{ item.price }} x {{ item.quantity }}
+                <div class="action" @click="removeItem(item.menuitem_id)">-</div>
+                <div class="action" @click="addItem(item.menuitem_id)">+</div>
+              </div>
             </div>
-            <div class="cart-item__bottom">
-              ${{ item.price }} x {{ item.quantity }}
-              <div class="action" @click="removeItem(item.menuitem_id)">-</div>
-              <div class="action" @click="addItem(item.menuitem_id)">+</div>
-            </div>
-          </div>
-          <div class="cart__bottom">
-            <button class="btn -primary" @click="checkout">
-              Checkout
-            </button>
-            <div>
-              total:
-              <span class="price">${{ total.toFixed(2) }}</span>
+            <div class="cart__bottom">
+              <button class="btn -primary" @click="checkout">
+                Checkout
+              </button>
+              <div>
+                total:
+                <span class="price">${{ total.toFixed(2) }}</span>
+              </div>
             </div>
           </div>
         </div>

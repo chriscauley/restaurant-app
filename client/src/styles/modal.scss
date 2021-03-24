@@ -29,6 +29,10 @@
   margin-bottom: 20px;
 }
 
+.modal__body .ur-form__actions {
+  @apply mb-0;
+}
+
 .modal__footer {
   @apply flex justify-end;
   .btn {

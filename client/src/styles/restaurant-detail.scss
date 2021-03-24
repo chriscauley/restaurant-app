@@ -3,6 +3,9 @@
   .menu-section {
     @apply mb-8;
   }
+  .menu-title {
+    @apply flex justify-between;
+  }
   .menu-items {
     @apply justify-start;
   }
@@ -18,7 +21,7 @@
       font-weight: bold;
     }
     .menu-item__description {
-      @apply mt-2;
+      @apply mt-1 text-sm text-text-alt;
       &:empty {
         display: none;
       }
