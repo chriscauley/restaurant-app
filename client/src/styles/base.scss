@@ -37,9 +37,9 @@ body {
 }
 
 body, html, #app {
-  min-height: 100%;
+  min-height: 100vh;
 }
 
 #app {
-  @apply bg-bg mx-auto;
+  @apply bg-bg mx-auto pb-16;
 }

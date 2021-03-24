@@ -20,8 +20,8 @@
     </popper>
   </div>
   <div class="auth-links" v-else>
-    <router-link to="/login">Login</router-link>
-    <router-link to="/signup">Sign Up</router-link>
+    <router-link class="btn -link" to="/login">Login</router-link>
+    <router-link class="btn -link" to="/signup">Sign Up</router-link>
   </div>
 </template>
 

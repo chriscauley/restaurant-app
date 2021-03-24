@@ -28,4 +28,8 @@
     @apply text-black bg-yellow-500;
     &:hover { @apply bg-yellow-700; }
   }
+  &.-link {
+    @apply text-blue-500;
+  }
 }
+

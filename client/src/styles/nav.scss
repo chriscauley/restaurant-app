@@ -1,12 +1,15 @@
 .navbar {
-  @apply flex justify-between p-2;
-  .navbar__brand {
+  @apply bg-gray-100 flex justify-between px-4 py-2 mb-8;
+  .auth-links {
     @apply flex items-center;
-    font-size: 1.5rem;
-    img {
-      @apply mr-2;
-      height: 2rem;
-    }
+  }
+}
+
+.navbar .navbar__brand {
+  @apply flex items-center text-xl;
+  img {
+    @apply mr-2;
+    height: 2rem;
   }
 }
 
@@ -23,3 +26,4 @@
     }
   }
 }
+
