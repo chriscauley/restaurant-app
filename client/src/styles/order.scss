@@ -5,6 +5,12 @@
   }
 }
 
-.order-list .order-item {
-  @apply border flex items-center justify-between p-2 mb-4 rounded;
+.order-list-view .order-item {
+  @apply border flex items-center p-2 mb-4 rounded;
+  .description {
+    @apply flex-grow mx-4;
+  }
+  .total-price {
+    @apply font-bold text-lg;
+  }
 }

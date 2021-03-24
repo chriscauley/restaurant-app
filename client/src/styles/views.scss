@@ -9,3 +9,8 @@
 .home-view, .restaurant-view {
   @apply px-8;
 }
+
+.order-list-view {
+  @apply px-8 m-auto;
+  max-width: 600px;
+}

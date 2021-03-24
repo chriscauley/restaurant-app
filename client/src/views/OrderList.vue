@@ -1,5 +1,5 @@
 <template>
-  <div class="order-list">
+  <div class="order-list-view">
     <h2>Order List</h2>
     <div>
       <router-link
@@ -10,7 +10,8 @@
       >
         <div :class="getStatusClass(order)">{{ order.status }}</div>
         <div class="description">
-          {{ getDescription(order) }}
+          <div>{{ getDescription(order) }}</div>
+          <div>from {{ order.restaurant_name }}</div>
         </div>
         <div class="total-price">${{ order.total_price }}</div>
       </router-link>
@@ -34,9 +35,9 @@ export default {
   },
   methods: {
     getDescription(order) {
-      const user_name = this.is_owner ? order.user_name : 'You'
-      const { total_items, restaurant_name } = order
-      return `${user_name} ordered ${total_items} from ${restaurant_name}.`
+      const { total_items } = order
+      const user = this.is_owner ? order.user_name : 'You'
+      return `${user} ordered ${total_items} item${total_items === 1 ? '' : 's'}`
     },
     getStatusClass(order) {
       let color = order.allowed_status ? '-primary' : '-secondary'
