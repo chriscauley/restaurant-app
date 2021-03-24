@@ -1,5 +1,5 @@
 .cart {
-  @apply border rounded;
+  @apply border p-4 rounded;
   .cart-item {
     @apply mb-2;
     &__top {
@@ -12,7 +12,10 @@
       }
     }
   }
-  .cart-total {
-    @apply border-t text-right;
+  .price {
+    @apply text-lg font-bold;
+  }
+  .cart__bottom {
+    @apply border-t flex items-center justify-between pt-4;
   }
 }

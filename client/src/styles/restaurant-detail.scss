@@ -1,4 +1,11 @@
-.restaurant-detail {
+/* TODO rename this menu as it only applies to the menu section */
+.restaurant-view {
+  .menu-section {
+    @apply mb-8;
+  }
+  .menu-items {
+    @apply justify-start;
+  }
   .menu-item {
     @apply border cursor-pointer p-2 rounded;
     .menu-item__top {

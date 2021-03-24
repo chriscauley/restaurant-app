@@ -1,5 +1,5 @@
 <template>
-  <div v-if="restaurant" class="restaurant-detail">
+  <div v-if="restaurant" class="restaurant-view">
     <h1>
       {{ restaurant.name }}
       <i class="fa fa-edit" v-if="is_owner" @click="edit('restaurant', restaurant.id)" />
@@ -46,7 +46,7 @@
           <div v-for="item in cart.items" :key="item.id" class="cart-item">
             <div class="cart-item__top">
               <div class="cart-item__name">{{ item.name }}</div>
-              <div class="cart-item__total">${{ item.price * item.quantity }}</div>
+              <div class="price">${{ item.price * item.quantity }}</div>
             </div>
             <div class="cart-item__bottom">
               ${{ item.price }} x {{ item.quantity }}
@@ -54,10 +54,15 @@
               <div class="action" @click="addItem(item.menuitem_id)">+</div>
             </div>
           </div>
-          <div class="cart-total">${{ total }}</div>
-          <button class="btn -primary" @click="checkout">
-            Checkout
-          </button>
+          <div class="cart__bottom">
+            <button class="btn -primary" @click="checkout">
+              Checkout
+            </button>
+            <div>
+              total:
+              <span class="price">${{ total.toFixed(2) }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

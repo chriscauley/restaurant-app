@@ -1,5 +1,5 @@
 .user-dropdown .user-dropdown__name {
-  @apply flex;
+  @apply flex items-center;
   .avatar {
     @apply w-6 rounded-full overflow-hidden mr-2;
   }
