@@ -61,7 +61,7 @@
         </div>
       </div>
     </div>
-    <modal v-if="form_name" :close="() => (form_name = null)">
+    <modal v-if="form_attrs" :close="() => (form_name = null)">
       <schema-form v-bind="form_attrs" />
       <template #actions>{{ ' ' }}</template>
     </modal>
