@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home-view">
     <h1>Restaurants</h1>
     <restaurant-list v-if="restaurants" :restaurants="restaurants" />
     <div v-if="is_owner">
