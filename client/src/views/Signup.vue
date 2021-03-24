@@ -1,9 +1,11 @@
 <template>
-  <div>
+  <div class="signup-view">
     <h1>Sign Up</h1>
     <schema-form form_name="signup" :state="state" :success="success" />
-    <router-link to="/signup/owner/">Register as a business</router-link>
     <social-links verb="Sign Up" />
+    <div class="bottom">
+      <router-link class="btn -link" to="/signup/owner/">Register as a business</router-link>
+    </div>
   </div>
 </template>
 

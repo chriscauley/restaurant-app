@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <div class="login-view">
+    <h1>Login</h1>
+    <p>
+      Welcome to Top Table. Please login to continue.
+    </p>
     <schema-form form_name="login" :success="success" />
     <social-links verb="Login" />
   </div>
