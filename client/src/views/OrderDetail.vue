@@ -3,10 +3,10 @@
     <div v-if="order">
       <h2>You ordered from {{ order.restaurant_name }} {{ formatDistanceToNow(order.created) }}</h2>
       <div>
-        <button v-if="can_cancel" class="btn btn-cancel" @click="cancelling = true">
+        <button v-if="can_cancel" class="btn -danger" @click="cancelling = true">
           Cancel Order
         </button>
-        <button v-else-if="order.allowed_status" class="btn btn-success" @click="markAllowedStatus">
+        <button v-else-if="order.allowed_status" class="btn -primary" @click="markAllowedStatus">
           Mark order as {{ order.allowed_status }}
         </button>
       </div>
@@ -42,8 +42,8 @@
     <modal v-if="cancelling" title="Cancel Order" :close="() => (cancelling = false)">
       Are you sure you want to cancel this order? This cannot be undone.
       <template #actions>
-        <button class="btn btn-secondary" @click="cancelling = false">No</button>
-        <button class="btn btn-danger" @click="confirmCancel">Yes, cancel the order</button>
+        <button class="btn -secondary" @click="cancelling = false">No</button>
+        <button class="btn -danger" @click="confirmCancel">Yes, cancel the order</button>
       </template>
     </modal>
   </div>

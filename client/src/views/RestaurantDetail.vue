@@ -55,7 +55,7 @@
             </div>
           </div>
           <div class="cart-total">${{ total }}</div>
-          <button class="btn btn-primary" @click="checkout">
+          <button class="btn -primary" @click="checkout">
             Checkout
           </button>
         </div>

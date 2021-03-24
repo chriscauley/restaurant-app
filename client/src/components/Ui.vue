@@ -17,7 +17,7 @@
         {{ alert.text }}
       </div>
       <div class="modal__footer">
-        <button class="btn btn-primary" @click="closeAlert">Ok</button>
+        <button class="btn -primary" @click="closeAlert">Ok</button>
       </div>
     </div>
   </div>
