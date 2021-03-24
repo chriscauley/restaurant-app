@@ -14,7 +14,7 @@
           Orders
           <span v-if="pending_orders" class="badge -red">{{ pending_orders }}</span>
         </router-link>
-        <router-link to="/settings" class="menu-item">Settings</router-link>
+        <router-link to="/settings/" class="menu-item">Settings</router-link>
         <div class="menu-item" @click="logout">Logout</div>
       </div>
     </popper>

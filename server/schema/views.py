@@ -39,7 +39,9 @@ def schema_form(request, form_name, object_id=None, method=None, content_type=No
     instance = None
 
     def check_permission(permission):
-        f = getattr(form_class, 'user_can_'+permission, None)
+        f = getattr(form_class, 'user_can_' + permission, None)
+        if f == 'SELF':
+            return request.user == instance
         if f == 'ANY':
             return True
         return f and f(instance, request.user)

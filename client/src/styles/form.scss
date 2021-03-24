@@ -45,4 +45,16 @@
 .ur-placeholder {
   height: 300px;
   width: 100%;
+  .modal & {
+    width: 229px;
+    height: 20px;
+  }
+}
+
+.ur-form .ur-file {
+  .original, .preview {
+    display: inline-block;
+    vertical-align: middle;
+    width: 50%;
+  }
 }

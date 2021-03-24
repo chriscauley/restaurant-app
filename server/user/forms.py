@@ -72,11 +72,12 @@ class UserSettingsForm(forms.ModelForm):
     _avatar_url = None
     avatar_url = forms.CharField(required=False)
 
-    user_can_POST = 'SELF'
+    user_can_GET = 'SELF'
     user_can_POST = 'SELF'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['username'].help_text = None
         if not self.data.get('avatar_url') == self.instance.avatar_url:
             self._avatar_url = self.data.get('avatar_url')
 

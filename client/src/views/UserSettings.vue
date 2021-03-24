@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="user-settings-view">
     <schema-form form_name="settings/self" :success="success" />
   </div>
 </template>
