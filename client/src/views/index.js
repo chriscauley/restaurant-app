@@ -7,7 +7,7 @@ import RestaurantDetail from './RestaurantDetail'
 import Signup from './Signup'
 import SignupOwner from './SignupOwner'
 import SignupComplete from './SignupComplete'
-import RegistrationComplete from './RegistrationComplete'
+import { RegistrationComplete, RegistrationInvalid } from './Registration'
 import UserSettings from './UserSettings'
 
 export default {
@@ -21,5 +21,6 @@ export default {
   SignupOwner,
   SignupComplete,
   RegistrationComplete,
+  RegistrationInvalid,
   UserSettings,
 }

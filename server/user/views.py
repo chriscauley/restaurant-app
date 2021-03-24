@@ -19,5 +19,5 @@ def complete_registration(request, activation_key):
         user = view.activate(activation_key=activation_key)
     except ActivationError:
         return HttpResponseRedirect('/registration/invalid/')
-    login(request, user)
+    login(request, user, backend='django.contrib.auth.backends.ModelBackend')
     return HttpResponseRedirect('/registration/complete/')

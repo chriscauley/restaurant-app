@@ -40,3 +40,9 @@
 .ur-form .form-error {
   @apply text-red-500 text-sm;
 }
+
+/* this just stops the page from popping a bit as the form loads */
+.ur-placeholder {
+  height: 300px;
+  width: 100%;
+}

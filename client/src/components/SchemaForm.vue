@@ -1,5 +1,6 @@
 <template>
   <ur-form v-if="schema" :schema="schema" v-bind="$attrs" :onSubmit="submit" :errors="errors" />
+  <div v-else class="ur-placeholder" />
 </template>
 
 <script>
