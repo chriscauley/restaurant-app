@@ -49,3 +49,13 @@ The server can be started locally with `./bin/develop`. The server will be runni
 * To create a new owner or customer, go to the signup page in a browser. After creating a user, log in as the superuser and view the link in the email stored in the admin at http://toptable.localhost:8431/admin/mailer/message/ or run the command `python manage.py send_mail` to send the emails in the queue. (sending emails requires having the settings prefixed `EMAIL_` to be set)
 
 * To create a customer with a github or twitter account, go make sure the `SOCIAL_AUTH_` settings are set and follow the prompts in the local app.
+
+## Testing
+
+* Server tests can be run with `pytest`
+
+* Front end unit tests can be run from the client directory `yarn test:unit`
+
+* There are a few end to end tests. To run these you'll need to start the development server with `./bin/develop` and then run `yarn test:e2e` from the client directory.
+
+* If testing in Postman (or similar), start the development server with `KILL_CSRF ./bin/develop`. This will disable CSRF protection, making it much easier to test postman.
