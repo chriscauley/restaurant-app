@@ -20,14 +20,15 @@ for fname in os.listdir('_dummy'):
         print('new restaurant', restaurant)
     menus[restaurant_name] = sections
 
+menu_keys = list(menus.keys())
+
 for restaurant in Restaurant.objects.all():
     if restaurant.menusection_set.all():
         print('skipping', restaurant)
         continue
     use_name = restaurant.name
     if not menus.get(use_name):
-        # TOOD pick from list
-        continue
+        use_name = menu_keys[restaurant.id % len(menu_keys)]
     for section in menus[use_name]:
         name = section['sectionTitle']
         items = zip(section['itemNames'], section['itemPrices'])

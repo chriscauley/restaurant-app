@@ -1,0 +1,16 @@
+#! /usr/bin/env bash
+
+set -e
+if [ ! -d .venv ];
+then
+    python3 -m venv .venv
+fi
+
+. .venv/bin/activate
+pip install -U pip
+pip install -r requirements.txt
+./manage.py migrate
+
+cd client
+yarn install
+

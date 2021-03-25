@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Restaurant, MenuItem, Order, OrderItem
+from .models import Restaurant, MenuItem, MenuSection, Order, OrderItem
 from django.contrib.auth.admin import UserAdmin
 
 
@@ -10,6 +10,11 @@ class RestaurantAdmin(admin.ModelAdmin):
 
 @admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(MenuSection)
+class MenuSectionAdmin(admin.ModelAdmin):
     pass
 
 

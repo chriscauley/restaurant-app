@@ -9,6 +9,7 @@ client/coverage
 .media
 *.pyc
 server/local_settings.py
+server/.secret_key
 htmlcov
 .coverage
 
