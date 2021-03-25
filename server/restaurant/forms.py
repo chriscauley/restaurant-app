@@ -38,6 +38,8 @@ class OwnerRestaurantForm(forms.ModelForm):
         if instance:
             return instance.user_can_edit(user)
         return user.is_authenticated and user.role == 'owner'
+    user_can_DELETE = user_can_POST
+
     class Meta:
         model = Restaurant
         fields = ('name', 'description', 'photo_url')

@@ -31,7 +31,7 @@ class Restaurant(models.Model):
         menusections = self.menusection_set.all().prefetch_related('menuitem_set')
         data['menusections'] = [s.get_json(user) for s in menusections]
         data['is_owner'] = self.user_can_edit(user)
-        data['is_blocked'] = OwnerBlock.objects.filter(owner=self.owner, user=user).exists()
+        data['is_blocked'] = OwnerBlock.objects.filter(owner=self.owner, user_id=user.id).exists()
         return data
 
 class MenuSection(BaseModel):

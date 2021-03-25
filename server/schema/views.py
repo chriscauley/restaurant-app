@@ -87,10 +87,10 @@ def schema_form(request, form_name, object_id=None, method=None, content_type=No
             return JsonResponse(data)
         return JsonResponse({'errors': form.errors.get_json_data()}, status=400)
 
-    if request.method == "DELETE" and instance and hasattr(form_class, 'user_can_DELETE'):
-        if not check_permission('DELETE'):
-            return JsonResponse({'error': 'You cannot edit this resource.'}, status=403)
-        instance.delete()
-        return JsonResponse({})
+    if request.method == "DELETE":
+        if instance and hasattr(form_class, 'user_can_DELETE') and check_permission('DELETE'):
+            instance.delete()
+            return JsonResponse({})
+        return JsonResponse({'error': 'You cannot edit this resource.'}, status=403)
 
     return JsonResponse({}, status=405)

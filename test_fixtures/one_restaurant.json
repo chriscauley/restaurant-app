@@ -1,0 +1,34 @@
+[
+{
+  "model": "restaurant.restaurant",
+  "pk": 1,
+  "fields": {
+    "name": "Moe's Tavern",
+    "description": "arst",
+    "owner": 3,
+    "photo": "restaurant_photos/Moes_Tavern_Night-560x315.jpg"
+  }
+},
+{
+  "model": "restaurant.menusection",
+  "pk": 1,
+  "fields": {
+    "created": "2021-03-14T15:14:17.694Z",
+    "updated": "2021-03-21T22:15:43.284Z",
+    "restaurant": 1,
+    "name": "Breakfast"
+  }
+},
+{
+  "model": "restaurant.menuitem",
+  "pk": 1,
+  "fields": {
+    "created": "2021-03-14T15:14:17.697Z",
+    "updated": "2021-03-21T22:16:08.365Z",
+    "menusection": 1,
+    "name": "Spam",
+    "description": "It's spam",
+    "price": "29.00"
+  }
+}
+]
