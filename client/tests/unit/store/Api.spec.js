@@ -1,3 +1,4 @@
+// TODO this fails intermittently because it relies too heavily on async
 import Api from '@/store/Api'
 import api from '@/common/api'
 
@@ -29,7 +30,6 @@ test.skip('Api', async next => {
   expect(third_result.foo).toBe('bar')
 
   // after marking stale, calling api.get again gives new result
-  // TODO this is failing intermittently
   api.markStale()
   const promise3 = new Promise(r => (resolve = r))
   api.get(url, resolve)

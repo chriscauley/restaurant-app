@@ -42,54 +42,14 @@ def field_to_schema(field):
     'type': FIELD_TO_TYPE.get(field_type, 'string'),
   }
 
-  # TODO.rm
-  # if not schema['type']:
-  #   #currently only supported for TypedChoiceField
-  #   sample_value = field.coerce('1')
-  #   if isinstance(sample_value, (int, float)):
-  #     schema['type'] = 'integer'
-  #   elif isinstance(sample_value, bool):
-  #     schema['type'] = 'boolean'
-  #   else:
-  #     schema['type'] = 'string'
-
-  # TODO.rm
-  # if field_type in FIELD_TO_FORMAT:
-    # schema['format'] = FIELD_TO_FORMAT.get(field_type, None)
-
   # Setup of JSON Schema keywords
   for (field_attr, schema_attr) in KEYWORDS.items():
     if hasattr(field, field_attr):
       schema[schema_attr] = getattr(field, field_attr)
 
-  # TODO.rm
-  # choices needs to be two attrs, so handle it separately
-  # if hasattr(field, 'choices'):
-  #   optional = not schema.get('required')
-  #   schema['enum'] = [a for a, b in field.choices]
-  #   schema['enumNames'] = [b for a, b in field.choices]
-  #   if not optional and not schema['enum'][0]:
-  #     schema['enum'] = schema['enum'][1:]
-  #     schema['enumNames'] = schema['enumNames'][1:]
-
   # RJSF doesn't like minLength = null
   if schema.get('minLength', 0) is None:
     schema.pop('minLength')
-
-  # TODO.rm
-  # if field_type == 'ImageField':
-  #   # RJSF confuses length of file and length of filename, eg "megapixel.png" is 1e6 characters long
-  #   schema.pop('maxLength', None)
-  #   # RJSF is confusde by default None on file field
-  #   schema.pop('default', None)
-
-  # if field_type == 'ModelMultipleChoiceField':
-  #   schema['type'] = 'array'
-  #   schema['items'] = {
-  #     'type': 'integer',
-  #     'enum': schema.pop('enum'),
-  #     'enumNames': schema.pop('enumNames'),
-  #   }
 
   for field_attr in ['maxLength', 'title', 'maximum', 'minimum', 'default']:
     if schema.get(field_attr, '') is None:
@@ -118,21 +78,8 @@ def form_to_schema(form):
     if getattr(form, 'instance', None):
       if hasattr(form.instance, name) and getattr(form.instance, name) != None:
         value = getattr(form.instance, name)
-        # TODO.rm
-        # if isinstance(value, ImageFieldFile):
-        #   if not value:
-        #     continue #empty file field, ignore
-        #   else:
-        #     value = value.url
         if hasattr(value, 'pk'):
           value = value.pk
-        # if field.__class__.__name__ == 'ModelMultipleChoiceField':
-        #   value = [obj.id for obj in value.all()]
         schema['properties'][name]['default'] = value
-
-
-  # TODO.rm
-  # if hasattr(form, 'form_title'):
-  #   schema['title'] = form.form_title
 
   return schema

@@ -17,7 +17,6 @@ def restaurant_list(request):
         blocks = OwnerBlock.objects.filter(user=request.user).values_list('owner_id', flat=True)
         query = query.exclude(owner__in=blocks)
     process = lambda r: serialize(r, ['id', 'name', 'description', 'photo_url'])
-    # TODO pagination not implemented on front end yet
     return JsonResponse(paginate(query, process=process, query_dict=request.GET, per_page=12))
 
 def process_cartitem(item):
