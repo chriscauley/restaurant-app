@@ -52,12 +52,16 @@ def schema_form(request, form_name, object_id=None, method=None, content_type=No
         else:
             instance = _meta.model.objects.get(id=object_id)
 
-    if not check_permission('GET'):
-        return JsonResponse({'error': 'You do not have access to this resource'}, status=403)
-
     kwargs = {}
     if instance:
         kwargs['instance'] = instance
+    elif request.method == "GET" and 'schema' in request.GET:
+        # schema forms are publicly available if no instance is requested
+        schema = form_to_schema(form_class())
+        return JsonResponse({'schema': schema})
+
+    if not check_permission('GET'):
+        return JsonResponse({'error': 'You do not have access to this resource'}, status=403)
 
     if request.method == "GET":
         if 'schema' in request.GET:

@@ -37,7 +37,7 @@ class OwnerRestaurantForm(forms.ModelForm):
     def user_can_POST(instance, user):
         if instance:
             return instance.user_can_edit(user)
-        return user.role == 'owner'
+        return user.is_authenticated and user.role == 'owner'
     class Meta:
         model = Restaurant
         fields = ('name', 'description', 'photo_url')
@@ -61,7 +61,7 @@ class OwnerMenuItemForm(forms.ModelForm):
     def user_can_POST(instance, user):
         if instance:
             return instance.menusection.restaurant.user_can_edit(user)
-        return user.role == 'owner'
+        return user.is_authenticated and user.role == 'owner'
     user_can_GET = user_can_POST
     user_can_DELETE = user_can_POST
 
@@ -88,7 +88,7 @@ class OwnerMenuSectionForm(forms.ModelForm):
     def user_can_POST(instance, user):
         if instance:
             return instance.restaurant.user_can_edit(user)
-        return user.role == 'owner'
+        return user.is_authenticated and user.role == 'owner'
     user_can_GET = user_can_POST
     user_can_DELETE = user_can_POST
 

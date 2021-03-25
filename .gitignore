@@ -9,6 +9,8 @@ client/coverage
 .media
 *.pyc
 server/local_settings.py
+htmlcov
+.coverage
 
 # development files
 db.sqlite3

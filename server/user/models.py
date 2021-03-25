@@ -4,7 +4,6 @@ from django.db import models
 
 
 class User(AbstractUser):
-    # TODO use avatar from twitter/github
     avatar = models.ImageField(upload_to="avatars", null=True, blank=True)
     social_avatar = models.TextField(null=True, blank=True)
     _role_choices = [
@@ -21,4 +20,4 @@ class User(AbstractUser):
             return self.avatar.url
         return self.social_avatar
     def get_json(self, user):
-        return {'id': self.id}
+        return {'id': self.id, 'avatar_url': self.avatar_url, 'username': self.username}
