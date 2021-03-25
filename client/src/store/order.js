@@ -10,9 +10,14 @@ const fetchList = (params = { page: 1 }) => {
 
 const fetchOne = id => api.get(`order/${id}/`)
 
-const updateStatus = (id, status) => api.post(`order/${id}/`, { status })
-const blockUser = id => api.post(`order/${id}/`, { action: 'block' })
-const unblockUser = id => api.post(`order/${id}/`, { action: 'unblock' })
+const refetch = ({ id }) => {
+  api.markStale()
+  fetchOne(id)
+}
+
+const updateStatus = (id, status) => api.post(`order/${id}/`, { status }).then(refetch)
+const blockUser = id => api.post(`order/${id}/`, { action: 'block' }).then(refetch)
+const unblockUser = id => api.post(`order/${id}/`, { action: 'unblock' }).then(refetch)
 
 export default {
   fetchList,

@@ -104,6 +104,10 @@ class Order(BaseModel):
         return self.restaurant.name
 
     @property
+    def restaurant_photo_url(self):
+        return self.restaurant.photo_url
+
+    @property
     def items(self):
         attrs = ['quantity', 'name', 'price', 'id']
         return [serialize(item, attrs) for item in self.orderitem_set.all()]

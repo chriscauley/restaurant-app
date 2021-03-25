@@ -119,6 +119,7 @@ def order_detail(request, order_id):
         'user_id',
         'user_name',
         'user_avatar_url',
+        'restaurant_photo_url',
         'id',
         'status',
         'status_history',

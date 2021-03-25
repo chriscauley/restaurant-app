@@ -4,8 +4,8 @@
       <h2>Order #{{ order.id }}</h2>
       <div class="row">
         <div class="col-6 left-details">
-          <div class="avatar" :style="`background-image: url(${order.user_avatar_url})`" />
-          <div class="user">Username: {{ order.user_name }}</div>
+          <div v-if="photo_url" class="avatar" :style="`background-image: url(${photo_url})`" />
+          <div class="user" v-if="order.is_owner">Username: {{ order.user_name }}</div>
           <div class="date">Date: {{ date }}</div>
           <div class="restaurant">Restaurant: {{ order.restaurant_name }}</div>
         </div>
@@ -99,8 +99,12 @@ export default {
       return this.order.allowed_status === 'canceled'
     },
     history() {
+      const unslugify = status => {
+        status = status.replace(/_/g, ' ')
+        return status.slice(0, 1).toUpperCase() + status.slice(1)
+      }
       return this.order.status_history.map(({ status, created }) => ({
-        status,
+        status: unslugify(status),
         date: created && format(new Date(created), 'h:mm aaaa'),
       }))
     },
@@ -111,6 +115,12 @@ export default {
       const steps = this.history.length - 1
       const steps_done = this.history.filter(h => h.date).length - 1
       return `width: ${(100 * steps_done) / steps}%`
+    },
+    photo_url() {
+      if (this.order.is_owner) {
+        return this.order.user_avatar_url
+      }
+      return this.order.restaurant_photo_url
     },
   },
   methods: {
