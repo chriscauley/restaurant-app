@@ -11,21 +11,27 @@ const mockStore = restaurant => {
     })
     return item
   }
+  const state = reactive({
+    cart: {
+      items: [],
+    },
+  })
   const $store = {
     restaurant: {
       markStale: jest.fn(),
       fetchOne: jest.fn(() => restaurant),
     },
+    auth: {
+      get() {},
+    },
     cart: {
-      state: reactive({
-        items: [],
-      }),
+      fetch: () => state.cart,
       addItem: _item_id => {
         const item = findItem(_item_id)
-        $store.cart.state.items.push({ quantity: 1, price: item.price, _item_id })
+        state.cart.items.push({ quantity: 1, price: item.price, _item_id })
       },
       removeItem: _item_id => {
-        $store.cart.state.items = $store.cart.state.items.filter(item => item._item_id !== _item_id)
+        state.cart.items = state.cart.items.filter(item => item._item_id !== _item_id)
       },
       checkout: jest.fn(),
     },

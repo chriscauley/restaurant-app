@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="col-4">
-        <div v-if="!is_owner" class="cart-box">
+        <div v-if="cart" class="cart-box">
           <h2>Cart</h2>
           <div v-if="cart.restaurant_id !== restaurant.id" class="alert -warning">
             You already have a cart open with another restaurant. Adding items on this page will
@@ -82,7 +82,7 @@ export default {
       return this.$store.restaurant.fetchOne(this.$route.params.id)
     },
     cart() {
-      return this.$store.cart.state
+      return !this.is_owner && this.$store.cart.fetch()
     },
     total() {
       let total = 0
