@@ -3,8 +3,23 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+import os
+from django.core.management.utils import get_random_secret_key
 
-SECRET_KEY = '@4zg8pi7l&f0+_iz2h&d4g_i(0q(h0_cw*%#dj$#dj5)b%(esf'
+def get_secret_key(BASE_DIR):
+    key_path = os.path.join(BASE_DIR, 'server/.secret_key')
+    if os.path.exists(key_path):
+        with open(key_path, 'r') as f:
+            SECRET_KEY = f.read()
+    else:
+        SECRET_KEY = get_random_secret_key()
+        with open(key_path, 'w') as f:
+            f.write(SECRET_KEY)
+            print('wrote secret key to', key_path)
+
+    return SECRET_KEY
+
+SECRET_KEY = get_secret_key(BASE_DIR)
 DEBUG = True
 KILL_CSRF = False
 ALLOWED_HOSTS = ['toptable.localhost']
