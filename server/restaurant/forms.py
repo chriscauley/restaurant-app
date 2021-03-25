@@ -64,7 +64,7 @@ class OwnerMenuItemForm(forms.ModelForm):
         if instance:
             return instance.menusection.restaurant.user_can_edit(user)
         return user.is_authenticated and user.role == 'owner'
-    user_can_GET = user_can_POST
+    user_can_GET = "ANY"
     user_can_DELETE = user_can_POST
 
     class Meta:
@@ -91,7 +91,7 @@ class OwnerMenuSectionForm(forms.ModelForm):
         if instance:
             return instance.restaurant.user_can_edit(user)
         return user.is_authenticated and user.role == 'owner'
-    user_can_GET = user_can_POST
+    user_can_GET = "ANY"
     user_can_DELETE = user_can_POST
 
     class Meta:

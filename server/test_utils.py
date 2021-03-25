@@ -7,7 +7,7 @@ class BaseTestCase(TestCase):
     def setUp(self):
         self.client = Client()
 
-    def post(self, url, data):
+    def post(self, url, data={}):
         return self.client.post(url, data, content_type='application/json')
 
     def login(self, username):
