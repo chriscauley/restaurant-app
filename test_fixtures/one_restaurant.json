@@ -3,6 +3,8 @@
   "model": "restaurant.restaurant",
   "pk": 1,
   "fields": {
+    "created": "2021-03-25T20:24:17.990Z",
+    "updated": "2021-03-25T20:24:18.002Z",
     "name": "Moe's Tavern",
     "description": "arst",
     "owner": 3,

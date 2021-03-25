@@ -3,8 +3,8 @@ from server.restaurant.models import MenuItem, Restaurant, MenuSection
 
 class RestaurantFormsTestCase(BaseTestCase):
     fixtures = [
-        'test_fixtures/one_restaurant.json',
         'test_fixtures/user.json',
+        'test_fixtures/one_restaurant.json',
     ]
 
     def _test_user_or_guest(self):

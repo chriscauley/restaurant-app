@@ -58,4 +58,4 @@ The server can be started locally with `./bin/develop`. The server will be runni
 
 * There are a few end to end tests. To run these you'll need to start the development server with `./bin/develop` and then run `yarn test:e2e` from the client directory.
 
-* If testing in Postman (or similar), start the development server with `KILL_CSRF ./bin/develop`. This will disable CSRF protection, making it much easier to test postman.
+* If testing in Postman (or similar), start the development server with `KILL_CSRF=1 ./bin/develop`. This will disable CSRF protection, making it much easier to test postman.

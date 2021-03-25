@@ -4,8 +4,8 @@ from server.user.models import User
 
 class OrderFlowTestCase(BaseTestCase):
     fixtures = [
-        'test_fixtures/one_restaurant.json',
         'test_fixtures/user.json',
+        'test_fixtures/one_restaurant.json',
     ]
 
     def setUp(self):
