@@ -1,5 +1,8 @@
 <template>
   <div class="cart">
+    <div v-if="items.length === 0">
+      Your cart is empty
+    </div>
     <div v-for="item in items" :key="item.id" class="cart-item">
       <div class="cart-item__top">
         <div class="cart-item__name">{{ item.name }}</div>

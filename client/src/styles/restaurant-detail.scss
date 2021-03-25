@@ -1,4 +1,10 @@
-/* TODO rename this menu as it only applies to the menu section */
+.restaurant-view {
+  .cart-box {
+    position: sticky;
+    top: 1rem;;
+  }
+}
+
 .restaurant-view {
   .menu-section {
     @apply mb-8;
