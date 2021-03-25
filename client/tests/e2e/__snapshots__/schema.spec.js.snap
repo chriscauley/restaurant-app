@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getting schema form login 1`] = `undefined`;
+
+exports[`getting schema form menuitem 1`] = `undefined`;
+
+exports[`getting schema form menusection 1`] = `undefined`;
+
+exports[`getting schema form owner/signup 1`] = `undefined`;
+
+exports[`getting schema form restaurant 1`] = `undefined`;
+
+exports[`getting schema form signup 1`] = `undefined`;

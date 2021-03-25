@@ -39,5 +39,8 @@ module.exports = {
 
   globals: {
     jest: 'readonly',
+    describe: 'readonly',
+    test: 'readonly',
+    expect: 'readonly',
   },
 }

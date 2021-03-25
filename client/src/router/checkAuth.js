@@ -4,7 +4,7 @@ const requireAuth = (to, next) => {
   if (!store.auth.get()) {
     next({
       name: 'login',
-      params: { next: to.fullPath },
+      query: { next: to.fullPath },
     })
   } else {
     next()
@@ -13,7 +13,7 @@ const requireAuth = (to, next) => {
 
 const redirectIfAuthed = (to, next) => {
   if (store.auth.get()) {
-    next(to.params.next || '/')
+    next(to.query.next || '/')
   } else {
     next()
   }

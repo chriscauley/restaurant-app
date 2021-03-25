@@ -8,6 +8,7 @@
   "scripts": {
     "build": "vue-cli-service build",
     "test:unit": "jest",
+    "test:e2e": "VUE_APP_ROOT_URL=http://toptable.localhost:8431 yarn jest --config=jest.e2e.js",
     "lint": "vue-cli-service lint",
     "watch": "vue-cli-service build --watch"
   },

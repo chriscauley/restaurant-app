@@ -4,7 +4,7 @@ import store from '@/store'
 import SchemaForm from '@/components/SchemaForm'
 import Modal from '@/components/Modal'
 
-jest.mock('@/common/api') // eslint-disable-line
+jest.mock('@/common/api')
 
 const dom = new JSDOM()
 global.document = dom.window.document

@@ -6,8 +6,9 @@ const root = process.env.VUE_APP_ROOT_URL || ''
 const api = axios.create({
   baseURL: root + '/api',
   transformRequest(data, headers) {
-    headers.delete['X-CSRFToken'] = getCSRF(document.cookie)
-    headers.post['X-CSRFToken'] = getCSRF(document.cookie)
+    const csrf = getCSRF(typeof document === 'undefined' ? '' : document.cookie)
+    headers.delete['X-CSRFToken'] = csrf
+    headers.post['X-CSRFToken'] = csrf
     headers.post['Content-Type'] = 'application/json'
     return JSON.stringify(data)
   },
