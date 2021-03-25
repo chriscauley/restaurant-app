@@ -55,7 +55,6 @@ const mountElement = (propsData = {}) => {
 
 test('OrderDetail renders properly', () => {
   const wrapper = mountElement()
-  expect(wrapper.find('.user').text()).toBe('Username: John Doe')
   expect(wrapper.find('.date').text()).toBe('Date: Jan 1, 2021')
   expect(wrapper.find('.restaurant').text()).toBe('Restaurant: Central Perk')
 })
