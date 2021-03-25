@@ -10,12 +10,14 @@ const PaginatedComponent = {
         value: page ** 2,
         next_page: page < 2,
       }
-    }
-  }
+    },
+  },
 }
 
 test('PaginatedMixin', () => {
-  expect(PaginatedMixin.methods.getPage).toThrow('Paginated component must specify a getPage function')
+  expect(PaginatedMixin.methods.getPage).toThrow(
+    'Paginated component must specify a getPage function',
+  )
 
   const wrapper = shallowMount(PaginatedComponent)
 
@@ -28,5 +30,4 @@ test('PaginatedMixin', () => {
   expect(wrapper.vm.current_page).toBe(2)
   expect(wrapper.vm.pages.length).toBe(2)
   expect(wrapper.vm.has_next_page).toBe(false)
-
 })

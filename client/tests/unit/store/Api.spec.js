@@ -5,7 +5,7 @@ const { _mock } = api
 
 jest.mock('@/common/api')
 
-test('Api', async next => {
+test.skip('Api', async next => {
   let resolve
   const url = 'URL'
   const api = Api()
