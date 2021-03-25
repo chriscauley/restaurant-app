@@ -44,12 +44,12 @@
       <div class="col-4">
         <div v-if="cart" class="cart-box">
           <h2>Cart</h2>
-          <div v-if="cart.restaurant_id !== restaurant.id" class="alert -warning">
+          <div v-if="show_warning" class="alert -warning">
             You already have a cart open with another restaurant. Adding items on this page will
             clear your existing cart.
           </div>
           <cart
-            v-else
+            v-else-if="cart.items"
             :addItem="addItem"
             :removeItem="removeItem"
             :checkout="checkout"
@@ -112,13 +112,20 @@ export default {
         },
       }
     },
+    show_warning() {
+      return this.cart.restaurant_id && this.cart.restaurant_id !== this.restaurant.id
+    },
   },
   methods: {
     addItem(item_id) {
-      this.$store.cart.addItem(item_id)
+      if (!this.is_owner) {
+        this.$store.cart.addItem(item_id)
+      }
     },
     removeItem(item_id) {
-      this.$store.cart.removeItem(item_id)
+      if (!this.is_owner) {
+        this.$store.cart.removeItem(item_id)
+      }
     },
     checkout() {
       this.$store.cart.checkout()

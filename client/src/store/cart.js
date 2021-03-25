@@ -5,9 +5,14 @@ const api = Api()
 
 const fetch = () => api.get('cart/')
 
-const addItem = item_id => api.post('cart/add/', { item_id })
+const refetch = () => {
+  api.markStale()
+  return api.get('cart/')
+}
 
-const removeItem = item_id => api.post('cart/remove/', { item_id })
+const addItem = item_id => api.post('cart/add/', { item_id }).then(refetch)
+
+const removeItem = item_id => api.post('cart/remove/', { item_id }).then(refetch)
 
 const checkout = () => {
   api.post('cart/checkout/').then(({ order_id }) => {

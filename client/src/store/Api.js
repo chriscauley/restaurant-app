@@ -35,11 +35,7 @@ export default () => {
     stale_at = new Date().valueOf()
   }
 
-  const post = (url, data) =>
-    api.post(url, data).then(() => {
-      markStale()
-      get(url)
-    })
+  const post = (url, data) => api.post(url, data)
 
   return { get, markStale, post }
 }

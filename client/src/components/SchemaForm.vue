@@ -86,8 +86,9 @@ export default {
         })
     },
     doDelete() {
-      api.delete(`${this.form_name}/`)
-      this.onDelete(this.name)
+      api.delete(`${this.form_name}/`).then(() => {
+        this.onDelete(this.name)
+      })
     },
   },
 }
