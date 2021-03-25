@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 import json
 
+from server.decorators import user_role_required
 from server.restaurant.models import Restaurant, Order, MenuSection, MenuItem, Cart, CartItem, serialize, OwnerBlock
 from server.paginate import paginate
 
@@ -28,6 +29,7 @@ def process_cartitem(item):
         'quantity': item.quantity,
     }
 
+@user_role_required
 def cart_detail(request):
     if not request.user.is_authenticated:
         return JsonResponse({})
@@ -40,6 +42,7 @@ def cart_detail(request):
     })
 
 
+@user_role_required
 def cart_add(request):
     data = json.loads(request.body.decode('utf-8') or "{}")
     menuitem = get_object_or_404(MenuItem, id=data.get('item_id'))
@@ -56,6 +59,7 @@ def cart_add(request):
     return cart_detail(request)
 
 
+@user_role_required
 def cart_remove(request):
     data = json.loads(request.body.decode('utf-8') or "{}")
     cartitem = get_object_or_404(CartItem, cart__user=request.user, menuitem_id=data.get('item_id'))
@@ -66,6 +70,7 @@ def cart_remove(request):
     return cart_detail(request)
 
 
+@user_role_required
 def cart_checkout(request):
     data = json.loads(request.body.decode('utf-8') or "{}")
     cart = get_object_or_404(Cart, user=request.user)
