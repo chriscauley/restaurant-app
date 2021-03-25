@@ -1,6 +1,6 @@
 <template>
   <div class="order-list-view">
-    <h2>Order List</h2>
+    <h2>{{ title }}</h2>
     <div>
       <router-link
         :to="`/order/${order.id}/`"
@@ -12,6 +12,7 @@
         <div class="description">
           <div>{{ getDescription(order) }}</div>
           <div>from {{ order.restaurant_name }}</div>
+          <div>on {{ getDate(order) }}</div>
         </div>
         <div class="total-price">${{ order.total_price }}</div>
       </router-link>
@@ -20,20 +21,34 @@
 </template>
 
 <script>
+import { format } from 'date-fns'
 export default {
   __route: {
     path: '/order-list',
     meta: { authRequired: true },
+  },
+  props: {
+    user_id: Number,
+    restaurant_id: Number,
+    title: {
+      type: String,
+      default: () => 'Order List',
+    },
   },
   computed: {
     is_owner() {
       return this.$store.auth.get()?.role === 'owner'
     },
     orders() {
-      return this.$store.order.fetchList()?.items
+      const { restaurant_id, user_id } = this
+      return this.$store.order.fetchList({ user_id, restaurant_id })?.items
     },
   },
   methods: {
+    getDate(order) {
+      const { created } = order
+      return format(new Date(created), 'MMM d, yyyy')
+    },
     getDescription(order) {
       const { total_items } = order
       const user = this.is_owner ? order.user_name : 'You'

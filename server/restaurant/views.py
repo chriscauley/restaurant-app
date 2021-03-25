@@ -108,11 +108,13 @@ def order_detail(request, order_id):
         raise NotImplementedError('TODO')
     # TODO this uses so many queries
     attrs = [
+        'user_id',
         'user_name',
         'user_avatar_url',
         'id',
         'status',
         'status_history',
+        'restaurant_id',
         'restaurant_name',
         'items',
         'created',
@@ -129,6 +131,11 @@ def order_list(request):
         orders = request.user.order_set.all()
     elif request.user.role == 'owner':
         orders = Order.objects.filter(restaurant__owner=request.user)
+
+    if request.GET.get('user_id'):
+        orders = orders.filter(user_id=request.GET['user_id'])
+    if request.GET.get('restaurant_id'):
+        orders = orders.filter(restaurant_id=request.GET['restaurant_id'])
     orders = orders.select_related('restaurant', 'user')
     attrs = [
         'id',

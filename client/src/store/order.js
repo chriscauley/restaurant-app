@@ -1,8 +1,13 @@
 import Api from './Api'
+import querystring from 'querystring'
 
 const api = Api()
 
-const fetchList = () => api.get('orders/')
+const fetchList = (params = {}) => {
+  const query = querystring.stringify(params)
+  return api.get('orders/?' + query)
+}
+
 const fetchOne = id => api.get(`order/${id}/`)
 
 const updateStatus = (id, status) => api.post(`order/${id}/`, { status })
