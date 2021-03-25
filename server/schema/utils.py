@@ -124,8 +124,8 @@ def form_to_schema(form):
         #     continue #empty file field, ignore
         #   else:
         #     value = value.url
-        # if hasattr(value, 'pk'):
-        #   value = value.pk
+        if hasattr(value, 'pk'):
+          value = value.pk
         # if field.__class__.__name__ == 'ModelMultipleChoiceField':
         #   value = [obj.id for obj in value.all()]
         schema['properties'][name]['default'] = value

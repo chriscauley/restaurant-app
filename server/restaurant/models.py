@@ -13,7 +13,9 @@ class BaseModel(models.Model):
         abstract = True
 
 
-class Restaurant(models.Model):
+class Restaurant(BaseModel):
+    class Meta:
+        ordering = ('-created',)
     name = models.CharField(max_length=256)
     description = models.TextField()
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
@@ -34,7 +36,10 @@ class Restaurant(models.Model):
         data['is_blocked'] = OwnerBlock.objects.filter(owner=self.owner, user_id=user.id).exists()
         return data
 
+
 class MenuSection(BaseModel):
+    class Meta:
+        ordering = ('-created',)
     restaurant = models.ForeignKey(Restaurant, models.CASCADE)
     name = models.CharField(max_length=256)
     __str__ = lambda self: self.name
@@ -55,6 +60,8 @@ class MenuItem(BaseModel):
     __str__ = lambda self: self.name
     def get_json(self, user):
         return serialize(self, ['id', 'name', 'price', 'description'])
+    class Meta:
+        ordering = ('-created',)
 
 
 class Cart(BaseModel):
@@ -159,11 +166,15 @@ class OrderItem(BaseModel):
     @property
     def price(self):
         return self.menuitem.price
+    class Meta:
+        ordering = ('-created',)
 
 
 class OrderStatusUpdate(BaseModel):
     order = models.ForeignKey(Order, models.CASCADE)
     status = models.CharField(max_length=16, choices=Order.STATUS_CHOICES)
+    class Meta:
+        ordering = ('-created',)
 
 
 class OwnerBlock(BaseModel):
