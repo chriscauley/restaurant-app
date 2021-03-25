@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import FocusMixin from './FocusMixin'
+import FocusMixin from '@/mixins/FocusMixin'
 
 export default {
   mixins: [FocusMixin],
