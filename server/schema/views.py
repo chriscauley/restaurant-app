@@ -1,4 +1,5 @@
 from django.http import JsonResponse, Http404
+from django.shortcuts import get_object_or_404
 from django.urls import path
 
 from .utils import form_to_schema
@@ -28,12 +29,10 @@ def register(form, form_name=None):
     return form
 
 
-def schema_form(request, form_name, object_id=None, method=None, content_type=None):
+def schema_form(request, form_name, object_id=None):
     if not form_name in FORMS:
         raise Http404(f"Form with name {form_name} does not exist")
 
-    method = method or request.method
-    content_type = content_type or request.headers.get('Content-Type', None)
     form_class = FORMS[form_name]
     _meta  = getattr(form_class, 'Meta', object())
     instance = None
@@ -50,7 +49,7 @@ def schema_form(request, form_name, object_id=None, method=None, content_type=No
         if object_id == "self":
             instance = request.user
         else:
-            instance = _meta.model.objects.get(id=object_id)
+            instance = get_object_or_404(_meta.model, id=object_id)
 
     kwargs = {}
     if instance:

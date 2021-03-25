@@ -38,3 +38,5 @@ if settings.DEBUG:  # pragma: no cover
     ]
 
 urlpatterns.append(re_path('', spa))
+
+handler404 = "server.views.handler404"
