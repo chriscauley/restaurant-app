@@ -9,10 +9,9 @@ class User(AbstractUser):
     _role_choices = [
         'user',
         'owner',
-        'admin',
     ]
     ROLE_CHOICES = zip(_role_choices, _role_choices)
-    role = models.CharField(max_length=8, choices=ROLE_CHOICES)
+    role = models.CharField(max_length=8, choices=ROLE_CHOICES, default='user')
 
     @property
     def avatar_url(self):

@@ -6,3 +6,4 @@ pytest-cov==2.11.1
 pytest-django==4.1.0
 social-auth-app-django==4.0.0
 social-auth-core==4.1.0
+whitenoise==5.2.0

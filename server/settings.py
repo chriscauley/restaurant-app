@@ -21,10 +21,10 @@ def get_secret_key(BASE_DIR):
 
 SECRET_KEY = get_secret_key(BASE_DIR)
 DEBUG = True
-KILL_CSRF = False
 ALLOWED_HOSTS = ['toptable.localhost']
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -129,6 +130,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'client/dist')]
+STATIC_ROOT = os.path.join(BASE_DIR, '.static')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_ROOT = os.path.join(BASE_DIR, '.media')
 MEDIA_URL = '/media/'
 
@@ -141,7 +144,7 @@ try:
 except ImportError:
     pass
 
-if KILL_CSRF:
+if os.environ.get('KILL_CSRF'):
     print("""
     KILL_CSRF is on.
     This is meant to be a temporary hack to make working in postman faster.
