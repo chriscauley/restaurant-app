@@ -32,10 +32,10 @@ const wait = s =>
   })
 
 const newOrder = data => ({
-  created: "Jan 1 2021 12:00",
+  created: 'Jan 1 2021 12:00',
   status_history: [{ status: 'placed', created: new Date() }],
-  user_name: "John Doe",
-  restaurant_name: "Central Perk",
+  user_name: 'John Doe',
+  restaurant_name: 'Central Perk',
   ...data,
 })
 

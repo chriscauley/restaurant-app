@@ -1,5 +1,24 @@
 <template>
-  <ur-form v-if="schema" :schema="schema" v-bind="$attrs" :onSubmit="submit" :errors="errors" />
+  <ur-form
+    v-if="schema && !confirming_delete"
+    :schema="schema"
+    v-bind="$attrs"
+    :onSubmit="submit"
+    :errors="errors"
+  >
+    <template #actions>
+      <button type="submit" class="btn -primary">Submit</button>
+      <div v-if="onDelete" class="btn -danger" @click="confirming_delete = true">Delete</div>
+    </template>
+  </ur-form>
+  <div v-else-if="confirming_delete">
+    <h3>Delete "{{ name }}"</h3>
+    <p>Are you sure you want to delete this? This cannot be undone</p>
+    <div class="ur-form__actions">
+      <button class="btn -primary" @click="doDelete">Yes, Delete It</button>
+      <button class="btn -secondary" @click="confirming_delete = false">No</button>
+    </div>
+  </div>
   <div v-else class="ur-placeholder" />
 </template>
 
@@ -29,11 +48,15 @@ export default {
   props: {
     form_name: String,
     success: Function,
+    onDelete: Function,
   },
   data() {
-    return { errors: null, loading: false }
+    return { errors: null, loading: false, confirming_delete: false }
   },
   computed: {
+    name() {
+      return this.schema?.properties.name.default
+    },
     schema() {
       const schema = this.$store.schema.fetch(this.form_name)
       if (!schema) {
@@ -61,6 +84,10 @@ export default {
             this.$store.schema.markStale(this.form_name)
           }
         })
+    },
+    doDelete() {
+      api.delete(`${this.form_name}/`)
+      this.onDelete(this.name)
     },
   },
 }

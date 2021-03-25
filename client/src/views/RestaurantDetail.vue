@@ -91,7 +91,9 @@ export default {
       if (!this.form_name) {
         return
       }
+      const can_delete = !!this.form_name.match(/\/\d+/)
       return {
+        onDelete: can_delete ? this.onDelete : undefined,
         form_name: this.form_name,
         state: this.form_state || {},
         success: data => {
@@ -130,6 +132,19 @@ export default {
     },
     edit(model, id) {
       this.form_name = `${model}/${id}`
+    },
+    onDelete(name) {
+      if (this.form_name.startsWith('restaurant')) {
+        this.$router.replace('/')
+      } else {
+        this.$store.restaurant.markStale()
+        this.$store.restaurant.fetchOne(this.$route.params.id)
+        this.form_name = null
+      }
+      this.$store.ui.toast({
+        text: `"${name}" has been deleted.`,
+        level: 'success',
+      })
     },
   },
 }
