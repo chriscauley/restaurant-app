@@ -42,12 +42,10 @@
           <button v-else @click="blockUser" class="btn -danger">Block User</button>
         </div>
       </div>
-      <order-list
-        v-if="order.is_owner"
-        :restaurant_id="order.restaurant_id"
-        :user_id="order.user_id"
-        :title="`Past Orders from ${order.user_name}`"
-      />
+      <div v-if="order.is_owner && past_orders">
+        <h2>Past Orders from {{ order.user_name }}</h2>
+        <order-list :orders="past_orders" />
+      </div>
     </div>
     <modal v-if="cancelling" title="Cancel Order" :close="() => (cancelling = false)">
       Are you sure you want to cancel this order? This cannot be undone.
@@ -62,7 +60,7 @@
 <script>
 import { formatDistanceToNow, format } from 'date-fns'
 
-import OrderList from '@/views/OrderList'
+import OrderList from '@/components/OrderList'
 import Cart from '@/components/Cart'
 
 export default {
@@ -106,6 +104,10 @@ export default {
       const steps = this.history.length - 1
       const steps_done = this.history.filter(h => h.date).length - 1
       return `width: ${(100 * steps_done) / steps}%`
+    },
+    past_orders() {
+      const { user_id, restaurant_id } = this.order
+      return this.$store.order.fetchList({ user_id, restaurant_id })?.items
     },
   },
   methods: {

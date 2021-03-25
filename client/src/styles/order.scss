@@ -51,7 +51,7 @@
   @apply mb-16 mx-auto flex justify-evenly;
 }
 
-.order-list-view .order-item {
+.order-list .order-item {
   @apply border flex items-center p-2 mb-4 rounded;
   .description {
     @apply flex-grow mx-4;

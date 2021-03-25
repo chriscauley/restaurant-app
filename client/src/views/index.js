@@ -2,7 +2,7 @@ import Checkout from './Checkout'
 import Home from './Home'
 import Login from './Login'
 import OrderDetail from './OrderDetail'
-import OrderList from './OrderList'
+import Orders from './Orders'
 import RestaurantDetail from './RestaurantDetail'
 import Signup from './Signup'
 import SignupOwner from './SignupOwner'
@@ -15,7 +15,7 @@ export default {
   Home,
   Login,
   OrderDetail,
-  OrderList,
+  Orders,
   RestaurantDetail,
   Signup,
   SignupOwner,

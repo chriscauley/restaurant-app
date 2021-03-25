@@ -10,7 +10,7 @@
     </div>
     <popper v-if="focused" class="menu" placement="bottom-end">
       <div>
-        <router-link to="/order-list/" class="menu-item">
+        <router-link to="/orders/" class="menu-item">
           Orders
           <span v-if="pending_orders" class="badge -red">{{ pending_orders }}</span>
         </router-link>
