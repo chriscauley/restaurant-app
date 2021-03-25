@@ -8,8 +8,8 @@ export const RegistrationInvalid = {
     this.$store.ui.toast({
       text: 'This registration link is no longer valid. Please try again.',
       level: 'danger',
-    }),
-      this.$router.replace('/')
+    })
+    this.$router.replace('/')
   },
 }
 
@@ -23,7 +23,7 @@ export const RegistrationComplete = {
     this.$store.ui.toast({
       text: 'Your account has been activated and you are now logged in.',
       level: 'success',
-    }),
-      this.$router.replace('/')
+    })
+    this.$router.replace('/')
   },
 }

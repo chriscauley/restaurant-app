@@ -1681,10 +1681,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@unrest/form@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@unrest/form/-/form-0.0.1.tgz#ce9e573616683afa9845bacc8a5e7d5e12c318f9"
-  integrity sha512-XHfg77/T5QjXaWp/IxBdMMgb5IpLaKv5Sn1ZyJ6h894cINZUYZOYjx94tq+5plAvqnN1GPxp8tON3OsMyjOQyw==
+"@unrest/form@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@unrest/form/-/form-0.0.2.tgz#f6e5905881cfceaa804fa8b27dc39092681f5ad1"
+  integrity sha512-LrTeA9TaWF8jqGj2InQ2z4IoG0M6EdXtLaZGB2AUcmXmRFystQf/8VfEC0FNstff7Lh5TH+sBLeABEBPrf3IFw==
   dependencies:
     core-js "^3.6.5"
     lodash.pick "^4.4.0"
