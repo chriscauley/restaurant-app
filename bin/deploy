@@ -11,4 +11,5 @@ python manage.py migrate
 cd client
 yarn build
 
+cd ..
 python manage.py collectstatic --noinput
