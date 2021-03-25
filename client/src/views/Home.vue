@@ -1,17 +1,19 @@
 <template>
   <div class="home-view">
-    <h1>Restaurants</h1>
+    <div class="home-view__top">
+      <h1>Restaurants</h1>
+      <div v-if="is_owner">
+        <button class="btn -primary" @click="adding = true">
+          Add another restaurant
+        </button>
+      </div>
+    </div>
     <template v-for="(page, index) in pages" :key="index">
       <restaurant-list v-if="page" :restaurants="page.items" />
     </template>
     <button v-if="has_next_page" class="btn -primary list-paginator" @click="loadNextPage">
       Load More Restaurants
     </button>
-    <div v-if="is_owner">
-      <button class="btn -primary" @click="adding = true">
-        Add another restaurant
-      </button>
-    </div>
     <modal v-if="adding">
       <schema-form form_name="restaurant" :success="success" />
       <template #actions>{{ ' ' }}</template>

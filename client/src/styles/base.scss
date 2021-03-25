@@ -19,3 +19,6 @@
 @import './social-links';
 @import './user-dropdown';
 
+.list-paginator {
+  @apply block mx-auto px-16 py-4;
+}

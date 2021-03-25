@@ -14,3 +14,7 @@
   @apply px-8 m-auto;
   max-width: 600px;
 }
+
+.home-view__top {
+  @apply flex justify-between items-center;
+}
