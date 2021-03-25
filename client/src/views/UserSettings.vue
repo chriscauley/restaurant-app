@@ -14,6 +14,7 @@ export default {
     success() {
       this.$store.ui.toast({
         text: 'Settings updated',
+        level: 'success',
       })
     },
   },
