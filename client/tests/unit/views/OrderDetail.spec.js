@@ -32,8 +32,10 @@ const wait = s =>
   })
 
 const newOrder = data => ({
-  created: new Date(),
+  created: "Jan 1 2021 12:00",
   status_history: [{ status: 'placed', created: new Date() }],
+  user_name: "John Doe",
+  restaurant_name: "Central Perk",
   ...data,
 })
 
@@ -53,9 +55,9 @@ const mountElement = (propsData = {}) => {
 
 test('OrderDetail renders properly', () => {
   const wrapper = mountElement()
-
-  expect(wrapper.find('h2').text()).toBe('You ordered from  less than a minute ago')
-  expect(wrapper.find('.order-history').text()).toBe('placed less than a minute ago')
+  expect(wrapper.find('.user').text()).toBe('Username: John Doe')
+  expect(wrapper.find('.date').text()).toBe('Date: Jan 1, 2021')
+  expect(wrapper.find('.restaurant').text()).toBe('Restaurant: Central Perk')
 })
 
 test('OrderDetail polls correctly', async next => {
@@ -65,7 +67,7 @@ test('OrderDetail polls correctly', async next => {
   wrapper.vm.$store._order = newOrder({ allowed_status: 'canceled', status: 'placed' })
   await wait(POLL_FREQUENCY * 2)
 
-  wrapper.find('.btn-cancel').trigger('click')
+  wrapper.find('.btn.-danger').trigger('click')
   expect(wrapper.text().includes('Cancel Order')).toBe(true)
   expect(wrapper.vm.cancelling).toBe(true)
 

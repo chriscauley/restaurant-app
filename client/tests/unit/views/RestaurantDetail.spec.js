@@ -65,7 +65,6 @@ test('RestaurantDetail renders properly', () => {
   })
 
   expect(wrapper.find('h1').text()).toBe('My restaurant')
-  expect(wrapper.find('.cart-total').text()).toBe('$0')
   expect(wrapper.find('.menu-section h2').text()).toBe('Poke Bowls')
   expect(wrapper.find('.menu-item__name').text()).toBe('Yuzu Salmon')
 })
