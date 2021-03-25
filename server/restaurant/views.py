@@ -87,25 +87,28 @@ def cart_checkout(request):
 
 
 def order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if not order.user_can_see_order(request.user):
+        return JsonResponse({}, status=404)
+
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8') or "{}")
         order = get_object_or_404(Order, id=order_id)
         if data.get('status'):
             if not order.user_can_set_status(request.user, data['status']):
-                raise NotImplementedError(f'TODO {request.user} cannot set status {data["status"]}')
+                message = f'You cannot set status {data["status"]}'
+                return JsonResponse({ 'message': message }, status=403)
             order.set_status(data.get('status'))
         if data.get('action'):
             owner = order.restaurant.owner
             if request.user != owner:
-                raise NotImplementedError('TODO')
+                message = "Only the owner can block users"
+                return JsonResponse({ 'message': message }, status=403)
             if data['action'] == 'block':
                 OwnerBlock.objects.get_or_create(user=order.user, owner=owner)
             if data['action'] == 'unblock':
                 OwnerBlock.objects.filter(user=order.user, owner=owner).delete()
 
-    order = get_object_or_404(Order, id=order_id)
-    if not order.user_can_see_order(request.user):
-        raise NotImplementedError('TODO')
     # TODO this uses so many queries
     attrs = [
         'user_id',
@@ -127,6 +130,9 @@ def order_detail(request, order_id):
     return JsonResponse(data)
 
 def order_list(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({ 'items': [] })
+
     if request.user.role == 'user':
         orders = request.user.order_set.all()
     elif request.user.role == 'owner':
