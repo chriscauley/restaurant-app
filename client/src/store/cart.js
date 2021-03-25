@@ -16,6 +16,7 @@ const removeItem = item_id => api.post('cart/remove/', { item_id }).then(refetch
 
 const checkout = () => {
   api.post('cart/checkout/').then(({ order_id }) => {
+    api.markStale()
     router.push({ name: 'orderdetail', params: { order_id } })
   })
 }

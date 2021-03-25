@@ -5,6 +5,9 @@
       <i class="fa fa-edit" v-if="is_owner" @click="edit('restaurant', restaurant.id)" />
     </h1>
     <h3>{{ restaurant.description }}</h3>
+    <p v-if="!is_owner">
+      Click any meal to add it to your cart.
+    </p>
     <div class="row">
       <div class="menu col-8">
         <div v-for="section in restaurant.menusections" :key="section.id" class="menu-section">

@@ -8,6 +8,9 @@
         </button>
       </div>
     </div>
+    <p v-if="!is_owner">
+      Click a restaurant to start your order.
+    </p>
     <template v-for="(page, index) in pages" :key="index">
       <restaurant-list v-if="page" :restaurants="page.items" />
     </template>
