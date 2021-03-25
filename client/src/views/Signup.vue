@@ -19,17 +19,7 @@ export default {
     meta: { authRedirect: true },
   },
   data() {
-    // TODO remove dummy state
-    const DEBUG = true
-    const r = Math.round(1000 * Math.random())
-    const dummy_state = {
-      username: 'cantelope' + r,
-      email: `arst${r}@arst.com`,
-      password1: 'no hope heerey1',
-    }
-    return {
-      state: DEBUG ? dummy_state : {},
-    }
+    return { state: {} }
   },
   methods: {
     success() {
