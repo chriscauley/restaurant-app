@@ -17,7 +17,7 @@ def restaurant_list(request):
         query = query.exclude(owner__in=blocks)
     process = lambda r: serialize(r, ['id', 'name', 'description', 'photo_url'])
     # TODO pagination not implemented on front end yet
-    return JsonResponse(paginate(query, process=process, query_dict=request.GET, per_page=60))
+    return JsonResponse(paginate(query, process=process, query_dict=request.GET, per_page=12))
 
 def process_cartitem(item):
     return {
@@ -117,7 +117,6 @@ def order_detail(request, order_id):
         'id',
         'status',
         'status_history',
-        'restaurant_id',
         'restaurant_name',
         'items',
         'created',
@@ -134,15 +133,15 @@ def order_list(request):
         return JsonResponse({ 'items': [] })
 
     if request.user.role == 'user':
-        orders = request.user.order_set.all()
+        query = request.user.order_set.all()
     elif request.user.role == 'owner':
-        orders = Order.objects.filter(restaurant__owner=request.user)
+        query = Order.objects.filter(restaurant__owner=request.user)
 
     if request.GET.get('user_id'):
-        orders = orders.filter(user_id=request.GET['user_id'])
+        query = query.filter(user_id=request.GET['user_id'])
     if request.GET.get('restaurant_id'):
-        orders = orders.filter(restaurant_id=request.GET['restaurant_id'])
-    orders = orders.select_related('restaurant', 'user')
+        query = query.filter(restaurant_id=request.GET['restaurant_id'])
+    query = query.select_related('restaurant', 'user')
     attrs = [
         'id',
         'restaurant_name',
@@ -153,9 +152,8 @@ def order_list(request):
         'created',
         'status',
     ]
-    items = []
-    for order in orders:
+    def process(order):
         item = serialize(order, attrs)
         item['allowed_status'] = order.get_allowed_status(request.user)
-        items.append(item)
-    return JsonResponse({ 'items': items })
+        return item
+    return JsonResponse(paginate(query, process=process, query_dict=request.GET, per_page=3))

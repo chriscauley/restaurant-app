@@ -42,9 +42,14 @@
           <button v-else @click="blockUser" class="btn -danger">Block User</button>
         </div>
       </div>
-      <div v-if="order.is_owner && past_orders">
+      <div v-if="order.is_owner && pages[0]?.items">
         <h2>Past Orders from {{ order.user_name }}</h2>
-        <order-list :orders="past_orders" />
+        <template v-for="(page, index) in pages" :key="index">
+          <order-list :orders="page?.items" />
+        </template>
+        <button v-if="has_next_page" class="btn -primary list-paginator" @click="loadNextPage">
+          Load More Orders
+        </button>
       </div>
     </div>
     <modal v-if="cancelling" title="Cancel Order" :close="() => (cancelling = false)">
@@ -60,10 +65,12 @@
 <script>
 import { formatDistanceToNow, format } from 'date-fns'
 
+import PaginatedMixin from '@/mixins/PaginatedMixin'
 import OrderList from '@/components/OrderList'
 import Cart from '@/components/Cart'
 
 export default {
+  mixins: [PaginatedMixin],
   components: { Cart, OrderList },
   props: {
     POLL_FREQUENCY: {
@@ -105,10 +112,6 @@ export default {
       const steps_done = this.history.filter(h => h.date).length - 1
       return `width: ${(100 * steps_done) / steps}%`
     },
-    past_orders() {
-      const { user_id, restaurant_id } = this.order
-      return this.$store.order.fetchList({ user_id, restaurant_id })?.items
-    },
   },
   methods: {
     poll() {
@@ -135,6 +138,10 @@ export default {
     },
     unblockUser() {
       this.$store.order.unblockUser(this.order.id)
+    },
+    getPage(page) {
+      const { user_id } = this.order
+      return this.$store.order.fetchList({ user_id, page })
     },
   },
 }

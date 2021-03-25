@@ -3,7 +3,7 @@ import querystring from 'querystring'
 
 const api = Api()
 
-const fetchList = (params = {}) => {
+const fetchList = (params = { page: 1 }) => {
   const query = querystring.stringify(params)
   return api.get('orders/?' + query)
 }

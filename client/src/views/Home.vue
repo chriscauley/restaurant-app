@@ -1,7 +1,12 @@
 <template>
   <div class="home-view">
     <h1>Restaurants</h1>
-    <restaurant-list v-if="restaurants" :restaurants="restaurants" />
+    <template v-for="(page, index) in pages" :key="index">
+      <restaurant-list v-if="page" :restaurants="page.items" />
+    </template>
+    <button v-if="has_next_page" class="btn -primary list-paginator" @click="loadNextPage">
+      Load More Restaurants
+    </button>
     <div v-if="is_owner">
       <button class="btn -primary" @click="adding = true">
         Add another restaurant
@@ -15,9 +20,11 @@
 </template>
 
 <script>
+import PaginatedMixin from '@/mixins/PaginatedMixin'
 import RestaurantList from '@/components/RestaurantList'
 
 export default {
+  mixins: [PaginatedMixin],
   components: { RestaurantList },
   __route: {
     path: '/',
@@ -27,14 +34,14 @@ export default {
     return { adding: false }
   },
   computed: {
-    restaurants() {
-      return this.$store.restaurant.fetchList()?.items
-    },
     is_owner() {
       return this.$store.auth.get()?.role === 'owner'
     },
   },
   methods: {
+    getPage(page) {
+      return this.$store.restaurant.fetchList({ page })
+    },
     success(data) {
       this.$router.push(`/restaurant/${data.id}/${data.name}/`)
     },

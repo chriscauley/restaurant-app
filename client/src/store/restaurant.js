@@ -11,7 +11,7 @@ const prepRestaurant = data => {
   return data
 }
 
-const fetchList = (page = 1) => {
+const fetchList = ({ page }) => {
   const data = api.get(`restaurants/?page=${page}`)
   data?.items.forEach(prepRestaurant)
   return data

@@ -9,18 +9,22 @@ const dummyTo = {
   guest: {
     matched: [],
     params: {},
+    query: {},
   },
   authRequired: {
     matched: [{ meta: { authRequired: true } }],
     params: {},
+    query: {},
   },
   authRedirect: {
     matched: [{ meta: { authRedirect: true } }],
     params: {},
+    query: {},
   },
   requireUserRole: {
     matched: [{ meta: { requiredRole: 'user' } }],
     params: {},
+    query: {},
   },
 }
 
@@ -38,7 +42,7 @@ test('checkAuth', async _next => {
 
   const authRequiredRedirect = {
     name: 'login',
-    params: { next: undefined },
+    query: { next: undefined },
   }
 
   store.auth.setFaked(self_user.user)
