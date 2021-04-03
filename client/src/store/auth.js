@@ -1,33 +1,20 @@
-import Api from './Api'
+import { ReactiveRestApi } from '@unrest/vue-reactive-storage'
 
-const api = Api()
+import api from '@/common/api'
 
-let faked
-
-const check = () => {
-  if (faked !== undefined) {
-    return Promise.resolve()
-  }
-  return new Promise(resolve => api.get('self/', resolve))
-}
-
-const get = () => {
-  return faked !== undefined ? faked : api.get('self/')?.user
-}
-
-const logout = () => api.post('logout/').then(refetch)
-
-const refetch = () => {
-  api.markStale()
-  return new Promise(resolve => api.get('self/', resolve))
-}
+const URL = 'self/'
+const store = ReactiveRestApi({ client: api })
+const get = () => store.get(URL)?.user
+const check = () => store.fetch(URL).then(r => r.user)
 
 export default {
-  setFaked: user => (faked = user),
-  check,
-  refetch,
-  logout,
   get,
+  check,
+  logout: () => store.post('logout/').then(get),
+  refetch: () => {
+    store.markStale()
+    return check()
+  },
   social: [
     {
       name: 'Twitter',

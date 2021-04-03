@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.9.1",
-    "@unrest/form": "^0.0.2",
+    "@unrest/form": "^0.0.3",
+    "@unrest/vue-reactive-storage": "^0.0.1",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "date-fns": "^2.19.0",

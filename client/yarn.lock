@@ -1681,13 +1681,24 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@unrest/form@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@unrest/form/-/form-0.0.2.tgz#f6e5905881cfceaa804fa8b27dc39092681f5ad1"
-  integrity sha512-LrTeA9TaWF8jqGj2InQ2z4IoG0M6EdXtLaZGB2AUcmXmRFystQf/8VfEC0FNstff7Lh5TH+sBLeABEBPrf3IFw==
+"@unrest/form@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@unrest/form/-/form-0.0.3.tgz#c2178af2bab74b6c67bc25be7d9cb198e0950392"
+  integrity sha512-vBIqySDqnPiuUvwyUcOUoDR0RD2pcT96h0+HAbYlDkv41GgkiTYS5d+5iZxqM51qCVs9KLGzZXCTUJi+qGWBkA==
   dependencies:
+    "@vue/cli-plugin-unit-jest" "^4.5.12"
     core-js "^3.6.5"
     lodash.pick "^4.4.0"
+    vue "^3.0.0"
+
+"@unrest/vue-reactive-storage@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@unrest/vue-reactive-storage/-/vue-reactive-storage-0.0.1.tgz#b31d4e1f52045ec20a49b31cd5e6afbd0dbb29fa"
+  integrity sha512-PHx16mjmITO8k4a5jKw4OdjKIljvQcFUIfLtJMXuPSESua7lfnJ+aSt+9irpWpLbAI7jXg+GMc2kv2PVunSp2w==
+  dependencies:
+    axios "^0.21.1"
+    core-js "^3.6.5"
+    local-storage-json "^1.1.0"
     vue "^3.0.0"
 
 "@vue/babel-helper-vue-jsx-merge-props@^1.2.1":
@@ -1849,7 +1860,7 @@
   dependencies:
     "@vue/cli-shared-utils" "^4.5.12"
 
-"@vue/cli-plugin-unit-jest@~4.5.0":
+"@vue/cli-plugin-unit-jest@^4.5.12", "@vue/cli-plugin-unit-jest@~4.5.0":
   version "4.5.12"
   resolved "https://registry.yarnpkg.com/@vue/cli-plugin-unit-jest/-/cli-plugin-unit-jest-4.5.12.tgz#883d43f9a4bb6088a3b8125bd492511d05e1073e"
   integrity sha512-hZibVfMDGTANN7QENbE7eEAlk8adTW8fEpuGXA4IV+eDqLDPUPVUOwcw8f9d7Rx3KVHES3GyFQ9yVK/KeI9NGw==
@@ -8008,6 +8019,11 @@ loader-utils@^2.0.0:
     big.js "^5.2.2"
     emojis-list "^3.0.0"
     json5 "^2.1.2"
+
+local-storage-json@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/local-storage-json/-/local-storage-json-1.1.0.tgz#4a26763dee96d35c8089ac2df2546d621ca9a326"
+  integrity sha512-ZF7I5mKJ7yrirgCCrcfQeztWFOsD30rTNPlAnDkWx7CBewKd0PR65RSWkNvAK+id/7eprMBfmhVjzou/ByUZtw==
 
 locate-path@^3.0.0:
   version "3.0.0"
