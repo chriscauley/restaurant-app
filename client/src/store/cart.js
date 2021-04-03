@@ -1,24 +1,20 @@
-import Api from './Api'
+import { ReactiveRestApi } from '@unrest/vue-reactive-storage'
+import client from '@/common/api'
 import router from '@/router'
 
-const api = Api()
+const store = ReactiveRestApi({ client })
 
-const fetch = () => api.get('cart/')
+const fetch = () => store.fetch('cart/')
+const get = () => store.get('cart/')
 
-const refetch = () => {
-  api.markStale()
-  return api.get('cart/')
-}
+const addItem = item_id => store.post('cart/add/', { item_id }).then(fetch)
 
-const addItem = item_id => api.post('cart/add/', { item_id }).then(refetch)
-
-const removeItem = item_id => api.post('cart/remove/', { item_id }).then(refetch)
+const removeItem = item_id => store.post('cart/remove/', { item_id }).then(fetch)
 
 const checkout = () => {
-  api.post('cart/checkout/').then(({ order_id }) => {
-    api.markStale()
+  store.post('cart/checkout/').then(({ order_id }) => {
     router.push({ name: 'orderdetail', params: { order_id } })
   })
 }
 
-export default { fetch, addItem, removeItem, checkout }
+export default { get, fetch, addItem, removeItem, checkout }

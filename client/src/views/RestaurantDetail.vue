@@ -85,7 +85,7 @@ export default {
       return this.$store.restaurant.fetchOne(this.$route.params.id)
     },
     cart() {
-      return !this.is_owner && this.$store.cart.fetch()
+      return !this.is_owner && this.$store.cart.get()
     },
     total() {
       let total = 0
