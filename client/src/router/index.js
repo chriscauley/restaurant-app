@@ -34,7 +34,7 @@ router.beforeEach(checkAuth)
 router.beforeEach(checkRole)
 router.beforeEach(() => {
   // refresh any api calls after navigation
-  store.restaurant.markStale()
-  store.order.markStale()
+  store.restaurant.api.markStale()
+  store.order.api.markStale()
 })
 export default router

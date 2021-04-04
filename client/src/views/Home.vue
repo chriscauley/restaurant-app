@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     getPage(page) {
-      return this.$store.restaurant.fetchList({ page })
+      return this.$store.restaurant.getPage({ page })
     },
     success(data) {
       this.$router.push(`/restaurant/${data.id}/${data.name}/`)

@@ -82,7 +82,7 @@ export default {
   },
   computed: {
     restaurant() {
-      return this.$store.restaurant.fetchOne(this.$route.params.id)
+      return this.$store.restaurant.getOne(this.$route.params.id)
     },
     cart() {
       return !this.is_owner && this.$store.cart.get()
@@ -106,8 +106,8 @@ export default {
         state: this.form_state || {},
         success: data => {
           this.form_name = this.form_state = null
-          this.$store.restaurant.markStale()
-          this.$store.restaurant.fetchOne(this.$route.params.id)
+          this.$store.restaurant.api.markStale()
+          this.$store.restaurant.getOne(this.$route.params.id)
           this.$store.ui.toast({
             text: `Updated "${data.name}"`,
             level: 'success',
@@ -152,8 +152,7 @@ export default {
       if (this.form_name.startsWith('restaurant')) {
         this.$router.replace('/')
       } else {
-        this.$store.restaurant.markStale()
-        this.$store.restaurant.fetchOne(this.$route.params.id)
+        this.$store.restaurant.getOne(this.$route.params.id)
         this.form_name = null
       }
       this.$store.ui.toast({

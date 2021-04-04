@@ -35,7 +35,7 @@ export default {
       return this.$store.auth.get()
     },
     pending_orders() {
-      const orders = this.$store.order.fetchList()?.items || []
+      const orders = this.$store.order.getPage({ page: 1 })?.items || []
       return orders.filter(o => o.allowed_status).length
     },
   },

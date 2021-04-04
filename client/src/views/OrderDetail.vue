@@ -10,7 +10,7 @@
           <div class="restaurant">Restaurant: {{ order.restaurant_name }}</div>
         </div>
         <div class="col-6">
-          <cart :items="order.items" />
+          <cart v-if="order.items" :items="order.items" />
         </div>
       </div>
       <div v-if="order.status === 'canceled'">
@@ -93,7 +93,7 @@ export default {
   },
   computed: {
     order() {
-      return this.$store.order.fetchOne(this.$route.params.order_id)
+      return this.$store.order.getOne(this.$route.params.order_id)
     },
     can_cancel() {
       return this.order.allowed_status === 'canceled'
@@ -102,6 +102,9 @@ export default {
       const unslugify = status => {
         status = status.replace(/_/g, ' ')
         return status.slice(0, 1).toUpperCase() + status.slice(1)
+      }
+      if (!this.order.status_history) {
+        return []
       }
       return this.order.status_history.map(({ status, created }) => ({
         status: unslugify(status),
@@ -126,8 +129,8 @@ export default {
   methods: {
     poll() {
       clearTimeout(this.timeout)
-      this.$store.order.markStale()
-      this.$store.order.fetchOne(this.$route.params.order_id)
+      this.$store.order.api.markStale()
+      this.$store.order.getOne(this.$route.params.order_id)
       if (!['canceled', 'received'].includes(this.order?.status)) {
         this.timeout = setTimeout(this.poll, this.POLL_FREQUENCY * 1000)
       }
@@ -148,10 +151,6 @@ export default {
     },
     unblockUser() {
       this.$store.order.unblockUser(this.order.id)
-    },
-    getPage(page) {
-      const { user_id } = this.order
-      return this.$store.order.fetchList({ user_id, page })
     },
   },
 }

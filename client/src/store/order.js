@@ -1,29 +1,15 @@
-import Api from './Api'
-import querystring from 'querystring'
+import { RestStorage } from '@unrest/vue-reactive-storage'
 
-const api = Api()
+import client from '@/common/api'
 
-const fetchList = (params = { page: 1 }) => {
-  const query = querystring.stringify(params)
-  return api.get('orders/?' + query)
-}
+const store = RestStorage('order', { client })
 
-const fetchOne = id => api.get(`order/${id}/`)
+const refetch = ({ id }) => store.getOne(id)
 
-const refetch = ({ id }) => {
-  api.markStale()
-  fetchOne(id)
-}
+const updateStatus = (id, status) => store.save({ id, status }).then(refetch)
+const blockUser = id => store.save({ id, action: 'block' }).then(refetch)
+const unblockUser = id => store.save({ id, action: 'unblock' }).then(refetch)
 
-const updateStatus = (id, status) => api.post(`order/${id}/`, { status }).then(refetch)
-const blockUser = id => api.post(`order/${id}/`, { action: 'block' }).then(refetch)
-const unblockUser = id => api.post(`order/${id}/`, { action: 'unblock' }).then(refetch)
+Object.assign(store, { updateStatus, blockUser, unblockUser })
 
-export default {
-  fetchList,
-  fetchOne,
-  updateStatus,
-  markStale: api.markStale,
-  blockUser,
-  unblockUser,
-}
+export default store

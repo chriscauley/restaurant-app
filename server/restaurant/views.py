@@ -91,8 +91,11 @@ def cart_checkout(request):
 
 
 def order_detail(request, order_id):
-    order = get_object_or_404(Order, id=order_id)
-    if not order.user_can_see_order(request.user):
+    q = Order.objects.filter(id=order_id)
+    q = q.select_related('restaurant__owner', 'user')
+    q = q.prefetch_related('orderstatusupdate_set')
+    order = q.first()
+    if not (order and order.user_can_see_order(request.user)):
         return JsonResponse({}, status=404)
 
     if request.method == 'POST':
@@ -113,7 +116,9 @@ def order_detail(request, order_id):
             if data['action'] == 'unblock':
                 OwnerBlock.objects.filter(user=order.user, owner=owner).delete()
 
-    # TODO this uses so many queries
+    return JsonResponse(serialize_order(order, request.user))
+
+def serialize_order(order, user):
     attrs = [
         'user_id',
         'user_name',
@@ -126,12 +131,13 @@ def order_detail(request, order_id):
         'items',
         'created',
         'total_items',
+        'total_price',
     ]
     data = serialize(order, attrs)
-    data['allowed_status'] = order.get_allowed_status(request.user)
+    data['allowed_status'] = order.get_allowed_status(user)
     data['is_blocked'] = OwnerBlock.objects.filter(owner=order.restaurant.owner, user=order.user).exists()
-    data['is_owner'] = order.restaurant.owner == request.user
-    return JsonResponse(data)
+    data['is_owner'] = order.restaurant.owner == user
+    return data
 
 def order_list(request):
     if not request.user.is_authenticated:
@@ -146,19 +152,6 @@ def order_list(request):
         query = query.filter(user_id=request.GET['user_id'])
     if request.GET.get('restaurant_id'):
         query = query.filter(restaurant_id=request.GET['restaurant_id'])
-    query = query.select_related('restaurant', 'user')
-    attrs = [
-        'id',
-        'restaurant_name',
-        'user_name',
-        'user_avatar_url',
-        'total_items',
-        'total_price',
-        'created',
-        'status',
-    ]
-    def process(order):
-        item = serialize(order, attrs)
-        item['allowed_status'] = order.get_allowed_status(request.user)
-        return item
+    query = query.select_related('restaurant', 'user').prefetch_related('orderstatusupdate_set')
+    process = lambda o: serialize_order(o, request.user)
     return JsonResponse(paginate(query, process=process, query_dict=request.GET, per_page=3))

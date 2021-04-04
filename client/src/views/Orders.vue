@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     getPage(page) {
-      return this.$store.order.fetchList({ page })
+      return this.$store.order.getPage({ page })
     },
   },
 }
