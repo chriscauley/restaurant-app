@@ -1681,20 +1681,19 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@unrest/form@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@unrest/form/-/form-0.0.3.tgz#c2178af2bab74b6c67bc25be7d9cb198e0950392"
-  integrity sha512-vBIqySDqnPiuUvwyUcOUoDR0RD2pcT96h0+HAbYlDkv41GgkiTYS5d+5iZxqM51qCVs9KLGzZXCTUJi+qGWBkA==
+"@unrest/vue-form@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@unrest/vue-form/-/vue-form-0.0.1.tgz#96f905d0e5e0d35b29d4c55a0c39f36bc968158c"
+  integrity sha512-Q++Cm0g+BNHDBqze+Qds9p5FpGdn8zYW17nQokGrdgYvED6WcyEjL/q6p/ypniBx4iC2D//q9YSasAu30MLS5g==
   dependencies:
-    "@vue/cli-plugin-unit-jest" "^4.5.12"
-    core-js "^3.6.5"
+    jsonschema "^1.4.0"
     lodash.pick "^4.4.0"
     vue "^3.0.0"
 
-"@unrest/vue-reactive-storage@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@unrest/vue-reactive-storage/-/vue-reactive-storage-0.0.1.tgz#b31d4e1f52045ec20a49b31cd5e6afbd0dbb29fa"
-  integrity sha512-PHx16mjmITO8k4a5jKw4OdjKIljvQcFUIfLtJMXuPSESua7lfnJ+aSt+9irpWpLbAI7jXg+GMc2kv2PVunSp2w==
+"@unrest/vue-storage@^0.0.5":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@unrest/vue-storage/-/vue-storage-0.0.4.tgz#d1d6abeff9de597fa56dfa61e960fe782d2d4b97"
+  integrity sha512-MlMWoON/3Ay7AD6D7SjyblhW8iuDdNPlAFXIAp9ZFPlrLwC8YdExbmSR3AANOkHtLa+kjwza/KbiyX3gRqVRKg==
   dependencies:
     axios "^0.21.1"
     core-js "^3.6.5"
@@ -1860,7 +1859,7 @@
   dependencies:
     "@vue/cli-shared-utils" "^4.5.12"
 
-"@vue/cli-plugin-unit-jest@^4.5.12", "@vue/cli-plugin-unit-jest@~4.5.0":
+"@vue/cli-plugin-unit-jest@~4.5.0":
   version "4.5.12"
   resolved "https://registry.yarnpkg.com/@vue/cli-plugin-unit-jest/-/cli-plugin-unit-jest-4.5.12.tgz#883d43f9a4bb6088a3b8125bd492511d05e1073e"
   integrity sha512-hZibVfMDGTANN7QENbE7eEAlk8adTW8fEpuGXA4IV+eDqLDPUPVUOwcw8f9d7Rx3KVHES3GyFQ9yVK/KeI9NGw==
@@ -7874,6 +7873,11 @@ jsonfile@^6.0.1:
     universalify "^2.0.0"
   optionalDependencies:
     graceful-fs "^4.1.6"
+
+jsonschema@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/jsonschema/-/jsonschema-1.4.0.tgz#1afa34c4bc22190d8e42271ec17ac8b3404f87b2"
+  integrity sha512-/YgW6pRMr6M7C+4o8kS+B/2myEpHCrxO4PEWnqJNBFMjn7EWXqlQ4tGwL6xTHeRplwuZmcAncdvfOad1nT2yMw==
 
 jsprim@^1.2.2:
   version "1.4.1"

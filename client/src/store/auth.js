@@ -1,4 +1,4 @@
-import { ReactiveRestApi } from '@unrest/vue-reactive-storage'
+import { ReactiveRestApi } from '@unrest/vue-storage'
 
 import api from '@/common/api'
 

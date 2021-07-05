@@ -1,5 +1,5 @@
 <template>
-  <ur-form
+  <unrest-form
     v-if="schema && !confirming_delete"
     :schema="schema"
     v-bind="$attrs"
@@ -10,7 +10,7 @@
       <button type="submit" class="btn -primary">Submit</button>
       <div v-if="onDelete" class="btn -danger" @click="confirming_delete = true">Delete</div>
     </template>
-  </ur-form>
+  </unrest-form>
   <div v-else-if="confirming_delete">
     <h3>Delete "{{ name }}"</h3>
     <p>Are you sure you want to delete this? This cannot be undone</p>
