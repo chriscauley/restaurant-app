@@ -1,14 +1,14 @@
 <template>
   <div class="modal">
-    <div class="modal__mask" @click="close" />
-    <div class="modal__content">
-      <div class="modal__title h4" v-if="title">
+    <div class="modal-mask" @click="close" />
+    <div class="modal-content">
+      <div class="modal-title h4" v-if="title">
         {{ title }}
       </div>
-      <div class="modal__body">
+      <div class="modal-body">
         <slot />
       </div>
-      <div class="modal__footer">
+      <div class="modal-footer">
         <slot name="actions">
           <button class="btn -secondary" @click="close">Close</button>
         </slot>

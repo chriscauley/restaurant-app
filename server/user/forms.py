@@ -39,7 +39,7 @@ class SignupForm(RegistrationFormUniqueEmail):
         super().__init__(*args, **kwargs)
         self.fields['username'].help_text = None
         self.fields['password1'].help_text = None
-        self.fields.pop('password2')
+        self.fields.pop('password2', None)
     def clean(self, *args, **kwargs):
         self.cleaned_data['password2'] = self.cleaned_data.get('password1')
         super().clean()

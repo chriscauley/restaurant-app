@@ -2,16 +2,16 @@
   @apply fixed h-full left-0 top-0 w-full;
 }
 
-.modal .modal__mask {
+.modal .modal-mask {
   @apply absolute bg-black cursor-pointer h-full w-full;
   --tw-bg-opacity: 0.2;
 }
 
-.modal .modal__title {
+.modal .modal-title {
   @apply flex font-bold mb-4;
 }
 
-.modal .modal__content {
+.modal .modal-content {
   @apply absolute bg-white;
   border-radius: 8px;
   left: 50%;
@@ -23,17 +23,17 @@
   transform: translate(-50%, -50%);
 }
 
-.modal__body {
+.modal-body {
   font-size: 14px;
   line-height: 22px;
   margin-bottom: 20px;
 }
 
-.modal__body, .modal__body .ur-form__actions {
+.modal-body, .modal-body .ur-form__actions {
   @apply mb-0;
 }
 
-.modal__footer {
+.modal-footer {
   @apply flex justify-end;
   .btn {
     @apply ml-4;

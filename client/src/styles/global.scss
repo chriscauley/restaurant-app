@@ -31,3 +31,7 @@ body, html, #app {
 p {
   margin-bottom: 1rem;
 }
+
+.unrest-floating-actions {
+  @apply fixed bottom-0 right-0 m-4 flex gap-2 text-lg;
+}

@@ -1,0 +1,37 @@
+auth:
+  - signUp:
+    - customer
+    - owner
+  - accountExists
+  - verifyEmail
+  - login
+  - badLogin
+socialAuth:
+  - twitter
+  - github
+settings:
+  - updateAvatar
+  - updateUsername
+  - updateEmail
+customer:
+  - restaurantList
+  - restaurantDetail
+  - createCartItem
+  - updateCartItem
+  - deleteCartItem
+  - placeOrder
+  - cancelOrder
+  - receiveOrder
+owner:
+  Restaurant:
+    - create
+    - update
+    - delete
+  MenuSection:
+    - create
+    - update
+    - delete
+  MenuItem:
+    - create
+    - update
+    - delete

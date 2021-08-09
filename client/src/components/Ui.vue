@@ -7,16 +7,16 @@
     </div>
   </div>
   <div v-if="alert" class="modal">
-    <div class="modal__mask" @click="closeAlert" />
-    <div class="modal__content">
-      <h2 v-if="alert.title" class="modal__title">
+    <div class="modal-mask" @click="closeAlert" />
+    <div class="modal-content">
+      <h2 v-if="alert.title" class="modal-title">
         <i :class="`fa fa-${alert.icon}`" v-if="alert.icon" />
         {{ alert.title }}
       </h2>
-      <div class="modal__body">
+      <div class="modal-body">
         {{ alert.text }}
       </div>
-      <div class="modal__footer">
+      <div class="modal-footer">
         <button class="btn -primary" @click="closeAlert">Ok</button>
       </div>
     </div>

@@ -2,9 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": ">=14.13.1"
-  },
   "scripts": {
     "build": "vue-cli-service build",
     "test:unit": "jest",
@@ -35,19 +32,17 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0-0",
+    "json-loader": "^0.5.7",
     "postcss": "^7",
     "postcss-import": "^12.0.0",
     "sass": "^1.32.8",
     "sass-loader": "^10.1.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "typescript": "~3.9.3",
-    "vue-jest": "^5.0.0-0"
+    "vue-cli-plugin-yaml-loader": "~1.0.0",
+    "vue-jest": "^5.0.0-0",
+    "yaml-loader": "^0.6.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ],
   "jest": {
     "moduleNameMapper": {
       "@/(.*)$": "<rootDir>/src/$1",
