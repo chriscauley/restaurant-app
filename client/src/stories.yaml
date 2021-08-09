@@ -2,36 +2,41 @@ auth:
   - signUp:
     - customer
     - owner
-  - accountExists
+    social:
+    - twitter
+    - github
   - verifyEmail
   - login
-  - badLogin
-socialAuth:
-  - twitter
-  - github
+  - accountExists # BUG error does not display
+  - badLogin # BUG error does not show
 settings:
   - updateAvatar
   - updateUsername
-  - updateEmail
 customer:
   - restaurantList
   - restaurantDetail
   - createCartItem
   - updateCartItem
-  - deleteCartItem
+  - removeCartItem
   - placeOrder
   - cancelOrder
   - receiveOrder
 owner:
-  Restaurant:
-    - create
-    - update
-    - delete
-  MenuSection:
-    - create
-    - update
-    - delete
-  MenuItem:
-    - create
-    - update
-    - delete
+  - Restaurant:
+      - create
+      - update
+      - delete
+    MenuSection:
+      - create
+      - update
+      - delete
+    MenuItem:
+      - create
+      - update
+      - delete
+    updateStatus:
+      - processing
+      - in_route
+      - delivered
+  - blockUser
+  - unblockUser

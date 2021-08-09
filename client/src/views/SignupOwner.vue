@@ -17,6 +17,7 @@ export default {
   },
   methods: {
     success() {
+      this.$story.complete('auth.signUp.owner')
       this.$router.replace('/signup/complete/')
     },
   },

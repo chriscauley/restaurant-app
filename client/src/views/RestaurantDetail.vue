@@ -78,9 +78,22 @@ export default {
     meta: { authRequired: true },
   },
   data() {
+    if (this.$store.auth.get().role === 'user') {
+      this.$story.complete('customer.restaurantDetail')
+    }
     return { form_name: null, form_state: null }
   },
   computed: {
+    story_action() {
+      const [model, id] = this.form_name.split('/')
+      const verb = id ? 'update' : 'create'
+      const from_slug = {
+        restaurant: 'Restaurant',
+        menuitem: 'MenuItem',
+        menusection: 'MenuSection',
+      }
+      return `owner.${from_slug[model]}.${verb}`
+    },
     restaurant() {
       return this.$store.restaurant.getOne(this.$route.params.id)
     },
@@ -99,12 +112,13 @@ export default {
       if (!this.form_name) {
         return
       }
-      const can_delete = !!this.form_name.match(/\/\d+/)
+      const exists = !!this.form_name.match(/\/\d+/)
       return {
-        onDelete: can_delete ? this.onDelete : undefined,
+        onDelete: exists ? this.onDelete : undefined,
         form_name: this.form_name,
         state: this.form_state || {},
         success: data => {
+          this.$story.complete(this.story_action)
           this.form_name = this.form_state = null
           this.$store.restaurant.api.markStale()
           this.$store.restaurant.getOne(this.$route.params.id)
@@ -149,6 +163,7 @@ export default {
       this.form_name = `${model}/${id}`
     },
     onDelete(name) {
+      this.$story.complete(this.story_action.replace(/(create|update)/, 'delete'))
       if (this.form_name.startsWith('restaurant')) {
         this.$router.replace('/')
       } else {

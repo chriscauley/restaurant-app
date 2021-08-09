@@ -20,6 +20,7 @@ export const RegistrationComplete = {
     meta: { authRedirect: true },
   },
   mounted() {
+    this.$story.complete('auth.verifyEmail')
     this.$store.ui.toast({
       text: 'Your account has been activated and you are now logged in.',
       level: 'success',

@@ -56,7 +56,7 @@
       Are you sure you want to cancel this order? This cannot be undone.
       <template #actions>
         <button class="btn -secondary" @click="cancelling = false">No</button>
-        <button class="btn -danger" @click="confirmCancel">Yes, cancel the order</button>
+        <button class="btn -danger" @click="markAllowedStatus">Yes, cancel the order</button>
       </template>
     </modal>
   </div>
@@ -138,19 +138,30 @@ export default {
     formatDistanceToNow(s) {
       return formatDistanceToNow(new Date(s).valueOf()) + ' ago'
     },
-    confirmCancel() {
-      this.$store.order.updateStatus(this.order.id, 'canceled')
-      this.cancelling = false
-    },
     markAllowedStatus() {
       const { id, allowed_status } = this.order
+      const action_by_status = {
+        canceled: 'customer.cancelOrder',
+        received: 'customer.receiveOrder',
+        processing: 'owner.updateStatus.processing',
+        in_route: 'owner.updateStatus.in_route',
+        delivered: 'owner.updateStatus.delivered',
+      }
+      this.$story.complete(action_by_status[allowed_status])
       this.$store.order.updateStatus(id, allowed_status)
+      this.cancelling = false
     },
     blockUser() {
+      this.$story.complete('owner.blockUser')
       this.$store.order.blockUser(this.order.id)
     },
     unblockUser() {
+      this.$story.complete('owner.unblockUser')
       this.$store.order.unblockUser(this.order.id)
+    },
+    getPage(page) {
+      const { user_id } = this.order
+      return this.$store.order.getPage({ page, query: { user_id } })
     },
   },
 }

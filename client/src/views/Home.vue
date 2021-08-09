@@ -27,6 +27,7 @@
 <script>
 import PaginatedMixin from '@/mixins/PaginatedMixin'
 import RestaurantList from '@/components/RestaurantList'
+import store from '@/store'
 
 export default {
   mixins: [PaginatedMixin],
@@ -40,6 +41,9 @@ export default {
   },
   computed: {
     is_owner() {
+      if (store.auth.get().role === 'user') {
+        this.$story.complete('customer.restaurantList')
+      }
       return this.$store.auth.get()?.role === 'owner'
     },
   },

@@ -28,11 +28,23 @@
 <script>
 import FocusMixin from '@/mixins/FocusMixin'
 
+const getStoryAction = avatar_url => {
+  if (avatar_url?.includes('avatars.githubusercontent.com')) {
+    return 'auth.social.github'
+  } else if (avatar_url?.includes('pbs.twimg.com')) {
+    return 'auth.social.twitter'
+  }
+  return
+}
+
 export default {
   mixins: [FocusMixin],
   computed: {
     user() {
-      return this.$store.auth.get()
+      const user = this.$store.auth.get()
+      const action = getStoryAction(user?.avatar_url)
+      action && this.$story.once(action, user.avatar_url)
+      return user
     },
     pending_orders() {
       const orders = this.$store.order.getPage({ page: 1 })?.items || []

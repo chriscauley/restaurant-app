@@ -11,9 +11,8 @@ import store from '@/store'
 import stories from '@/stories.yaml'
 import router from '@/router'
 
-uS.register(stories)
-
 const app = createApp(App)
+app.use(uS, stories)
 app.use(store)
 app.use(router)
 app.use(UrForm.plugin)

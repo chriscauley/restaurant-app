@@ -1,5 +1,5 @@
-.unrest-story {
-  z-index: 100;
+.unrest-story .unrest-floating-actions {
+  z-index: 1001; /* toasts are 1000 */
 }
 
 .unrest-story__branch {

@@ -23,6 +23,7 @@ export default {
   },
   methods: {
     success() {
+      this.$story.complete('auth.signUp.customer')
       this.$router.replace('/signup/complete/')
     },
   },

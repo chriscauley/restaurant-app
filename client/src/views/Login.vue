@@ -11,6 +11,7 @@
 
 <script>
 import SocialLinks from '@/components/SocialLinks'
+
 export default {
   components: { SocialLinks },
   __route: {
@@ -19,10 +20,11 @@ export default {
   },
   methods: {
     success() {
-      this.$store.auth.refetch().then(
-        // reload route to cause router to redirect to next or /
-        () => this.$router.replace(this.$route.query.next || '/'),
-      )
+      const next = () => {
+        this.$story.complete('auth.login')
+        this.$router.replace(this.$route.query.next || '/')
+      }
+      this.$store.auth.refetch().then(next)
     },
   },
 }

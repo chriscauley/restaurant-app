@@ -11,7 +11,9 @@ export default {
     meta: { authRequired: true },
   },
   methods: {
-    success() {
+    success(data) {
+      this.$story.once('settings.updateAvatar', data.avatar_url)
+      this.$story.once('settings.updateUsername', data.username)
       this.$store.ui.toast({
         text: 'Settings updated',
         level: 'success',
