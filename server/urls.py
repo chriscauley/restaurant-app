@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path, re_path
+from unrest.views import index
 
 from server.restaurant.views import restaurant_list, cart_detail, cart_add, cart_remove, cart_checkout, order_detail, order_list
 from server.user.views import whoami, logout, complete_registration
-from server.views import spa
 
 # need to import these files somewhere to @schema.register the forms
 import server.restaurant.forms
@@ -37,6 +37,6 @@ if settings.DEBUG:  # pragma: no cover
         }),
     ]
 
-urlpatterns.append(re_path('', spa))
+urlpatterns.append(re_path('', index))
 
 handler404 = "server.views.handler404"

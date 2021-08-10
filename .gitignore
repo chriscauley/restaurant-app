@@ -2,7 +2,6 @@
 client/node_modules
 client/.env.local
 client/.env.*.local
-client/dist
 client/coverage
 
 # python server
@@ -10,10 +9,12 @@ client/coverage
 .media
 .static
 *.pyc
-server/local_settings.py
-server/.secret_key
+server/settings/local.py
+server/settings/.secret_key
 htmlcov
 .coverage
+unrest
 
 # development files
 db.sqlite3
+dist

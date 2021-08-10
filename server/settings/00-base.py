@@ -1,25 +1,10 @@
 from pathlib import Path
 import os
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 import os
-from django.core.management.utils import get_random_secret_key
 
-def get_secret_key(BASE_DIR):
-    key_path = os.path.join(BASE_DIR, 'server/.secret_key')
-    if os.path.exists(key_path):
-        with open(key_path, 'r') as f:
-            SECRET_KEY = f.read()
-    else:
-        SECRET_KEY = get_random_secret_key()
-        with open(key_path, 'w') as f:
-            f.write(SECRET_KEY)
-            print('wrote secret key to', key_path)
-
-    return SECRET_KEY
-
-SECRET_KEY = get_secret_key(BASE_DIR)
 DEBUG = True
 ALLOWED_HOSTS = ['toptable.localhost']
 
@@ -129,7 +114,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'client/dist')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'dist')]
 STATIC_ROOT = os.path.join(BASE_DIR, '.static')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_ROOT = os.path.join(BASE_DIR, '.media')
@@ -137,17 +122,3 @@ MEDIA_URL = '/media/'
 
 # Other
 EMAIL_BACKEND = "mailer.backend.DbBackend"
-
-# machine specific settings
-try:
-    from .local_settings import *
-except ImportError:
-    pass
-
-if os.environ.get('KILL_CSRF'):
-    print("""
-    KILL_CSRF is on.
-    This is meant to be a temporary hack to make working in postman faster.
-    Please enable asap.
-    """)
-    MIDDLEWARE = [s for s in MIDDLEWARE if s != 'django.middleware.csrf.CsrfViewMiddleware']
