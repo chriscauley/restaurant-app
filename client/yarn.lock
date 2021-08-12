@@ -1681,6 +1681,11 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@unrest/vue-auth@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@unrest/vue-auth/-/vue-auth-0.0.6.tgz#fc7a5ee92404c18d44c4bd6ee4329364f6a05d4c"
+  integrity sha512-yKHeRd+7Nev4yfkJ+D8lzg6i9+iibE+O0HrBHmlukR4kbDG77eoAxhPplSr4Hs2AcQ32z5r+Doo8r+dVdUR7Ew==
+
 "@unrest/vue-form@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@unrest/vue-form/-/vue-form-0.0.1.tgz#96f905d0e5e0d35b29d4c55a0c39f36bc968158c"
@@ -1699,6 +1704,14 @@
     core-js "^3.6.5"
     local-storage-json "^1.1.0"
     vue "^3.0.0"
+
+"@unrest/vue@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@unrest/vue/-/vue-0.1.8.tgz#698768d9b8733924a6603295e422f79abbf539c4"
+  integrity sha512-spp4HGEz0P35l8H+3eqDpntDUqOGNMzRR1zXS29nKPAHMycf9WD7pnvj1oRSWCfEztdt8TO/Zd6BePQdgSchWw==
+  dependencies:
+    dedent "^0.7.0"
+    marked "^2.1.3"
 
 "@vue/babel-helper-vue-jsx-merge-props@^1.2.1":
   version "1.2.1"
@@ -4573,6 +4586,11 @@ decompress@^4.2.0:
     make-dir "^1.0.0"
     pify "^2.3.0"
     strip-dirs "^2.0.0"
+
+dedent@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/dedent/-/dedent-0.7.0.tgz#2495ddbaf6eb874abb0e1be9df22d2e5a544326c"
+  integrity sha1-JJXduvbrh0q7Dhvp3yLS5aVEMmw=
 
 deep-equal@^1.0.1:
   version "1.1.1"
@@ -8243,6 +8261,11 @@ map-visit@^1.0.0:
   integrity sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
   dependencies:
     object-visit "^1.0.0"
+
+marked@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-2.1.3.tgz#bd017cef6431724fd4b27e0657f5ceb14bff3753"
+  integrity sha512-/Q+7MGzaETqifOMWYEA7HVMaZb4XbcRfaOzcSsHZEith83KGlvaSG33u0SKu89Mj5h+T8V2hM+8O45Qc5XTgwA==
 
 md5.js@^1.3.4:
   version "1.3.5"

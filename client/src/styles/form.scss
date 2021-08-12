@@ -35,6 +35,15 @@
   [type=checkbox], [type=radio] {
     margin-right: 0.5em;
   }
+  .input-group {
+    @apply relative;
+    &-append {
+      @apply absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+  }
 }
 
 .ur-form .form-error {

@@ -1,12 +1,9 @@
-.social-links {
-  @apply w-full;
-  .social-links__or {
-    @apply text-center mb-4;
-  }
-  .social-links__links {
+/* from @unrest/tailwind */
+.unrest-auth-social {
+  &__or {
     @apply flex justify-center mb-4;
-    .btn {
-      @apply mx-2;
-    }
+  }
+  &__buttons {
+    @apply flex justify-center gap-x-4;
   }
 }

@@ -3,7 +3,7 @@ from django import forms
 import urllib
 
 from .models import Restaurant, MenuItem, MenuSection
-from server import schema
+from unrest import schema
 
 NOT_OWNER = 'NOT_OWNER'
 

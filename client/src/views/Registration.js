@@ -1,3 +1,5 @@
+import unrest from '@unrest/vue'
+
 export const RegistrationInvalid = {
   render: () => '',
   __route: {
@@ -5,7 +7,7 @@ export const RegistrationInvalid = {
     meta: { authRedirect: true },
   },
   mounted() {
-    this.$store.ui.toast({
+    unrest.ui.toast({
       text: 'This registration link is no longer valid. Please try again.',
       level: 'danger',
     })
@@ -21,7 +23,7 @@ export const RegistrationComplete = {
   },
   mounted() {
     this.$story.complete('auth.verifyEmail')
-    this.$store.ui.toast({
+    unrest.ui.toast({
       text: 'Your account has been activated and you are now logged in.',
       level: 'success',
     })

@@ -4,13 +4,14 @@
       <img src="/static/pizza.png" />
       Top Table
     </router-link>
-    <user-dropdown />
+    <unrest-auth-menu :items="items" />
   </header>
 </template>
 
 <script>
-import UserDropdown from './UserDropdown'
 export default {
-  components: { UserDropdown },
+  data() {
+    return { items: [{ to: '/settings/', text: 'Settings' }] }
+  },
 }
 </script>

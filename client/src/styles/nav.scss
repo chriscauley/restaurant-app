@@ -13,13 +13,13 @@
   }
 }
 
-.navbar .user-dropdown {
+.navbar .unrest-auth-menu {
   @apply cursor-pointer flex items-center;
-  .menu {
+  .ur-popper {
     @apply bg-white border shadow;
     min-width: 200px;
   }
-  .menu-item {
+  .dropdown-item {
     @apply cursor-pointer flex p-2;
     &:hover {
       @apply bg-gray-200;

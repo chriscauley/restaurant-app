@@ -1,10 +1,7 @@
-.user-dropdown .user-dropdown__name {
-  @apply flex items-center;
+.unrest-auth-menu__trigger {
+  @apply flex gap-x-2 items-center;
   .avatar {
-    @apply w-6 rounded-full overflow-hidden mr-2;
-  }
-  .fa {
-    @apply mr-2;
+    @apply w-6 rounded-full overflow-hidden;
   }
 }
 

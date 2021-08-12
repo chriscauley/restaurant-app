@@ -1,8 +1,9 @@
-import store from '@/store'
+import auth from '@unrest/vue-auth'
+import unrest from '@unrest/vue'
 
 const requireRole = (role, to, next) => {
-  if (store.auth.get()?.role !== role) {
-    store.ui.toast({ text: `Only ${role} users can view that page`, level: 'danger' })
+  if (auth.get()?.role !== role) {
+    unrest.ui.toast({ text: `Only ${role} users can view that page`, level: 'danger' })
     next({ path: '/' })
   } else {
     next()
@@ -12,7 +13,7 @@ const requireRole = (role, to, next) => {
 export default (to, from, next) => {
   const requiredRole = to.matched.map(record => record.meta.requiredRole).find(role => role)
   if (requiredRole) {
-    store.auth.check().then(() => requireRole(requiredRole, to, next))
+    auth.fetch().then(() => requireRole(requiredRole, to, next))
   } else {
     next()
   }

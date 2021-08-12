@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     is_owner() {
-      return this.$store.auth.get()?.role === 'owner'
+      return this.$auth.get()?.role === 'owner'
     },
   },
   methods: {

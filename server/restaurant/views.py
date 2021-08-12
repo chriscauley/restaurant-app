@@ -19,6 +19,10 @@ def restaurant_list(request):
     process = lambda r: serialize(r, ['id', 'name', 'description', 'photo_url'])
     return JsonResponse(paginate(query, process=process, query_dict=request.GET, per_page=12))
 
+def restaurant_detail(request, restaurant_id):
+    restaurant = get_object_or_404(Restaurant, id=restaurant_id)
+    return JsonResponse(restaurant.get_json(request.user))
+
 def process_cartitem(item):
     return {
         'id': item.id,

@@ -52,13 +52,13 @@
         </button>
       </div>
     </div>
-    <modal v-if="cancelling" title="Cancel Order" :close="() => (cancelling = false)">
+    <unrest-modal v-if="cancelling" title="Cancel Order" @close="cancelling = false">
       Are you sure you want to cancel this order? This cannot be undone.
       <template #actions>
         <button class="btn -secondary" @click="cancelling = false">No</button>
         <button class="btn -danger" @click="markAllowedStatus">Yes, cancel the order</button>
       </template>
-    </modal>
+    </unrest-modal>
   </div>
 </template>
 

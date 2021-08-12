@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from unrest.views import index
 
-from server.restaurant.views import restaurant_list, cart_detail, cart_add, cart_remove, cart_checkout, order_detail, order_list
+from server.restaurant.views import restaurant_detail, restaurant_list, cart_detail, cart_add, cart_remove, cart_checkout, order_detail, order_list
 from server.user.views import whoami, logout, complete_registration
 
 # need to import these files somewhere to @schema.register the forms
@@ -19,24 +19,16 @@ urlpatterns = [
     path('api/cart/checkout/', cart_checkout),
     path('api/order/<int:order_id>/', order_detail),
     path('api/orders/', order_list),
+    path('api/restaurant/<int:restaurant_id>/', restaurant_detail),
 
     path('api/self/', whoami),
     path('api/logout/', logout),
     path('registration/complete/<str:activation_key>/', complete_registration),
 
     path('', include('social_django.urls', namespace='social')),
-    path('', include('server.schema.urls')),
+    path('', include('unrest.urls')),
+    re_path('', index),
 ]
 
-if settings.DEBUG:  # pragma: no cover
-    from django.views.static import serve
-    urlpatterns += [
-        re_path(r'^media/(?P<path>.*)$', serve, {
-            'document_root': settings.MEDIA_ROOT,
-            'show_indexes': True
-        }),
-    ]
-
-urlpatterns.append(re_path('', index))
-
+# TODO abstract 404 into unrest
 handler404 = "server.views.handler404"

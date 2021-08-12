@@ -1,6 +1,9 @@
 <template>
   <div class="user-settings-view">
-    <schema-form form_name="settings/self" :success="success" />
+    <unrest-schema-form
+      :form_name="`schema/UserSettingsForm/${$auth.user.id}`"
+      :success="success"
+    />
   </div>
 </template>
 
@@ -14,7 +17,7 @@ export default {
     success(data) {
       this.$story.once('settings.updateAvatar', data.avatar_url)
       this.$story.once('settings.updateUsername', data.username)
-      this.$store.ui.toast({
+      this.$ui.toast({
         text: 'Settings updated',
         level: 'success',
       })

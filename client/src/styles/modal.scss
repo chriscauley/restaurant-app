@@ -39,3 +39,7 @@
     @apply ml-4;
   }
 }
+
+.router-view.modal.-relative {
+  position: static;
+}

@@ -61,10 +61,10 @@
         </div>
       </div>
     </div>
-    <modal v-if="form_attrs" :close="() => (form_name = null)">
-      <schema-form v-bind="form_attrs" />
+    <unrest-modal v-if="form_attrs" @close="form_name = null">
+      <unrest-schema-form v-bind="form_attrs" />
       <template #actions>{{ ' ' }}</template>
-    </modal>
+    </unrest-modal>
   </div>
 </template>
 
@@ -78,21 +78,21 @@ export default {
     meta: { authRequired: true },
   },
   data() {
-    if (this.$store.auth.get().role === 'user') {
+    if (this.$auth.get().role === 'user') {
       this.$story.complete('customer.restaurantDetail')
     }
     return { form_name: null, form_state: null }
   },
   computed: {
     story_action() {
-      const [model, id] = this.form_name.split('/')
+      const [_chema, model_slug, id] = this.form_name.split('/')
       const verb = id ? 'update' : 'create'
       const from_slug = {
         restaurant: 'Restaurant',
         menuitem: 'MenuItem',
         menusection: 'MenuSection',
       }
-      return `owner.${from_slug[model]}.${verb}`
+      return `owner.${from_slug[model_slug]}.${verb}`
     },
     restaurant() {
       return this.$store.restaurant.getOne(this.$route.params.id)
@@ -122,7 +122,7 @@ export default {
           this.form_name = this.form_state = null
           this.$store.restaurant.api.markStale()
           this.$store.restaurant.getOne(this.$route.params.id)
-          this.$store.ui.toast({
+          this.$ui.toast({
             text: `Updated "${data.name}"`,
             level: 'success',
           })
@@ -148,29 +148,29 @@ export default {
       this.$store.cart.checkout()
     },
     addMenuSection() {
-      this.form_name = 'menusection'
+      this.form_name = 'schema/menusection'
       this.form_state = {
         restaurant: this.$route.params.id,
       }
     },
     addMenuItem(section) {
-      this.form_name = 'menuitem'
+      this.form_name = 'schema/menuitem'
       this.form_state = {
         menusection: section.id,
       }
     },
     edit(model, id) {
-      this.form_name = `${model}/${id}`
+      this.form_name = `schema/${model}/${id}`
     },
     onDelete(name) {
       this.$story.complete(this.story_action.replace(/(create|update)/, 'delete'))
-      if (this.form_name.startsWith('restaurant')) {
+      if (this.form_name.includes('restaurant')) {
         this.$router.replace('/')
       } else {
         this.$store.restaurant.getOne(this.$route.params.id)
         this.form_name = null
       }
-      this.$store.ui.toast({
+      this.$ui.toast({
         text: `"${name}" has been deleted.`,
         level: 'success',
       })

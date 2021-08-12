@@ -1,13 +1,13 @@
 import { defaultsDeep } from 'lodash'
 import { createRouter, createWebHistory, createMemoryHistory } from 'vue-router'
+import auth from '@unrest/vue-auth'
 
 import applyMeta from './applyMeta'
-import checkAuth from './checkAuth'
 import checkRole from './checkRole'
 import store from '@/store'
 import views from '@/views'
 
-const routes = []
+const routes = [...auth.routes]
 
 const loadViews = o =>
   Object.entries(o).forEach(([component_name, Component]) => {
@@ -30,7 +30,6 @@ const router = createRouter({
 })
 
 router.beforeEach(applyMeta)
-router.beforeEach(checkAuth)
 router.beforeEach(checkRole)
 router.beforeEach(() => {
   // refresh any api calls after navigation

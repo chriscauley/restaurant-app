@@ -1,9 +1,5 @@
-.login-view, .signup-view {
-  max-width: 400px;
-  margin: auto;
-  .bottom {
-    @apply text-center;
-  }
+.unrest-auth  .bottom {
+  @apply mt-8 text-center;
 }
 
 .home-view, .restaurant-view {

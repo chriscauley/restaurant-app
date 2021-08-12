@@ -17,17 +17,16 @@
     <button v-if="has_next_page" class="btn -primary list-paginator" @click="loadNextPage">
       Load More Restaurants
     </button>
-    <modal v-if="adding">
-      <schema-form form_name="restaurant" :success="success" />
+    <unrest-modal v-if="adding" @close="adding = null">
+      <unrest-schema-form form_name="schema/restaurant" :success="success" />
       <template #actions>{{ ' ' }}</template>
-    </modal>
+    </unrest-modal>
   </div>
 </template>
 
 <script>
 import PaginatedMixin from '@/mixins/PaginatedMixin'
 import RestaurantList from '@/components/RestaurantList'
-import store from '@/store'
 
 export default {
   mixins: [PaginatedMixin],
@@ -41,10 +40,10 @@ export default {
   },
   computed: {
     is_owner() {
-      if (store.auth.get().role === 'user') {
+      if (this.$auth.get().role === 'user') {
         this.$story.complete('customer.restaurantList')
       }
-      return this.$store.auth.get()?.role === 'owner'
+      return this.$auth.get()?.role === 'owner'
     },
   },
   methods: {
@@ -52,6 +51,7 @@ export default {
       return this.$store.restaurant.getPage({ page })
     },
     success(data) {
+      this.$story.complete('owner.Restaurant.create')
       this.$router.push(`/restaurant/${data.id}/${data.name}/`)
     },
   },
