@@ -1681,36 +1681,37 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@unrest/vue-auth@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@unrest/vue-auth/-/vue-auth-0.0.6.tgz#fc7a5ee92404c18d44c4bd6ee4329364f6a05d4c"
-  integrity sha512-yKHeRd+7Nev4yfkJ+D8lzg6i9+iibE+O0HrBHmlukR4kbDG77eoAxhPplSr4Hs2AcQ32z5r+Doo8r+dVdUR7Ew==
+"@unrest/vue-auth@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@unrest/vue-auth/-/vue-auth-0.0.7.tgz#5007142429614c097e3308fc204b48f5269bf986"
+  integrity sha512-MLP4gyTQOXG8STu395q8otI7DlzkvodyH38xpcYiMTmWlb1K7D+DkRtr+MHxcnJSNHwdEde033ChnbVkoaeHew==
 
-"@unrest/vue-form@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@unrest/vue-form/-/vue-form-0.0.1.tgz#96f905d0e5e0d35b29d4c55a0c39f36bc968158c"
-  integrity sha512-Q++Cm0g+BNHDBqze+Qds9p5FpGdn8zYW17nQokGrdgYvED6WcyEjL/q6p/ypniBx4iC2D//q9YSasAu30MLS5g==
+"@unrest/vue-form@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@unrest/vue-form/-/vue-form-0.0.7.tgz#dacc29674c3dfec1b5d39eb0a8b609f08a0d4e7e"
+  integrity sha512-uTby9frzR0GXQ7JmB4PTSL7bModHWzI3DlQ0YMB8vYQhz/XeVmUvAzNl1YPUAkTpvYXWGG1gGpnjKyAxkXrP8Q==
   dependencies:
     jsonschema "^1.4.0"
     lodash.pick "^4.4.0"
     vue "^3.0.0"
 
-"@unrest/vue-storage@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@unrest/vue-storage/-/vue-storage-0.0.4.tgz#d1d6abeff9de597fa56dfa61e960fe782d2d4b97"
-  integrity sha512-MlMWoON/3Ay7AD6D7SjyblhW8iuDdNPlAFXIAp9ZFPlrLwC8YdExbmSR3AANOkHtLa+kjwza/KbiyX3gRqVRKg==
+"@unrest/vue-storage@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@unrest/vue-storage/-/vue-storage-0.0.6.tgz#d98a80c74e1df7efe53d0831e2e12c8f1598203d"
+  integrity sha512-PAJvvALFHfM3b5E/K1bemcjomPDoHolCQnNtc1xmt2mHeOjRh/9qmbH/JOBaoE6/eOVS/nKozKqlgy+rx4hNVw==
   dependencies:
     axios "^0.21.1"
     core-js "^3.6.5"
     local-storage-json "^1.1.0"
     vue "^3.0.0"
 
-"@unrest/vue@^0.1.8":
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/@unrest/vue/-/vue-0.1.8.tgz#698768d9b8733924a6603295e422f79abbf539c4"
-  integrity sha512-spp4HGEz0P35l8H+3eqDpntDUqOGNMzRR1zXS29nKPAHMycf9WD7pnvj1oRSWCfEztdt8TO/Zd6BePQdgSchWw==
+"@unrest/vue@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@unrest/vue/-/vue-0.1.9.tgz#ef2b63447d82ff4702c55450f1e212b839917179"
+  integrity sha512-w2lzJnMGsZJ8vlHBpMsywxDOiaYUCi2NNDxTM8sBOvy6laziZb/0E7inhdgam/vYSvZ7JZteAfnD1rT18Aow1g==
   dependencies:
     dedent "^0.7.0"
+    lodash.clonedeep "^4.5.0"
     marked "^2.1.3"
 
 "@vue/babel-helper-vue-jsx-merge-props@^1.2.1":
