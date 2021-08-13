@@ -11,7 +11,6 @@ import router from '@/router'
 import '@/styles/base.scss'
 
 auth.configure({
-  AUTH_START: '/',
   oauth_providers: ['twitter', 'github'],
   enabled: !process.env.VUE_APP_OFFLINE,
 })
@@ -37,6 +36,15 @@ auth.config.modes.push({
     </div>
   ),
 })
+
+auth.config.onError = (e) => {
+  if (e?.username?.code === 'unique') {
+    uS.complete('auth.accountExists')
+  }
+  if (e?.__all__?.code === 'password_mismatch') {
+    uS.complete('auth.badLogin')
+  }
+}
 
 const app = createApp(App)
 app.use(uS, stories)
