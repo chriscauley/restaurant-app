@@ -24,10 +24,13 @@ auth.config.modes[1].extra = () => (
   </div>
 )
 
+auth.config.modes[1].next = '/signup/complete/'
+
 auth.config.modes.push({
   slug: 'sign-up-owner',
   form_name: 'schema/OwnerSignUpForm',
   title: 'Buisness Sign Up',
+  next: '/signup/complete/',
   extra: () => (
     <div class="bottom">
       <router-link to="/auth/sign-up/" class="btn -link">
@@ -37,7 +40,7 @@ auth.config.modes.push({
   ),
 })
 
-auth.config.onError = (e) => {
+auth.config.onError = e => {
   if (e?.username?.code === 'unique') {
     uS.complete('auth.accountExists')
   }

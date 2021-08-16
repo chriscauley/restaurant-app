@@ -122,3 +122,4 @@ MEDIA_URL = '/media/'
 
 # Other
 EMAIL_BACKEND = "mailer.backend.DbBackend"
+UNREST_VERIFY_EMAIL = True

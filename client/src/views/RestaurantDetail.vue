@@ -85,7 +85,7 @@ export default {
   },
   computed: {
     story_action() {
-      const [_chema, model_slug, id] = this.form_name.split('/')
+      const [_schema, model_slug, id] = this.form_name.split('/')
       const verb = id ? 'update' : 'create'
       const from_slug = {
         restaurant: 'Restaurant',
