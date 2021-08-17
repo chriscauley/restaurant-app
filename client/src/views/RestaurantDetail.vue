@@ -136,11 +136,13 @@ export default {
   methods: {
     addItem(item_id) {
       if (!this.is_owner) {
+        this.$story.complete('customer.updateCartItem')
         this.$store.cart.addItem(item_id)
       }
     },
     removeItem(item_id) {
       if (!this.is_owner) {
+        this.$story.complete('customer.updateCartItem')
         this.$store.cart.removeItem(item_id)
       }
     },
@@ -167,6 +169,7 @@ export default {
       if (this.form_name.includes('restaurant')) {
         this.$router.replace('/')
       } else {
+        this.$store.restaurant.api.markStale()
         this.$store.restaurant.getOne(this.$route.params.id)
         this.form_name = null
       }

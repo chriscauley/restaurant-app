@@ -40,10 +40,19 @@ export default {
   },
   computed: {
     is_owner() {
-      if (this.$auth.get().role === 'user') {
+      const { role, avatar_url } = this.$auth.user || {}
+      if (avatar_url?.includes('avatars.githubusercontent.com')) {
+        this.$story.once('auth.social.github', avatar_url)
+      } else if (avatar_url?.includes('pbs.twimg.com')) {
+        this.$story.once('auth.social.twitter', avatar_url)
+      }
+      if (role) {
+        this.$story.complete('auth.login')
+      }
+      if (role === 'user') {
         this.$story.complete('customer.restaurantList')
       }
-      return this.$auth.get()?.role === 'owner'
+      return role === 'owner'
     },
   },
   methods: {

@@ -19,14 +19,18 @@ export const RegistrationComplete = {
   render: () => '',
   __route: {
     path: '/registration/complete/',
-    meta: { authRedirect: true },
   },
   mounted() {
-    this.$story.complete('auth.verifyEmail')
-    unrest.ui.toast({
-      text: 'Your account has been activated and you are now logged in.',
-      level: 'success',
+    this.$auth.fetch().then(user => {
+      if (user) {
+        this.$story.complete('auth.verifyEmail')
+        this.$story.complete(`auth.signUp.${user.role}`)
+        unrest.ui.toast({
+          text: 'Your account has been activated and you are now logged in.',
+          level: 'success',
+        })
+      }
+      this.$router.replace('/')
     })
-    this.$router.replace('/')
   },
 }

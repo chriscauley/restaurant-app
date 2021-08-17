@@ -14,9 +14,12 @@ export default {
     meta: { authRequired: true },
   },
   methods: {
-    success(data) {
-      this.$story.once('settings.updateAvatar', data.avatar_url)
-      this.$story.once('settings.updateUsername', data.username)
+    success() {
+      this.$auth.markStale()
+      this.$auth.fetch().then(user => {
+        this.$story.once('settings.updateAvatar', user.avatar_url)
+        this.$story.once('settings.updateUsername', user.username)
+      })
       this.$ui.toast({
         text: 'Settings updated',
         level: 'success',

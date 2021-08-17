@@ -1,6 +1,6 @@
 auth:
   - signUp:
-    - customer
+    - user
     - owner
     social:
     - twitter
