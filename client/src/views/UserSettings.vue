@@ -16,7 +16,7 @@ export default {
   methods: {
     success() {
       this.$auth.markStale()
-      this.$auth.fetch().then(user => {
+      this.$auth.fetch().then((user) => {
         this.$story.once('settings.updateAvatar', user.avatar_url)
         this.$story.once('settings.updateUsername', user.username)
       })

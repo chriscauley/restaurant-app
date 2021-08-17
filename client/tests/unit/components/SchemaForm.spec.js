@@ -23,7 +23,7 @@ test('prepSchema sets custom fields', () => {
   expect(schema.properties.avatar_url).toStrictEqual({})
 })
 
-test('SchemaForm loads schema via api', async next => {
+test('SchemaForm loads schema via api', async (next) => {
   const schema = { properties: {} }
   const propsData = {
     form_name: 'dummy_schema',
@@ -38,7 +38,7 @@ test('SchemaForm loads schema via api', async next => {
   next()
 })
 
-test('SchemaForm.submit', async next => {
+test('SchemaForm.submit', async (next) => {
   const schema = { properties: {} }
   const form_name = 'submit_schema'
   const propsData = { form_name }

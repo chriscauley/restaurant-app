@@ -11,7 +11,7 @@ const requireRole = (role, to, next) => {
 }
 
 export default (to, from, next) => {
-  const requiredRole = to.matched.map(record => record.meta.requiredRole).find(role => role)
+  const requiredRole = to.matched.map((record) => record.meta.requiredRole).find((role) => role)
   if (requiredRole) {
     auth.fetch().then(() => requireRole(requiredRole, to, next))
   } else {

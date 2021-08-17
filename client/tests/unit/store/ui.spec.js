@@ -1,6 +1,6 @@
 import ui from '@/store/ui'
 
-test('ui.toasts are shown and hidden', done => {
+test('ui.toasts are shown and hidden', (done) => {
   ui.state.DELAY = 0
   expect(ui.state.toasts.length).toBe(0)
   ui.toast({})

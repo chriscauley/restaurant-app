@@ -26,12 +26,12 @@ const mockOrderStore = () => {
   return $store
 }
 
-const wait = s =>
-  new Promise(resolve => {
+const wait = (s) =>
+  new Promise((resolve) => {
     setTimeout(resolve, s * 1000)
   })
 
-const newOrder = data => ({
+const newOrder = (data) => ({
   created: 'Jan 1 2021 12:00',
   status_history: [{ status: 'placed', created: new Date() }],
   user_name: 'John Doe',
@@ -59,7 +59,7 @@ test('OrderDetail renders properly', () => {
   expect(wrapper.find('.restaurant').text()).toBe('Restaurant: Central Perk')
 })
 
-test('OrderDetail polls correctly', async next => {
+test('OrderDetail polls correctly', async (next) => {
   const POLL_FREQUENCY = 0.1
   const wrapper = mountElement({ POLL_FREQUENCY })
 

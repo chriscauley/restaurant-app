@@ -21,7 +21,7 @@ export const RegistrationComplete = {
     path: '/registration/complete/',
   },
   mounted() {
-    this.$auth.fetch().then(user => {
+    this.$auth.fetch().then((user) => {
       if (user) {
         this.$story.complete('auth.verifyEmail')
         this.$story.complete(`auth.signUp.${user.role}`)

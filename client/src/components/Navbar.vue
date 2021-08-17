@@ -13,7 +13,7 @@ export default {
   computed: {
     items() {
       const orders = this.$store.order.getPage({ page: 1 })?.items || []
-      const pending_orders = orders.filter(o => o.allowed_status).length
+      const pending_orders = orders.filter((o) => o.allowed_status).length
       const OrderLink = () => (
         <router-link to="/orders/">
           Orders

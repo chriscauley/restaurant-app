@@ -6,7 +6,7 @@ import { slugify } from '@/common/utils'
 
 const DEFAULT_IMG = '/static/pizza.png'
 
-const fromServer = data => {
+const fromServer = (data) => {
   data.img_style = `background-image: url(${data.photo_url || DEFAULT_IMG})`
   data.to = `/restaurant/${data.id}/${slugify(data.name)}/`
   return data

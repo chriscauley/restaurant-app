@@ -28,11 +28,11 @@ const dummyTo = {
   },
 }
 
-test('checkAuth', async _next => {
+test('checkAuth', async (_next) => {
   const doCheckAuth = (to, expectedLocation) => {
     let resolve
-    const promise = new Promise(r => (resolve = r))
-    const next = location => {
+    const promise = new Promise((r) => (resolve = r))
+    const next = (location) => {
       expect(location).toStrictEqual(expectedLocation)
       resolve()
     }
@@ -59,14 +59,14 @@ test('checkAuth', async _next => {
   _next()
 })
 
-test('checkRole', async _next => {
+test('checkRole', async (_next) => {
   const old_toast = store.ui.toast
   store.ui.toast = jest.fn()
 
   const doCheckRole = (to, expectedLocation) => {
     let resolve
-    const promise = new Promise(r => (resolve = r))
-    const next = location => {
+    const promise = new Promise((r) => (resolve = r))
+    const next = (location) => {
       expect(location).toStrictEqual(expectedLocation)
       resolve()
     }

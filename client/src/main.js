@@ -40,7 +40,7 @@ auth.config.modes.push({
   ),
 })
 
-auth.config.onError = e => {
+auth.config.onError = (e) => {
   if (e?.username?.code === 'unique') {
     uS.complete('auth.accountExists')
   }

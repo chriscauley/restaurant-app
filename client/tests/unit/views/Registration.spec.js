@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 
 import { RegistrationInvalid, RegistrationComplete } from '@/views/Registration'
 
-const options = toast => ({
+const options = (toast) => ({
   global: {
     mocks: {
       $router: { replace: jest.fn() },

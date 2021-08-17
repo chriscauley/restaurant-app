@@ -13,6 +13,6 @@ const api = axios.create({
     return JSON.stringify(data)
   },
 })
-api.interceptors.response.use(r => r.data, handleAPIError)
+api.interceptors.response.use((r) => r.data, handleAPIError)
 
 export default api

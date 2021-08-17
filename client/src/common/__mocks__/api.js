@@ -27,6 +27,6 @@ export default {
     post: (url, data) => _mock(url, data, 'POST:'),
     cleanUp: () => expect(Object.keys(store)).toStrictEqual([]), // eslint-disable-line
   },
-  get: url => _get(url),
-  post: url => _get(url, 'POST:'),
+  get: (url) => _get(url),
+  post: (url) => _get(url, 'POST:'),
 }

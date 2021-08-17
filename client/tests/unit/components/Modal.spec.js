@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 
 import Modal from '@/components/Modal'
 
-test('Modal', next => {
+test('Modal', (next) => {
   const propsData = {
     title: 'My Title',
     close: jest.fn(),

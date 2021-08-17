@@ -102,7 +102,7 @@ export default {
     },
     total() {
       let total = 0
-      this.cart.items.forEach(item => (total += item.price * item.quantity))
+      this.cart.items.forEach((item) => (total += item.price * item.quantity))
       return total
     },
     is_owner() {
@@ -117,7 +117,7 @@ export default {
         onDelete: exists ? this.onDelete : undefined,
         form_name: this.form_name,
         state: this.form_state || {},
-        success: data => {
+        success: (data) => {
           this.$story.complete(this.story_action)
           this.form_name = this.form_state = null
           this.$store.restaurant.api.markStale()

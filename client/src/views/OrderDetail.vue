@@ -70,8 +70,8 @@ import OrderList from '@/components/OrderList'
 import Cart from '@/components/Cart'
 
 export default {
-  mixins: [PaginatedMixin],
   components: { Cart, OrderList },
+  mixins: [PaginatedMixin],
   props: {
     POLL_FREQUENCY: {
       type: Number,
@@ -85,12 +85,6 @@ export default {
   data() {
     return { cancelling: false }
   },
-  mounted() {
-    this.timeout = setTimeout(this.poll, this.POLL_FREQUENCY * 1000)
-  },
-  unmounted() {
-    clearTimeout(this.timeout)
-  },
   computed: {
     order() {
       return this.$store.order.getOne(this.$route.params.order_id)
@@ -99,7 +93,7 @@ export default {
       return this.order.allowed_status === 'canceled'
     },
     history() {
-      const unslugify = status => {
+      const unslugify = (status) => {
         status = status.replace(/_/g, ' ')
         return status.slice(0, 1).toUpperCase() + status.slice(1)
       }
@@ -116,7 +110,7 @@ export default {
     },
     progress_style() {
       const steps = this.history.length - 1
-      const steps_done = this.history.filter(h => h.date).length - 1
+      const steps_done = this.history.filter((h) => h.date).length - 1
       return `width: ${(100 * steps_done) / steps}%`
     },
     photo_url() {
@@ -125,6 +119,12 @@ export default {
       }
       return this.order.restaurant_photo_url
     },
+  },
+  mounted() {
+    this.timeout = setTimeout(this.poll, this.POLL_FREQUENCY * 1000)
+  },
+  unmounted() {
+    clearTimeout(this.timeout)
   },
   methods: {
     poll() {

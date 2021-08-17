@@ -9,7 +9,7 @@ import views from '@/views'
 
 const routes = [...auth.routes]
 
-const loadViews = o =>
+const loadViews = (o) =>
   Object.entries(o).forEach(([component_name, Component]) => {
     const route = {
       name: component_name.toLowerCase(),

@@ -6,7 +6,7 @@
     "build": "vue-cli-service build --dest ../dist",
     "test:unit": "jest",
     "test:e2e": "VUE_APP_ROOT_URL=http://toptable.localhost:8431 yarn jest --config=jest.e2e.js",
-    "lint": "vue-cli-service lint",
+    "lint": "eslint \"src/**/*\" \"tests/**/*\"",
     "watch": "yarn build --watch"
   },
   "dependencies": {
@@ -22,6 +22,7 @@
     "vue-router": "^4.0.0-beta.13"
   },
   "devDependencies": {
+    "@unrest/eslint-config": "^0.0.5",
     "@vue/cli": "^4.5.12",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",

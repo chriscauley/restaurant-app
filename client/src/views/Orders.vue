@@ -15,8 +15,8 @@ import PaginatedMixin from '@/mixins/PaginatedMixin'
 import OrderList from '@/components/OrderList'
 
 export default {
-  mixins: [PaginatedMixin],
   components: { OrderList },
+  mixins: [PaginatedMixin],
   __route: {
     path: '/orders/',
     meta: { authRequired: true },

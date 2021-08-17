@@ -29,8 +29,8 @@ import PaginatedMixin from '@/mixins/PaginatedMixin'
 import RestaurantList from '@/components/RestaurantList'
 
 export default {
-  mixins: [PaginatedMixin],
   components: { RestaurantList },
+  mixins: [PaginatedMixin],
   __route: {
     path: '/',
     meta: { authRequired: true },

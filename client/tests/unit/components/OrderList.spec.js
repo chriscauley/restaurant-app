@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 
 import OrderList from '@/components/OrderList'
 
-const getOptions = role => ({
+const getOptions = (role) => ({
   mocks: {
     $store: {
       auth: {

@@ -3,11 +3,11 @@ import { reactive } from 'vue'
 
 import RestaurantDetail from '@/views/RestaurantDetail'
 
-const mockStore = restaurant => {
-  const findItem = id => {
+const mockStore = (restaurant) => {
+  const findItem = (id) => {
     let item
-    restaurant.menusections.forEach(menusection => {
-      item = item || menusection.items.find(item2 => item2.id === id)
+    restaurant.menusections.forEach((menusection) => {
+      item = item || menusection.items.find((item2) => item2.id === id)
     })
     return item
   }
@@ -26,12 +26,12 @@ const mockStore = restaurant => {
     },
     cart: {
       fetch: () => state.cart,
-      addItem: _item_id => {
+      addItem: (_item_id) => {
         const item = findItem(_item_id)
         state.cart.items.push({ quantity: 1, price: item.price, _item_id })
       },
-      removeItem: _item_id => {
-        state.cart.items = state.cart.items.filter(item => item._item_id !== _item_id)
+      removeItem: (_item_id) => {
+        state.cart.items = state.cart.items.filter((item) => item._item_id !== _item_id)
       },
       checkout: jest.fn(),
     },
@@ -39,7 +39,7 @@ const mockStore = restaurant => {
   return $store
 }
 
-const mountElement = restaurant => {
+const mountElement = (restaurant) => {
   const $store = mockStore(restaurant)
   return shallowMount(RestaurantDetail, {
     global: {

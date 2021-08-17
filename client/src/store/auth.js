@@ -5,7 +5,7 @@ import api from '@/common/api'
 const URL = 'self/'
 const store = ReactiveRestApi({ client: api })
 const get = () => store.get(URL)?.user
-const check = () => store.fetch(URL).then(r => r.user)
+const check = () => store.fetch(URL).then((r) => r.user)
 
 export default {
   get,

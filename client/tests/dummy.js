@@ -8,7 +8,7 @@ export const getRestaurantPage = (opts = {}) => {
   const MIN_ID = (page - 1) * per_page + 1
   return {
     pages,
-    items: range(count).map(i => {
+    items: range(count).map((i) => {
       const id = i + MIN_ID
       return {
         name: `Restaurant #${id}`,
