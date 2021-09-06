@@ -7,7 +7,7 @@ import urllib
 
 from server.user.models import User
 from unrest import schema
-from unrest.user.forms import SignUpForm
+from unrest.user.forms import SignUpForm, UserSettingsForm
 
 
 @schema.register
@@ -17,17 +17,14 @@ class OwnerSignUpForm(SignUpForm):
         return super().save(commit=commit)
 
 
+schema.unregister('UserSettingsForm')
 @schema.register
-class UserSettingsForm(forms.ModelForm):
+class UserSettingsForm(UserSettingsForm):
     _avatar_url = None
     avatar_url = forms.CharField(required=False)
 
-    user_can_GET = 'SELF'
-    user_can_POST = 'SELF'
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].help_text = None
         if not self.data.get('avatar_url') == self.instance.avatar_url:
             self._avatar_url = self.data.get('avatar_url')
 
@@ -35,13 +32,6 @@ class UserSettingsForm(forms.ModelForm):
         if self._avatar_url:
             response = urllib.request.urlopen(self._avatar_url['dataURL'])
             self._avatar_url['file'] = ContentFile(response.read())
-    def save(self, commit=True):
-        instance = super().save(commit)
-        if self._avatar_url:
-            instance.avatar.save(self._avatar_url['name'], self._avatar_url['file'])
-            instance.save()
-        return instance
 
-    class Meta:
-        model = User
+    class Meta(UserSettingsForm.Meta):
         fields = ['username', 'avatar_url']
