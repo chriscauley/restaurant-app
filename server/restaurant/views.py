@@ -5,7 +5,7 @@ import json
 
 from server.decorators import user_role_required
 from server.restaurant.models import Restaurant, Order, MenuSection, MenuItem, Cart, CartItem, serialize, OwnerBlock
-from server.paginate import paginate
+from unrest.pagination import paginate
 
 def restaurant_list(request):
     query = Restaurant.objects.all()
