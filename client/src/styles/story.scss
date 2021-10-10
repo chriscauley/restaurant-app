@@ -17,3 +17,19 @@
 .unrest-story .text-danger {
   color: #9b2c2c;
 }
+
+.list-group {
+  @apply border rounded bg-white;
+}
+
+.list-group-item {
+  @apply border-b px-5 py-3 flex items-center justify-between;
+  &:last-child {
+    @apply border-b-0;
+  }
+}
+
+.unrest-story__short-list {
+  @apply absolute right-0;
+  bottom: 100%;
+}

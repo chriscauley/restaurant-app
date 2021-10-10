@@ -121,5 +121,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '.media')
 MEDIA_URL = '/media/'
 
 # Other
-EMAIL_BACKEND = "mailer.backend.DbBackend"
+# EMAIL_BACKEND = "mailer.backend.DbBackend"
 UNREST_VERIFY_EMAIL = True

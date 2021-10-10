@@ -6,6 +6,7 @@ import applyMeta from './applyMeta'
 import checkRole from './checkRole'
 import store from '@/store'
 import views from '@/views'
+import admin from '@/admin'
 
 const routes = [...auth.routes]
 
@@ -22,6 +23,7 @@ const loadViews = (o) =>
   })
 
 loadViews(views)
+loadViews(admin.views)
 const createHistory = process.env.NODE_ENV === 'test' ? createMemoryHistory : createWebHistory
 
 const router = createRouter({

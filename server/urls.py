@@ -11,7 +11,7 @@ import server.restaurant.forms
 import server.user.forms
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('dj-admin/', admin.site.urls),
     path('api/restaurants/', restaurant_list),
     path('api/cart/', cart_detail),
     path('api/cart/add/', cart_add),
